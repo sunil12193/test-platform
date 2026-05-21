@@ -11,6 +11,14 @@ import { questionBankData } from "@/dummyData/questionBank";
 
 export default function QuestionBankPage() {
   const [data, setData] = useState<QuestionBank[]>(questionBankData);
+  const [search, setSearch] = useState<string>("");
+  
+  const filteredData = data.filter((item) =>
+  (item.questionType + " " + item.questionId + " " + item.question)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -290,12 +298,15 @@ export default function QuestionBankPage() {
           addUrl="/dashboard/question-bank/add"
           importUrl="/dashboard/question-bank/import"
           exportUrl="/dashboard/question-bank/export"
-        />
+
+          searchValue={search}
+          onSearchChange={setSearch}
+         />
 
         <DataTable
           title="Question Bank"
           columns={columns}
-          data={data}
+          data={filteredData}
           onEdit={(item: QuestionBank) => {
             console.log("Edit:", item);
           }}

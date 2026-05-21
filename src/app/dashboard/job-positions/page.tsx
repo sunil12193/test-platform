@@ -18,6 +18,13 @@ import { jobPositionsData } from "@/dummyData/jobPosition";
 
 export default function JobPositionsPage() {
   const [data, setData] = useState<JobPosition[]>(jobPositionsData);
+  const [search, setSearch] = useState<string>("");
+
+  const filteredData = data.filter((item) =>
+  (item.title + " " + item.positionId + " " + item.department)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -352,12 +359,15 @@ export default function JobPositionsPage() {
           addUrl="/dashboard/job-positions/add"
           importUrl="/dashboard/job-positions/import"
           exportUrl="/dashboard/job-positions/export"
+
+          searchValue={search}
+          onSearchChange={setSearch}
         />
 
         <DataTable
           title="Job Positions"
           columns={columns}
-          data={data}
+          data={filteredData}
           onEdit={(item: JobPosition) => {
             console.log("Edit Data:", item);
           }}

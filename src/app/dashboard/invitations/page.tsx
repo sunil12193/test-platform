@@ -21,6 +21,13 @@ import { invitationsData } from "@/dummyData/invitation";
 
 export default function InvitationsPage() {
   const [data, setData] = useState<Invitation[]>(invitationsData);
+  const [search, setSearch] = useState<string>("");
+
+  const filteredData = data.filter((item) =>
+  (item.invitationId || item.email || item.assessmentId)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -367,24 +374,18 @@ export default function InvitationsPage() {
   ];
 
   return (
-    <div
-      className="
-        min-h-screen
-        bg-linear-to-br
-        from-slate-50
-        via-blue-50/30
-        to-slate-100
-        p-6
-      "
-    >
+    <div className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
       <div className="space-y-6">
         <ActionButtons
           addUrl="/dashboard/invitations/add"
           importUrl="/dashboard/invitations/import"
           exportUrl="/dashboard/invitations/export"
+
+          searchValue={search}
+          onSearchChange={setSearch}
         />
 
-        <DataTable title="Invitations" columns={columns} data={data} />
+        <DataTable title="Invitations" columns={columns} data={filteredData} />
       </div>
     </div>
   );

@@ -3,47 +3,39 @@ import { useEffect, useState } from "react";
 import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
+import { Billing } from "@/type/billing";
+import { billingPlansData } from "@/dummyData/billing";
+import Pagination from "@/component/pagination";
 
-const billingPlansData = [
-  {
-    companyId: "CMPNY-1001",
-
-    currentPlan: "Enterprise Pro",
-
-    billingCycle: "Yearly",
-
-    totalUsers: 420,
-
-    activeAssessments: 28,
-
-    invoiceHistory: ["INV-2026-001", "INV-2026-002", "INV-2026-003"],
-
-    paymentStatus: "Paid",
-
-    renewalDate: "2027-05-15",
-  },
-
-  {
-    companyId: "CMPNY-1002",
-
-    currentPlan: "Startup Plan",
-
-    billingCycle: "Monthly",
-
-    totalUsers: 58,
-
-    activeAssessments: 7,
-
-    invoiceHistory: ["INV-2026-011", "INV-2026-012"],
-
-    paymentStatus: "Pending",
-
-    renewalDate: "2026-06-01",
-  },
-];
 
 export default function BillingPlansPage() {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+  const [data, setData] = useState<Billing[]>(billingPlansData);
+  const [search, setSearch] = useState<string>("");
+  const [currentPage, setCurrentPage] =
+    useState<number>(1);
+
+  const [pageSize, setPageSize] =
+    useState<number>(10);
+
+  const filteredData = data.filter((item) =>
+    item.companyId
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
+  const startIndex =
+    (currentPage - 1) * pageSize;
+
+  const endIndex =
+    startIndex + pageSize;
+
+  const paginatedData =
+    filteredData.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(
+    filteredData.length / pageSize
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,7 +44,7 @@ export default function BillingPlansPage() {
 
         console.log("Fetched Data: billing", response);
 
-        setData(response);
+        setData(response || []);
       } catch (error) {
         console.log(error);
       }
@@ -226,12 +218,11 @@ export default function BillingPlansPage() {
             w-fit
             shadow-sm
 
-            ${
-              item.paymentStatus === "Paid"
-                ? "bg-green-100 text-green-700"
-                : item.paymentStatus === "Pending"
-                  ? "bg-yellow-100 text-yellow-700"
-                  : "bg-red-100 text-red-700"
+            ${item.paymentStatus === "Paid"
+              ? "bg-green-100 text-green-700"
+              : item.paymentStatus === "Pending"
+                ? "bg-yellow-100 text-yellow-700"
+                : "bg-red-100 text-red-700"
             }
           `}
         >
@@ -310,20 +301,35 @@ export default function BillingPlansPage() {
   ];
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <ActionButtons
-        addUrl="/dashboard/billing/add"
-        importUrl="/dashboard/billing/import"
-        exportUrl="/dashboard/billing/export"
+    <div className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
+      <div className="space-y-6">
+        <ActionButtons
+          addUrl="/dashboard/billing/add"
+          importUrl="/dashboard/billing/import"
+          exportUrl="/dashboard/billing/export"
 
-        // showExport={false}
-      />
+          searchValue={search}
+          onSearchChange={setSearch}
+        />
 
-      <DataTable
-        title="Billing & Plans"
-        columns={columns}
-        data={billingPlansData}
-      />
+        <DataTable
+          title="Billing Plans"
+          columns={columns}
+          data={filteredData}
+          onEdit={(item: Billing) => {
+            console.log("Edit:", item);
+          }}
+        />
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={filteredData.length}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+        />
+      </div>
     </div>
   );
 }

@@ -20,6 +20,13 @@ import { hiringCampaignData } from "@/dummyData/hiringCampaign";
 
 export default function HiringCampaignsPage() {
   const [data, setData] = useState<HiringCampaign[]>(hiringCampaignData);
+  const [search, setSearch] = useState<string>("");
+
+  const filteredData = data.filter((item) =>
+  (item.campaignName + " " + item.campaignId + " " + item.positionId)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,10 +90,9 @@ export default function HiringCampaignsPage() {
                     font-semibold
                     border
 
-                    ${
-                      item.status === "Active"
-                        ? "bg-emerald-50 border-emerald-100 text-emerald-700"
-                        : "bg-slate-100 border-slate-200 text-slate-700"
+                    ${item.status === "Active"
+                      ? "bg-emerald-50 border-emerald-100 text-emerald-700"
+                      : "bg-slate-100 border-slate-200 text-slate-700"
                     }
                   `}
                 >
@@ -386,13 +392,7 @@ export default function HiringCampaignsPage() {
 
   return (
     <div
-      className="
-        min-h-screen
-        bg-linear-to-br
-        from-slate-50
-        via-blue-50/30
-        to-slate-100
-        p-6
+      className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6
       "
     >
       <div className="space-y-6">
@@ -400,9 +400,12 @@ export default function HiringCampaignsPage() {
           addUrl="/dashboard/hiring-campaigns/add"
           importUrl="/dashboard/hiring-campaigns/import"
           exportUrl="/dashboard/hiring-campaigns/export"
+          searchValue={search}
+          onSearchChange={setSearch}
+
         />
 
-        <DataTable title="Hiring Campaigns" columns={columns} data={data} />
+        <DataTable title="Hiring Campaigns" columns={columns} data={filteredData} />
       </div>
     </div>
   );
