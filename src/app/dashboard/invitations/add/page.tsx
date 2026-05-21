@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { InputField } from "../../../../component/InputField";
 
 export default function AddInvitationPage() {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ export default function AddInvitationPage() {
   });
 
   // HANDLE CHANGE
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
 
     setFormData({
@@ -34,7 +35,7 @@ export default function AddInvitationPage() {
   };
 
   // SUBMIT
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     console.log(formData);
@@ -210,42 +211,6 @@ export default function AddInvitationPage() {
           </div>
         </form>
       </div>
-    </div>
-  );
-}
-
-/* INPUT FIELD COMPONENT */
-function InputField({
-  label,
-  name,
-  value,
-  onChange,
-  placeholder,
-  type = "text",
-}) {
-  return (
-    <div>
-      <label className="text-sm font-semibold text-gray-700">{label}</label>
-
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="
-          w-full
-          mt-2
-          px-4
-          py-3
-          rounded-2xl
-          border
-          border-gray-300
-          outline-none
-          focus:ring-2
-          focus:ring-blue-500
-        "
-      />
     </div>
   );
 }

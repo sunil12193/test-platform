@@ -3,86 +3,115 @@
 import { useRouter } from "next/navigation";
 import { FiPlus, FiUpload, FiDownload } from "react-icons/fi";
 
+type ActionButtonsProps = {
+  addUrl: string;
+  importUrl: string;
+  exportUrl: string;
+  showAdd?: boolean;
+  showImport?: boolean;
+  showExport?: boolean;
+};
+
 export default function ActionButtons({
   addUrl,
   importUrl,
   exportUrl,
-
   showAdd = true,
   showImport = true,
   showExport = true,
-}) {
+}: ActionButtonsProps) {
   const router = useRouter();
 
   return (
     <div
       className="
-      flex
-      flex-col
-      md:flex-row
-      md:items-center
-      md:justify-between
-      gap-4
-      mb-4
-      w-full
-    "
+        relative
+        overflow-hidden
+        rounded-2xl
+        
+        
+        px-5
+        
+      "
     >
-      {/* LEFT SIDE */}
-      <div>
+      {/* BUTTONS */}
+      <div
+        className="
+          relative
+          z-10
+          flex
+          flex-wrap
+          items-center
+          justify-end
+          gap-3
+        "
+      >
+        {/* ADD */}
         {showAdd && (
           <button
             onClick={() => router.push(addUrl)}
             className="
+              group
+              h-11
+              px-5
+              rounded-xl
+              bg-[#0F2B46]
+              hover:bg-[#163a5c]
+              text-white
+              font-medium
               flex
               items-center
               gap-2
-              px-6
-              py-3
-              rounded-2xl
-              bg-linear-to-r
-              from-blue-600
-              to-indigo-600
-              text-white
-              font-semibold
-              shadow-lg
-              hover:scale-105
-              hover:shadow-xl
+              shadow-sm
+              hover:shadow-md
               transition-all
-              duration-300
+              duration-200
             "
           >
-            <FiPlus className="text-lg" />
+            <FiPlus
+              className="
+                text-[18px]
+                transition-transform
+                duration-300
+                group-hover:rotate-90
+              "
+            />
             Add
           </button>
         )}
-      </div>
 
-      {/* RIGHT SIDE */}
-      <div className="flex items-center gap-4 ml-auto">
         {/* IMPORT */}
         {showImport && (
           <button
             onClick={() => router.push(importUrl)}
             className="
+              group
+              h-11
+              px-5
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              hover:bg-slate-50
+              text-slate-700
+              font-medium
               flex
               items-center
               gap-2
-              px-6
-              py-3
-              rounded-2xl
-              bg-white
-              border
-              border-gray-200
-              text-gray-700
-              font-semibold
-              shadow-md
-              hover:bg-gray-100
-              hover:scale-105
+              shadow-sm
+              hover:shadow-md
               transition-all
-              duration-300
+              duration-200
             "
           >
-            <FiUpload className="text-lg" />
+            <FiUpload
+              className="
+                text-[17px]
+                transition-transform
+                duration-300
+                group-hover:-translate-y-0.5
+              "
+            />
             Import
           </button>
         )}
@@ -92,25 +121,31 @@ export default function ActionButtons({
           <button
             onClick={() => router.push(exportUrl)}
             className="
+              group
+              h-11
+              px-5
+              rounded-xl
+              bg-[#F59E0B]
+              hover:bg-[#E58E00]
+              text-white
+              font-medium
               flex
               items-center
               gap-2
-              px-6
-              py-3
-              rounded-2xl
-              bg-linear-to-r
-              from-emerald-500
-              to-green-600
-              text-white
-              font-semibold
-              shadow-lg
-              hover:scale-105
-              hover:shadow-xl
+              shadow-sm
+              hover:shadow-md
               transition-all
-              duration-300
+              duration-200
             "
           >
-            <FiDownload className="text-lg" />
+            <FiDownload
+              className="
+                text-[17px]
+                transition-transform
+                duration-300
+                group-hover:translate-y-0.5
+              "
+            />
             Export
           </button>
         )}

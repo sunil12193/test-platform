@@ -28,7 +28,7 @@ export default function AddProctoringPage() {
   });
 
   // HANDLE CHANGE
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -36,7 +36,7 @@ export default function AddProctoringPage() {
   };
 
   // SUBMIT
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const finalData = {

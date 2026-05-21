@@ -1,85 +1,36 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import {
-  useEffect,
-  useState,
-  type JSXElementConstructor,
-  type ReactElement,
-  type ReactNode,
-  type ReactPortal,
-} from "react";
+  FiActivity,
+  FiAlertTriangle,
+  FiBarChart2,
+  FiCalendar,
+  FiClipboard,
+  FiTarget,
+  FiUsers,
+} from "react-icons/fi";
+
 import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
-
-const hiringCampaignData = [
-  {
-    campaignId: "CMP-1001",
-
-    campaignName: "Frontend Hiring Drive 2026",
-
-    positionId: "POS-1001",
-
-    assignedAssessments: [
-      "React Skill Test",
-      "JavaScript MCQ",
-      "Frontend Coding Round",
-    ],
-
-    candidateIds: ["CND-1001", "CND-1002", "CND-1003"],
-
-    totalInvited: 150,
-    totalCompleted: 96,
-
-    averageScore: 78,
-
-    suspiciousActivities: 3,
-
-    startDate: "2026-05-15",
-    endDate: "2026-05-30",
-
-    status: "Active",
-
-    createdBy: "Sunil Kumar",
-  },
-
-  {
-    campaignId: "CMP-1002",
-
-    campaignName: "Backend Internship Program",
-
-    positionId: "POS-1002",
-
-    assignedAssessments: ["Node.js Assessment", "MongoDB Quiz"],
-
-    candidateIds: ["CND-2001", "CND-2002"],
-
-    totalInvited: 80,
-    totalCompleted: 80,
-
-    averageScore: 69,
-
-    suspiciousActivities: 1,
-
-    startDate: "2026-04-10",
-    endDate: "2026-04-25",
-
-    status: "Completed",
-
-    createdBy: "HR Team",
-  },
-];
+import { HiringCampaign } from "@/type/hirinigCampiagn";
+import { hiringCampaignData } from "@/dummyData/hiringCampaign";
 
 export default function HiringCampaignsPage() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<HiringCampaign[]>(hiringCampaignData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getRequest(`${API_BASE_URL}/hiring-campaigns`);
 
-        console.log("Fetched Data: hiring campaigns", response);
+        console.log("Fetched Data: Hiring Campaigns", response);
 
-        setData(response);
+        if (response) {
+          setData(response);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -93,48 +44,71 @@ export default function HiringCampaignsPage() {
     {
       header: "Campaign",
 
-      render: (item: any) => (
-        <div className="min-w-[320px]">
+      render: (item: HiringCampaign) => (
+        <div className="min-w-[360px] text-left">
           <div className="flex items-start gap-4">
+            {/* ICON */}
             <div
               className="
-              w-14
-              h-14
-              rounded-2xl
-              bg-linear-to-r
-              from-pink-500
-              to-purple-600
-              flex
-              items-center
-              justify-center
-              text-white
-              font-bold
-              text-lg
-              shadow-lg
-              shrink-0
-            "
+                h-14
+                w-14
+                rounded-2xl
+                bg-gradient-to-br
+                from-[#0F2B46]
+                to-[#1E4D7B]
+                flex
+                items-center
+                justify-center
+                text-white
+                shadow-sm
+                shrink-0
+              "
             >
-              {item.campaignName.charAt(0)}
+              <FiTarget size={22} />
             </div>
 
+            {/* CONTENT */}
             <div>
-              <h2 className="font-bold text-gray-900 text-base">
-                {item.campaignName}
-              </h2>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="font-semibold text-slate-800 text-[15px]">
+                  {item.campaignName}
+                </h2>
 
-              <p className="text-xs text-gray-500 mt-1">{item.campaignId}</p>
+                <span
+                  className={`
+                    px-3
+                    py-1
+                    rounded-full
+                    text-[11px]
+                    font-semibold
+                    border
 
-              <div className="mt-3">
+                    ${
+                      item.status === "Active"
+                        ? "bg-emerald-50 border-emerald-100 text-emerald-700"
+                        : "bg-slate-100 border-slate-200 text-slate-700"
+                    }
+                  `}
+                >
+                  {item.status}
+                </span>
+              </div>
+
+              <p className="text-xs text-slate-500 mt-1">{item.campaignId}</p>
+
+              <div className="mt-4">
                 <span
                   className="
-                  bg-blue-100
-                  text-blue-700
-                  px-3
-                  py-1
-                  rounded-full
-                  text-xs
-                  font-semibold
-                "
+                    px-3
+                    py-1
+                    rounded-full
+                    bg-blue-50
+                    border
+                    border-blue-100
+                    text-blue-700
+                    text-xs
+                    font-medium
+                  "
                 >
                   Position : {item.positionId}
                 </span>
@@ -149,29 +123,22 @@ export default function HiringCampaignsPage() {
     {
       header: "Assessments",
 
-      render: (item: any) => (
-        <div
-          className="
-          flex
-          flex-wrap
-          gap-2
-          min-w-70
-        "
-        >
-          {item.assignedAssessments.map((assessment: any, index: any) => (
+      render: (item: HiringCampaign) => (
+        <div className="flex flex-wrap gap-2 min-w-[280px]">
+          {item.assignedAssessments.map((assessment: string, index: number) => (
             <span
               key={index}
               className="
-                px-3
-                py-1
-                rounded-full
-                text-xs
-                font-semibold
-                bg-linear-to-r
-                from-indigo-100
-                to-blue-100
-                text-indigo-700
-              "
+                  px-3
+                  py-1
+                  rounded-full
+                  bg-indigo-50
+                  border
+                  border-indigo-100
+                  text-indigo-700
+                  text-xs
+                  font-medium
+                "
             >
               {assessment}
             </span>
@@ -184,39 +151,44 @@ export default function HiringCampaignsPage() {
     {
       header: "Candidates",
 
-      render: (item: any) => (
-        <div className="min-w-55">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-gray-600">Total Invited</span>
-
-            <span
+      render: (item: HiringCampaign) => (
+        <div className="min-w-[220px]">
+          <div className="flex items-center gap-3 mb-4">
+            <div
               className="
-              bg-blue-100
-              text-blue-700
-              px-3
-              py-1
-              rounded-full
-              text-xs
-              font-bold
-            "
+                h-10
+                w-10
+                rounded-xl
+                bg-sky-50
+                text-sky-600
+                flex
+                items-center
+                justify-center
+              "
             >
-              {item.totalInvited}
-            </span>
+              <FiUsers />
+            </div>
+
+            <div>
+              <h3 className="font-bold text-slate-800">{item.totalInvited}</h3>
+
+              <p className="text-xs text-slate-500">Total Invited</p>
+            </div>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Completed</span>
+            <span className="text-sm text-slate-500">Completed</span>
 
             <span
               className="
-              bg-green-100
-              text-green-700
-              px-3
-              py-1
-              rounded-full
-              text-xs
-              font-bold
-            "
+                px-3
+                py-1
+                rounded-full
+                bg-emerald-50
+                text-emerald-700
+                text-xs
+                font-semibold
+              "
             >
               {item.totalCompleted}
             </span>
@@ -229,42 +201,43 @@ export default function HiringCampaignsPage() {
     {
       header: "Completion",
 
-      render: (item: any) => {
-        const completionRate = Math.round(
-          (item.totalCompleted / item.totalInvited) * 100,
-        );
+      render: (item: HiringCampaign) => {
+        const completionRate =
+          item.totalInvited > 0
+            ? Math.round((item.totalCompleted / item.totalInvited) * 100)
+            : 0;
 
         return (
-          <div className="min-w-55">
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-green-700">
+          <div className="min-w-[220px]">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-sm text-slate-500">Completion</span>
+
+              <span className="font-bold text-emerald-600">
                 {completionRate}%
               </span>
-
-              <span className="text-xs text-gray-500">Completion Rate</span>
             </div>
 
-            <div
-              className="
-              w-full
-              h-2
-              rounded-full
-              bg-gray-200
-              overflow-hidden
-            "
-            >
+            <div className="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
               <div
                 className="
                   h-full
                   rounded-full
-                  bg-linear-to-r
-                  from-green-500
-                  to-emerald-600
+                  bg-gradient-to-r
+                  from-emerald-500
+                  to-green-600
                 "
                 style={{
                   width: `${completionRate}%`,
                 }}
               />
+            </div>
+
+            <div className="flex items-center gap-2 mt-3">
+              <FiActivity className="text-emerald-500 text-sm" />
+
+              <p className="text-xs text-slate-500">
+                {item.totalCompleted} completed
+              </p>
             </div>
           </div>
         );
@@ -275,33 +248,33 @@ export default function HiringCampaignsPage() {
     {
       header: "Average Score",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <div className="flex items-center gap-3">
+      render: (item: HiringCampaign) => (
+        <div className="min-w-[220px]">
+          <div className="flex items-center gap-4">
             <div
               className="
-              w-14
-              h-14
-              rounded-2xl
-              bg-linear-to-r
-              from-yellow-400
-              to-orange-500
-              text-white
-              flex
-              items-center
-              justify-center
-              font-bold
-              text-lg
-              shadow-lg
-            "
+                h-14
+                w-14
+                rounded-2xl
+                bg-gradient-to-br
+                from-amber-400
+                to-orange-500
+                text-white
+                flex
+                items-center
+                justify-center
+                font-bold
+                text-lg
+                shadow-sm
+              "
             >
               {item.averageScore}%
             </div>
 
             <div>
-              <h3 className="font-semibold text-gray-800">Avg Performance</h3>
+              <h3 className="font-semibold text-slate-800">Avg Performance</h3>
 
-              <p className="text-xs text-gray-500 mt-1">Candidate Score</p>
+              <p className="text-xs text-slate-500 mt-1">Candidate Score</p>
             </div>
           </div>
         </div>
@@ -312,24 +285,34 @@ export default function HiringCampaignsPage() {
     {
       header: "Security",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <div
-            className="
-            bg-red-100
-            text-red-700
-            px-4
-            py-3
-            rounded-2xl
-            font-bold
-            text-sm
-            w-fit
-          "
-          >
-            {item.suspiciousActivities} Suspicious
-          </div>
+      render: (item: HiringCampaign) => (
+        <div className="min-w-[180px]">
+          <div className="flex items-center gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-red-50
+                text-red-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiAlertTriangle />
+            </div>
 
-          <p className="text-xs text-gray-500 mt-2">Activities Detected</p>
+            <div>
+              <h3 className="font-semibold text-red-700">
+                {item.suspiciousActivities}
+              </h3>
+
+              <p className="text-xs text-slate-500 mt-1">
+                Suspicious Activities
+              </p>
+            </div>
+          </div>
         </div>
       ),
     },
@@ -338,46 +321,32 @@ export default function HiringCampaignsPage() {
     {
       header: "Timeline",
 
-      render: (item: any) => (
-        <div className="min-w-55">
-          <div
-            className="
-            bg-gray-100
-            rounded-2xl
-            px-4
-            py-3
-          "
-          >
-            <p className="font-semibold text-gray-800">{item.startDate}</p>
+      render: (item: HiringCampaign) => (
+        <div className="min-w-[200px]">
+          <div className="flex items-start gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-amber-50
+                text-amber-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiCalendar />
+            </div>
 
-            <p className="text-xs text-gray-500 mt-1">to {item.endDate}</p>
+            <div>
+              <p className="text-sm font-semibold text-slate-700">
+                {item.startDate}
+              </p>
+
+              <p className="text-xs text-slate-500 mt-1">to {item.endDate}</p>
+            </div>
           </div>
-        </div>
-      ),
-    },
-
-    // STATUS
-    {
-      header: "Status",
-
-      render: (item: any) => (
-        <div
-          className={`
-            px-4
-            py-2
-            rounded-2xl
-            text-xs
-            font-bold
-            w-fit
-
-            ${
-              item.status === "Active"
-                ? "bg-green-100 text-green-700"
-                : "bg-gray-100 text-gray-700"
-            }
-          `}
-        >
-          {item.status}
         </div>
       ),
     },
@@ -386,31 +355,55 @@ export default function HiringCampaignsPage() {
     {
       header: "Created By",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <h3 className="font-semibold text-gray-800">{item.createdBy}</h3>
+      render: (item: HiringCampaign) => (
+        <div className="min-w-[180px]">
+          <div className="flex items-center gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-slate-100
+                text-slate-700
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiClipboard />
+            </div>
 
-          <p className="text-xs text-gray-500 mt-1">Campaign Manager</p>
+            <div>
+              <h3 className="font-semibold text-slate-800">{item.createdBy}</h3>
+
+              <p className="text-xs text-slate-500 mt-1">Campaign Manager</p>
+            </div>
+          </div>
         </div>
       ),
     },
   ];
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <ActionButtons
-        addUrl="/dashboard/hiring-campaigns/add"
-        importUrl="/dashboard/hiring-campaigns/import"
-        exportUrl="/dashboard/hiring-campaigns/export"
+    <div
+      className="
+        min-h-screen
+        bg-gradient-to-br
+        from-slate-50
+        via-blue-50/30
+        to-slate-100
+        p-6
+      "
+    >
+      <div className="space-y-6">
+        <ActionButtons
+          addUrl="/dashboard/hiring-campaigns/add"
+          importUrl="/dashboard/hiring-campaigns/import"
+          exportUrl="/dashboard/hiring-campaigns/export"
+        />
 
-        // showExport={false}
-      />
-
-      <DataTable
-        title="Hiring Campaigns"
-        columns={columns}
-        data={hiringCampaignData}
-      />
+        <DataTable title="Hiring Campaigns" columns={columns} data={data} />
+      </div>
     </div>
   );
 }

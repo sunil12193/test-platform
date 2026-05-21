@@ -1,25 +1,33 @@
-// components/DataTable.jsx
-
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
-export default function DataTable({
+type Column<T> = {
+  header: string;
+  accessor?: keyof T;
+  render?: (item: T) => React.ReactNode;
+};
+type DataTableProps<T> = {
+  columns?: Column<T>[];
+  data?: T[];
+  title?: string;
+  onEdit?: (item: T) => void;
+};
+
+export default function DataTable<T extends Record<string, any>>({
   columns = [],
   data = [],
-  title,
+  title = "Data Table",
   onEdit,
-}: {
-  columns?: any[];
-  data?: any[];
-  title?: string;
-  onEdit?: (rowIndex: number) => void;
-}) {
-  // LOCAL STATE
-  const [tableData, setTableData] = useState(data);
+}: DataTableProps<T>) {
+  const [tableData, setTableData] = useState<T[]>(data);
 
-  // DELETE FUNCTION
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
+
+  // DELETE
   const handleDelete = (rowIndex: number) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this record?",
@@ -37,47 +45,66 @@ export default function DataTable({
   return (
     <div
       className="
-            relative
-            overflow-hidden
-            rounded-2xl
-            border
-            border-gray-200
-            bg-white
-            shadow-lg
-        "
+        overflow-hidden
+        rounded-2xl
+        border
+        border-slate-200/80
+        bg-white/90
+        backdrop-blur-xl
+        shadow-sm
+      "
     >
-      {/* TOP BAR */}
+      {/* HEADER */}
       <div
         className="
-                flex
-                items-center
-                justify-between
-                px-5
-                py-4
-                border-b
-                bg-linear-to-r
-                from-blue-600
-                to-indigo-600
-            "
+          flex
+          flex-col
+          lg:flex-row
+          lg:items-center
+          lg:justify-between
+          gap-4
+          px-6
+          py-5
+          border-b
+          border-slate-100
+          bg-linear-to-r
+          from-[#0F2B46]
+          via-[#163A5C]
+          to-[#1E4D7B]
+        "
       >
+        {/* LEFT */}
         <div>
-          <h2 className="text-xl font-bold text-white">{title}</h2>
+          <h2
+            className="
+              text-2xl
+              font-bold
+              tracking-tight
+              text-white
+            "
+          >
+            {title}
+          </h2>
 
-          <p className="text-blue-100 text-xs mt-1">
+          <p className="text-sm text-blue-100 mt-1">
             Manage and monitor all records
           </p>
         </div>
 
+        {/* TOTAL */}
         <div
           className="
-                    bg-white/20
-                    backdrop-blur-md
-                    px-3
-                    py-1.5
-                    rounded-xl
-                "
+            w-fit
+            px-4
+            py-2
+            rounded-xl
+            bg-white/10
+            border
+            border-white/10
+            backdrop-blur-md
+          "
         >
-          <p className="text-white text-xs font-medium">
+          <p className="text-sm font-medium text-white">
             Total : {tableData.length}
           </p>
         </div>
@@ -85,142 +112,148 @@ export default function DataTable({
 
       {/* TABLE */}
       <div className="overflow-x-auto">
-        <table
-          className="
-                    w-full
-                    min-w-250
-                    border-collapse
-                "
-        >
-          {/* HEADER */}
-          <thead className="bg-gray-50">
+        <table className="w-full min-w-275">
+          {/* TABLE HEADER */}
+          <thead className="bg-slate-50">
             <tr>
               {columns.map((column, index) => (
                 <th
                   key={index}
                   className="
-                                        px-4
-                                        py-3
-                                        text-center
-                                        text-xs
-                                        font-bold
-                                        uppercase
-                                        tracking-wide
-                                        text-gray-600
-                                        border-b
-                                        whitespace-nowrap
-                                    "
+                    px-6
+                    py-4
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-500
+                    text-center
+                    whitespace-nowrap
+                    border-b
+                    border-slate-100
+                  "
                 >
                   {column.header}
                 </th>
               ))}
 
-              {/* ACTION COLUMN */}
               <th
                 className="
-                px-4
-                py-3
-                text-center
-                text-xs
-                font-bold
-                uppercase
-                tracking-wide
-                text-gray-600
-                border-b
-                whitespace-nowrap"
+                  px-6
+                  py-4
+                  text-xs
+                  font-semibold
+                  uppercase
+                  tracking-wider
+                  text-slate-500
+                  text-center
+                  whitespace-nowrap
+                  border-b
+                  border-slate-100
+                "
               >
                 Actions
               </th>
             </tr>
           </thead>
 
-          {/* BODY */}
+          {/* TABLE BODY */}
           <tbody>
             {tableData.map((item, rowIndex) => (
               <tr
                 key={rowIndex}
                 className="
-                                    group
-                                    hover:bg-blue-50/40
-                                    transition-all
-                                    duration-200
-                                    border-b
-                                    border-gray-100
-                                "
+                  group
+                  border-b
+                  border-slate-100
+                  hover:bg-blue-50/30
+                  transition-all
+                  duration-200
+                "
               >
-                {/* TABLE DATA */}
+                {/* COLUMNS */}
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className="px-4
-                    py-3
-                    text-gray-700
-                    text-sm
-                    text-center
-                    whitespace-nowrap"
+                    className="
+                      px-6
+                      py-5
+                      text-sm
+                      text-slate-700
+                      whitespace-nowrap
+                      text-center
+                    "
                   >
                     <div
                       className="
-                    group-hover:translate-x-0.5
-                    transition
-                    duration-200
-                    text-center"
+                        transition-transform
+                        duration-200
+                        group-hover:translate-x-0.5
+                      "
                     >
                       {column.render
                         ? column.render(item)
-                        : item[column.accessor]}
+                        : column.accessor
+                          ? String(item[column.accessor] ?? "-")
+                          : "-"}
                     </div>
                   </td>
                 ))}
 
-                {/* ACTION BUTTONS */}
-                <td className="px-4 py-3">
+                {/* ACTIONS */}
+                <td className="px-6 py-5">
                   <div
                     className="
-                    flex
-                    items-center
-                    justify-center
-                    gap-3"
+                      flex
+                      items-center
+                      justify-center
+                      gap-3
+                    "
                   >
-                    {/* EDIT BUTTON */}
+                    {/* EDIT */}
                     <button
                       onClick={() => onEdit?.(item)}
                       className="
-                    w-10
-                    h-10
-                    rounded-xl
-                    bg-blue-100
-                    text-blue-600
-                    flex
-                    items-center
-                    justify-center
-                    hover:bg-blue-600
-                    hover:text-white
-                    transition-all
-                    duration-200"
+                        h-10
+                        w-10
+                        rounded-xl
+                        bg-blue-50
+                        text-[#1E4D7B]
+                        border
+                        border-blue-100
+                        flex
+                        items-center
+                        justify-center
+                        hover:bg-[#1E4D7B]
+                        hover:text-white
+                        transition-all
+                        duration-200
+                      "
                     >
-                      <FiEdit2 size={18} />
+                      <FiEdit2 size={16} />
                     </button>
 
-                    {/* DELETE BUTTON */}
+                    {/* DELETE */}
                     <button
                       onClick={() => handleDelete(rowIndex)}
                       className="
-                                                w-10
-                                                h-10
-                                                rounded-xl
-                                                bg-red-100
-                                                text-red-600
-                                                flex
-                                                items-center
-                                                justify-center
-                                                hover:bg-red-600
-                                                hover:text-white
-                                                transition-all
-                                                duration-200
-                                            "
+                        h-10
+                        w-10
+                        rounded-xl
+                        bg-red-50
+                        text-red-600
+                        border
+                        border-red-100
+                        flex
+                        items-center
+                        justify-center
+                        hover:bg-red-600
+                        hover:text-white
+                        transition-all
+                        duration-200
+                      "
                     >
-                      <FiTrash2 size={18} />
+                      <FiTrash2 size={16} />
                     </button>
                   </div>
                 </td>
@@ -232,26 +265,28 @@ export default function DataTable({
 
       {/* EMPTY STATE */}
       {tableData.length === 0 && (
-        <div className="py-16 text-center">
+        <div className="py-20 text-center">
           <div
             className="
-                        w-20
-                        h-20
-                        mx-auto
-                        rounded-full
-                        bg-gray-100
-                        flex
-                        items-center
-                        justify-center
-                        mb-4
-                    "
+              h-20
+              w-20
+              mx-auto
+              rounded-2xl
+              bg-slate-100
+              flex
+              items-center
+              justify-center
+              mb-5
+            "
           >
             <span className="text-3xl">📂</span>
           </div>
 
-          <h3 className="text-lg font-semibold text-gray-800">No Data Found</h3>
+          <h3 className="text-xl font-semibold text-slate-800">
+            No Data Found
+          </h3>
 
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-slate-500 mt-2">
             There are no records available right now.
           </p>
         </div>

@@ -1,70 +1,36 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import {
+  FiAlertTriangle,
+  FiBarChart2,
+  FiCalendar,
+  FiDownload,
+  FiFileText,
+  FiPieChart,
+  FiUser,
+} from "react-icons/fi";
+
 import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
-
-const reportsAnalyticsData = [
-  {
-    reportId: "RPT-1001",
-
-    reportType: "Assessment Performance Report",
-
-    generatedBy: "Sunil Kumar",
-
-    assessmentId: "ASM-1001",
-
-    campaignId: "CMP-1001",
-
-    averageScore: 78,
-    highestScore: 98,
-    lowestScore: 42,
-
-    completionRate: 84,
-
-    suspiciousActivities: 3,
-
-    exportedFormat: "PDF",
-
-    generatedAt: "2026-05-15",
-  },
-
-  {
-    reportId: "RPT-1002",
-
-    reportType: "Campaign Analytics Report",
-
-    generatedBy: "HR Team",
-
-    assessmentId: "ASM-1002",
-
-    campaignId: "CMP-1002",
-
-    averageScore: 69,
-    highestScore: 92,
-    lowestScore: 35,
-
-    completionRate: 100,
-
-    suspiciousActivities: 1,
-
-    exportedFormat: "Excel",
-
-    generatedAt: "2026-05-14",
-  },
-];
+import { ReportsAnalytics } from "@/type/report";
+import { reportsAnalyticsData } from "@/dummyData/report";
 
 export default function ReportsAnalyticsPage() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<ReportsAnalytics[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getRequest(`${API_BASE_URL}/report`);
 
-        console.log("Fetched Data: report", response);
+        console.log("Fetched Data: Reports", response);
 
-        setData(response);
+        if (response) {
+          setData(response);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -78,62 +44,66 @@ export default function ReportsAnalyticsPage() {
     {
       header: "Report",
 
-      render: (item: any) => (
-        <div className="min-w-80">
+      render: (item: ReportsAnalytics) => (
+        <div className="min-w-[360px] text-left">
           <div className="flex items-start gap-4">
+            {/* ICON */}
             <div
               className="
-              w-14
-              h-14
-              rounded-2xl
-              bg-linear-to-r
-              from-cyan-500
-              to-blue-600
-              flex
-              items-center
-              justify-center
-              text-white
-              font-bold
-              text-lg
-              shadow-lg
-              shrink-0
-            "
+                h-14
+                w-14
+                rounded-2xl
+                bg-gradient-to-br
+                from-[#0F2B46]
+                to-[#1E4D7B]
+                flex
+                items-center
+                justify-center
+                text-white
+                shadow-sm
+                shrink-0
+              "
             >
-              R
+              <FiFileText size={22} />
             </div>
 
+            {/* CONTENT */}
             <div>
-              <h2 className="font-bold text-gray-900 text-base">
+              <h2 className="font-semibold text-slate-800 text-[15px]">
                 {item.reportType}
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">{item.reportId}</p>
+              <p className="text-xs text-slate-500 mt-1">{item.reportId}</p>
 
-              <div className="flex items-center gap-2 mt-3">
+              <div className="flex items-center gap-2 mt-4 flex-wrap">
                 <span
                   className="
-                  bg-blue-100
-                  text-blue-700
-                  px-3
-                  py-1
-                  rounded-full
-                  text-xs
-                  font-semibold
-                "
+                    px-3
+                    py-1
+                    rounded-full
+                    bg-blue-50
+                    border
+                    border-blue-100
+                    text-blue-700
+                    text-xs
+                    font-medium
+                  "
                 >
                   {item.assessmentId}
                 </span>
 
                 <span
                   className="
-                  bg-purple-100
-                  text-purple-700
-                  px-3
-                  py-1
-                  rounded-full
-                  text-xs
-                  font-semibold
-                "
+                    px-3
+                    py-1
+                    rounded-full
+                    bg-violet-50
+                    border
+                    border-violet-100
+                    text-violet-700
+                    text-xs
+                    font-medium
+                  "
                 >
                   {item.campaignId}
                 </span>
@@ -148,19 +118,31 @@ export default function ReportsAnalyticsPage() {
     {
       header: "Generated By",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <div
-            className="
-            bg-gray-100
-            rounded-2xl
-            px-4
-            py-3
-          "
-          >
-            <h3 className="font-semibold text-gray-800">{item.generatedBy}</h3>
+      render: (item: ReportsAnalytics) => (
+        <div className="min-w-[200px]">
+          <div className="flex items-center gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-slate-100
+                text-slate-700
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiUser />
+            </div>
 
-            <p className="text-xs text-gray-500 mt-1">Report Creator</p>
+            <div>
+              <h3 className="font-semibold text-slate-800">
+                {item.generatedBy}
+              </h3>
+
+              <p className="text-xs text-slate-500 mt-1">Report Creator</p>
+            </div>
           </div>
         </div>
       ),
@@ -170,60 +152,87 @@ export default function ReportsAnalyticsPage() {
     {
       header: "Score Analytics",
 
-      render: (item: any) => (
-        <div className="min-w-70 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Average</span>
-
-            <span
+      render: (item: ReportsAnalytics) => (
+        <div className="min-w-[250px]">
+          <div className="flex items-center gap-3 mb-5">
+            <div
               className="
-              bg-blue-100
-              text-blue-700
-              px-3
-              py-1
-              rounded-full
-              text-xs
-              font-bold
-            "
+                h-10
+                w-10
+                rounded-xl
+                bg-sky-50
+                text-sky-600
+                flex
+                items-center
+                justify-center
+              "
             >
-              {item.averageScore}%
-            </span>
+              <FiBarChart2 />
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-slate-800">
+                Performance Metrics
+              </h3>
+
+              <p className="text-xs text-slate-500 mt-1">Candidate Scores</p>
+            </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Highest</span>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-500">Average</span>
 
-            <span
-              className="
-              bg-green-100
-              text-green-700
-              px-3
-              py-1
-              rounded-full
-              text-xs
-              font-bold
-            "
-            >
-              {item.highestScore}%
-            </span>
-          </div>
+              <span
+                className="
+                  px-3
+                  py-1
+                  rounded-full
+                  bg-blue-50
+                  text-blue-700
+                  text-xs
+                  font-semibold
+                "
+              >
+                {item.averageScore}%
+              </span>
+            </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Lowest</span>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-500">Highest</span>
 
-            <span
-              className="
-              bg-red-100
-              text-red-700
-              px-3
-              py-1
-              rounded-full
-              text-xs
-              font-bold
-            "
-            >
-              {item.lowestScore}%
-            </span>
+              <span
+                className="
+                  px-3
+                  py-1
+                  rounded-full
+                  bg-emerald-50
+                  text-emerald-700
+                  text-xs
+                  font-semibold
+                "
+              >
+                {item.highestScore}%
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-500">Lowest</span>
+
+              <span
+                className="
+                  px-3
+                  py-1
+                  rounded-full
+                  bg-red-50
+                  text-red-700
+                  text-xs
+                  font-semibold
+                "
+              >
+                {item.lowestScore}%
+              </span>
+            </div>
           </div>
         </div>
       ),
@@ -233,30 +242,22 @@ export default function ReportsAnalyticsPage() {
     {
       header: "Completion Rate",
 
-      render: (item: any) => (
-        <div className="min-w-55">
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-bold text-emerald-700">
+      render: (item: ReportsAnalytics) => (
+        <div className="min-w-[220px]">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500">Completion</span>
+
+            <span className="font-bold text-emerald-600">
               {item.completionRate}%
             </span>
-
-            <span className="text-xs text-gray-500">Completed</span>
           </div>
 
-          <div
-            className="
-            w-full
-            h-3
-            rounded-full
-            bg-gray-200
-            overflow-hidden
-          "
-          >
+          <div className="w-full h-3 rounded-full bg-slate-200 overflow-hidden">
             <div
               className="
                 h-full
                 rounded-full
-                bg-linear-to-r
+                bg-gradient-to-r
                 from-emerald-500
                 to-green-600
               "
@@ -264,6 +265,12 @@ export default function ReportsAnalyticsPage() {
                 width: `${item.completionRate}%`,
               }}
             />
+          </div>
+
+          <div className="flex items-center gap-2 mt-3">
+            <FiPieChart className="text-emerald-500 text-sm" />
+
+            <p className="text-xs text-slate-500">Overall Completion Rate</p>
           </div>
         </div>
       ),
@@ -273,56 +280,88 @@ export default function ReportsAnalyticsPage() {
     {
       header: "Security Insights",
 
-      render: (item: any) => (
-        <div className="min-w-50">
-          <div
-            className="
-            bg-red-100
-            text-red-700
-            px-4
-            py-3
-            rounded-2xl
-            font-bold
-            text-sm
-            w-fit
-          "
-          >
-            {item.suspiciousActivities} Activities
-          </div>
+      render: (item: ReportsAnalytics) => (
+        <div className="min-w-[200px]">
+          <div className="flex items-center gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-red-50
+                text-red-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiAlertTriangle />
+            </div>
 
-          <p className="text-xs text-gray-500 mt-2">
-            Suspicious Behavior Detected
-          </p>
+            <div>
+              <h3 className="font-semibold text-red-700">
+                {item.suspiciousActivities}
+              </h3>
+
+              <p className="text-xs text-slate-500 mt-1">
+                Suspicious Activities
+              </p>
+            </div>
+          </div>
         </div>
       ),
     },
 
-    // EXPORT FORMAT
+    // EXPORT
     {
       header: "Export",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <div
-            className={`
-              px-4
-              py-3
-              rounded-2xl
-              text-sm
-              font-bold
-              w-fit
+      render: (item: ReportsAnalytics) => (
+        <div className="min-w-[180px]">
+          <div className="flex items-center gap-3">
+            <div
+              className={`
+                h-10
+                w-10
+                rounded-xl
+                flex
+                items-center
+                justify-center
 
-              ${
-                item.exportedFormat === "PDF"
-                  ? "bg-red-100 text-red-700"
-                  : "bg-green-100 text-green-700"
-              }
-            `}
-          >
-            {item.exportedFormat}
+                ${
+                  item.exportedFormat === "PDF"
+                    ? "bg-red-50 text-red-600"
+                    : "bg-emerald-50 text-emerald-600"
+                }
+              `}
+            >
+              <FiDownload />
+            </div>
+
+            <div>
+              <div
+                className={`
+                  inline-flex
+                  items-center
+                  px-3
+                  py-1
+                  rounded-full
+                  text-xs
+                  font-semibold
+
+                  ${
+                    item.exportedFormat === "PDF"
+                      ? "bg-red-50 text-red-700"
+                      : "bg-emerald-50 text-emerald-700"
+                  }
+                `}
+              >
+                {item.exportedFormat}
+              </div>
+
+              <p className="text-xs text-slate-500 mt-2">Download Format</p>
+            </div>
           </div>
-
-          <p className="text-xs text-gray-500 mt-2">Download Format</p>
         </div>
       ),
     },
@@ -331,19 +370,33 @@ export default function ReportsAnalyticsPage() {
     {
       header: "Generated At",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <div
-            className="
-            bg-gray-100
-            rounded-2xl
-            px-4
-            py-3
-          "
-          >
-            <h3 className="font-semibold text-gray-800">{item.generatedAt}</h3>
+      render: (item: ReportsAnalytics) => (
+        <div className="min-w-[200px]">
+          <div className="flex items-start gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-amber-50
+                text-amber-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiCalendar />
+            </div>
 
-            <p className="text-xs text-gray-500 mt-1">Report Generated Date</p>
+            <div>
+              <p className="text-sm font-semibold text-slate-700">
+                {item.generatedAt}
+              </p>
+
+              <p className="text-xs text-slate-500 mt-1">
+                Report Generated Date
+              </p>
+            </div>
           </div>
         </div>
       ),
@@ -351,20 +404,19 @@ export default function ReportsAnalyticsPage() {
   ];
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <ActionButtons
-        addUrl="/dashboard/reports/add"
-        importUrl="/dashboard/reports/import"
-        exportUrl="/dashboard/reports/export"
-
-        // showExport={false}
-      />
-
-      <DataTable
-        title="Reports & Analytics"
-        columns={columns}
-        data={reportsAnalyticsData}
-      />
+    <div
+      className="
+        min-h-screen
+        bg-gradient-to-br
+        from-slate-50
+        via-blue-50/30
+        to-slate-100
+        p-6
+      "
+    >
+      <div className="space-y-6">
+        <DataTable title="Reports & Analytics" columns={columns} data={data} />
+      </div>
     </div>
   );
 }

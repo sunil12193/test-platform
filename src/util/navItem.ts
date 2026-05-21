@@ -23,7 +23,7 @@ export const navItems = [
 
   {
     label: "Candidates",
-    href: "/dashboard/candidates",
+    href: "/dashboard/candidate",
     sub: "Manage candidate profiles",
     icon: FiUsers,
   },
@@ -68,20 +68,6 @@ export const navItems = [
     href: "/dashboard/invitations",
     sub: "Send test invitations",
     icon: FiMail,
-  },
-
-  {
-    label: "Proctoring",
-    href: "/dashboard/proctoring",
-    sub: "Monitor exam integrity",
-    icon: FiShield,
-  },
-
-  {
-    label: "Activity Logs",
-    href: "/dashboard/activity-logs",
-    sub: "Track platform activities",
-    icon: FiActivity,
   },
 
   {

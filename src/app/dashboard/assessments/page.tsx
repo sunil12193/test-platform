@@ -1,88 +1,25 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import { FiClock, FiFileText, FiHelpCircle, FiUsers } from "react-icons/fi";
+
 import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
-
-// const assessmentData = [
-//   {
-//     assessmentId: "ASM-1001",
-//     title: "Frontend React Assessment",
-//     description: "React.js, Hooks, API & TailwindCSS Test",
-
-//     assessmentType: "Coding",
-//     duration: 60,
-//     totalQuestions: 25,
-//     totalMarks: 100,
-//     passingMarks: 40,
-
-//     difficultyLevel: "Medium",
-
-//     questionBankIds: ["QB101", "QB102"],
-
-//     randomizeQuestions: true,
-//     negativeMarking: false,
-
-//     startDate: "2026-05-20",
-//     endDate: "2026-05-22",
-
-//     status: "Active",
-
-//     totalCandidates: 120,
-//     completedAttempts: 84,
-
-//     averageScore: 76,
-//     suspiciousActivities: 2,
-
-//     createdBy: "Admin",
-//     createdAt: "2026-05-15",
-//   },
-
-//   {
-//     assessmentId: "ASM-1002",
-//     title: "JavaScript Aptitude Test",
-//     description: "Logic Building + JavaScript Fundamentals",
-
-//     assessmentType: "Mixed",
-//     duration: 45,
-//     totalQuestions: 40,
-//     totalMarks: 80,
-//     passingMarks: 35,
-
-//     difficultyLevel: "Hard",
-
-//     questionBankIds: ["QB201", "QB202"],
-
-//     randomizeQuestions: true,
-//     negativeMarking: true,
-
-//     startDate: "2026-05-25",
-//     endDate: "2026-05-28",
-
-//     status: "Draft",
-
-//     totalCandidates: 75,
-//     completedAttempts: 20,
-
-//     averageScore: 61,
-//     suspiciousActivities: 4,
-
-//     createdBy: "HR Team",
-//     createdAt: "2026-05-10",
-//   },
-// ];
+import { assessmentData } from "@/dummyData/assessment";
+import { Assessment } from "@/type/assessment";
 
 export default function AssessmentsPage() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Assessment[]>(assessmentData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getRequest(`${API_BASE_URL}/assessment`);
 
-        console.log("Fetched Data: assessment", response.data);
+        console.log("Fetched Data:", response);
 
-        setData(response);
+        setData(response || []);
       } catch (error) {
         console.log(error);
       }
@@ -96,41 +33,42 @@ export default function AssessmentsPage() {
     {
       header: "Assessment",
 
-      render: (item: any) => (
-        <div className="min-w-70">
-          <div className="flex items-center gap-4">
+      render: (item: Assessment) => (
+        <div className="min-w-[320px] text-left">
+          <div className="flex items-start gap-4">
+            {/* ICON */}
             <div
               className="
-              w-14
-              h-14
-              rounded-2xl
-              bg-linear-to-r
-              from-indigo-500
-              to-blue-600
-              flex
-              items-center
-              justify-center
-              text-white
-              font-bold
-              text-lg
-              shadow-lg
-            "
+                h-14
+                w-14
+                rounded-2xl
+                bg-gradient-to-br
+                from-[#0F2B46]
+                to-[#1E4D7B]
+                flex
+                items-center
+                justify-center
+                text-white
+                shadow-sm
+                shrink-0
+              "
             >
-              {item.title.charAt(0)}
+              <FiFileText size={22} />
             </div>
 
+            {/* INFO */}
             <div>
-              <h2 className="font-bold text-gray-900 text-base">
+              <h2 className="text-[15px] font-semibold text-slate-800">
                 {item.title}
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">{item.assessmentId}</p>
+              <p className="text-xs text-slate-500 mt-1">{item.assessmentId}</p>
+
+              <p className="text-sm text-slate-500 mt-3 leading-relaxed">
+                {item.description}
+              </p>
             </div>
           </div>
-
-          <p className="text-sm text-gray-500 mt-4 leading-relaxed">
-            {item.description}
-          </p>
         </div>
       ),
     },
@@ -139,20 +77,23 @@ export default function AssessmentsPage() {
     {
       header: "Type",
 
-      render: (item: any) => (
-        <div
-          className="
-          bg-blue-100
-          text-blue-700
-          px-4
-          py-2
-          rounded-2xl
-          text-xs
-          font-bold
-          w-fit
-        "
-        >
-          {item.assessmentType}
+      render: (item: Assessment) => (
+        <div className="flex justify-center min-w-[140px]">
+          <span
+            className="
+              px-4
+              py-2
+              rounded-xl
+              bg-blue-50
+              border
+              border-blue-100
+              text-blue-700
+              text-xs
+              font-semibold
+            "
+          >
+            {item.assessmentType}
+          </span>
         </div>
       ),
     },
@@ -161,13 +102,32 @@ export default function AssessmentsPage() {
     {
       header: "Questions",
 
-      render: (item: any) => (
-        <div className="min-w-40">
-          <h3 className="font-bold text-gray-800 text-lg">
-            {item.totalQuestions}
-          </h3>
+      render: (item: Assessment) => (
+        <div className="min-w-[150px]">
+          <div className="flex items-center justify-center gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-violet-50
+                text-violet-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiHelpCircle />
+            </div>
 
-          <p className="text-xs text-gray-500 mt-1">Total Questions</p>
+            <div className="text-left">
+              <h3 className="text-lg font-bold text-slate-800">
+                {item.totalQuestions}
+              </h3>
+
+              <p className="text-xs text-slate-500">Questions</p>
+            </div>
+          </div>
         </div>
       ),
     },
@@ -176,18 +136,18 @@ export default function AssessmentsPage() {
     {
       header: "Marks",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <div className="flex justify-between mb-2">
-            <span className="text-sm font-semibold text-gray-700">Total</span>
+      render: (item: Assessment) => (
+        <div className="min-w-[170px] space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-500">Total</span>
 
-            <span className="font-bold text-indigo-700">{item.totalMarks}</span>
+            <span className="font-bold text-slate-800">{item.totalMarks}</span>
           </div>
 
-          <div className="flex justify-between">
-            <span className="text-sm font-semibold text-gray-700">Passing</span>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-500">Passing</span>
 
-            <span className="font-bold text-green-600">
+            <span className="font-bold text-emerald-600">
               {item.passingMarks}
             </span>
           </div>
@@ -199,13 +159,32 @@ export default function AssessmentsPage() {
     {
       header: "Duration",
 
-      render: (item: any) => (
-        <div className="min-w-35">
-          <h3 className="font-bold text-gray-800 text-lg">
-            {item.duration} Min
-          </h3>
+      render: (item: Assessment) => (
+        <div className="min-w-[150px]">
+          <div className="flex items-center justify-center gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-amber-50
+                text-amber-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiClock />
+            </div>
 
-          <p className="text-xs text-gray-500 mt-1">Assessment Time</p>
+            <div className="text-left">
+              <h3 className="text-lg font-bold text-slate-800">
+                {item.duration}m
+              </h3>
+
+              <p className="text-xs text-slate-500">Duration</p>
+            </div>
+          </div>
         </div>
       ),
     },
@@ -214,26 +193,28 @@ export default function AssessmentsPage() {
     {
       header: "Difficulty",
 
-      render: (item: any) => (
-        <div
-          className={`
-            px-4
-            py-2
-            rounded-2xl
-            text-xs
-            font-bold
-            w-fit
+      render: (item: Assessment) => (
+        <div className="flex justify-center min-w-[140px]">
+          <span
+            className={`
+              px-4
+              py-2
+              rounded-xl
+              text-xs
+              font-semibold
+              border
 
-            ${
-              item.difficultyLevel === "Hard"
-                ? "bg-red-100 text-red-700"
-                : item.difficultyLevel === "Medium"
-                  ? "bg-yellow-100 text-yellow-700"
-                  : "bg-green-100 text-green-700"
-            }
-          `}
-        >
-          {item.difficultyLevel}
+              ${
+                item.difficultyLevel === "Hard"
+                  ? "bg-red-50 border-red-100 text-red-700"
+                  : item.difficultyLevel === "Medium"
+                    ? "bg-yellow-50 border-yellow-100 text-yellow-700"
+                    : "bg-emerald-50 border-emerald-100 text-emerald-700"
+              }
+            `}
+          >
+            {item.difficultyLevel}
+          </span>
         </div>
       ),
     },
@@ -242,172 +223,85 @@ export default function AssessmentsPage() {
     {
       header: "Candidates",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <div className="flex justify-between mb-3">
-            <span className="text-sm text-gray-600">Invited</span>
-
-            <span className="font-bold text-gray-800">
-              {item.totalCandidates}
-            </span>
-          </div>
-
-          <div className="flex justify-between">
-            <span className="text-sm text-gray-600">Completed</span>
-
-            <span className="font-bold text-green-600">
-              {item.completedAttempts}
-            </span>
-          </div>
-        </div>
-      ),
-    },
-
-    // SCORE
-    {
-      header: "Average Score",
-
-      render: (item: any) => (
-        <div className="min-w-45  ">
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-bold text-blue-700">
-              {item.averageScore}%
-            </span>
-
-            <span className="text-xs text-gray-500">Avg Score</span>
-          </div>
-
-          <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
+      render: (item: Assessment) => (
+        <div className="min-w-[180px]">
+          <div className="flex items-center gap-3">
             <div
               className="
-                h-full
-                rounded-full
-                bg-linear-to-r
-                from-blue-500
-                to-indigo-600
+                h-10
+                w-10
+                rounded-xl
+                bg-sky-50
+                text-sky-600
+                flex
+                items-center
+                justify-center
               "
-              style={{
-                width: `${item.averageScore}%`,
-              }}
-            />
-          </div>
-        </div>
-      ),
-    },
-
-    // SECURITY
-    {
-      header: "Security",
-
-      render: (item: any) => (
-        <div className="min-w-50 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Randomized</span>
-
-            <span
-              className={`
-              text-xs
-              font-bold
-              px-3
-              py-1
-              rounded-full
-
-              ${
-                item.randomizeQuestions
-                  ? "bg-green-100 text-green-700"
-                  : "bg-red-100 text-red-700"
-              }
-            `}
             >
-              {item.randomizeQuestions ? "Enabled" : "Disabled"}
-            </span>
-          </div>
+              <FiUsers />
+            </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Negative Marking</span>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-slate-500">Invited:</span>
 
-            <span
-              className={`
-              text-xs
-              font-bold
-              px-3
-              py-1
-              rounded-full
+                <span className="font-semibold text-slate-800">
+                  {item.totalCandidates}
+                </span>
+              </div>
 
-              ${
-                item.negativeMarking
-                  ? "bg-red-100 text-red-700"
-                  : "bg-gray-100 text-gray-700"
-              }
-            `}
-            >
-              {item.negativeMarking ? "Active" : "Off"}
-            </span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-slate-500">Completed:</span>
+
+                <span className="font-semibold text-emerald-600">
+                  {item.completedAttempts}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       ),
     },
 
-    // STATUS
+    // CREATED
     {
-      header: "Status",
+      header: "Created",
 
-      render: (item: any) => (
-        <div
-          className={`
-            px-4
-            py-2
-            rounded-2xl
-            text-xs
-            font-bold
-            w-fit
-
-            ${
-              item.status === "Active"
-                ? "bg-green-100 text-green-700"
-                : item.status === "Draft"
-                  ? "bg-yellow-100 text-yellow-700"
-                  : "bg-gray-100 text-gray-700"
-            }
-          `}
-        >
-          {item.status}
-        </div>
-      ),
-    },
-
-    // DATE
-    {
-      header: "Timeline",
-
-      render: (item: any) => (
-        <div className="min-w-45">
-          <p className="font-semibold text-gray-700">{item.startDate}</p>
-
-          <p className="text-xs text-gray-500 mt-1">to {item.endDate}</p>
+      render: (item: Assessment) => (
+        <div className="text-sm text-slate-500 font-medium min-w-[120px]">
+          {item.createdAt}
         </div>
       ),
     },
   ];
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
-      <ActionButtons
-        addUrl="/dashboard/assessments/add"
-        importUrl="/dashboard/assessments/import"
-        exportUrl="/dashboard/assessments/export"
+    <div
+      className="
+        min-h-screen
+        bg-gradient-to-br
+        from-slate-50
+        via-blue-50/30
+        to-slate-100
+        p-6
+      "
+    >
+      <div className="space-y-6">
+        <ActionButtons
+          addUrl="/dashboard/assessments/add"
+          importUrl="/dashboard/assessments/import"
+          exportUrl="/dashboard/assessments/export"
+        />
 
-        // showExport={false}
-      />
-
-      <DataTable
-        title="Assessments"
-        columns={columns}
-        data={data}
-        onEdit={(item: any) => {
-          console.log("Edit Data:", item);
-        }}
-      />
+        <DataTable
+          title="Assessments"
+          columns={columns}
+          data={data}
+          onEdit={(item: Assessment) => {
+            console.log("Edit:", item);
+          }}
+        />
+      </div>
     </div>
   );
 }

@@ -1,62 +1,37 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import {
+  FiCalendar,
+  FiCheckCircle,
+  FiClock,
+  FiKey,
+  FiMail,
+  FiSend,
+  FiShield,
+  FiUser,
+} from "react-icons/fi";
+
 import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
-
-const invitationsData = [
-  {
-    invitationId: "INV-1001",
-
-    candidateId: "CND-1001",
-
-    assessmentId: "ASM-1001",
-
-    email: "sunil@example.com",
-
-    inviteToken: "INV-TOKEN-XY12345",
-
-    sentAt: "2026-05-15 10:30 AM",
-
-    expiresAt: "2026-05-20 11:59 PM",
-
-    status: "Opened",
-
-    reminderSent: true,
-  },
-
-  {
-    invitationId: "INV-1002",
-
-    candidateId: "CND-1002",
-
-    assessmentId: "ASM-1002",
-
-    email: "rahul@example.com",
-
-    inviteToken: "INV-TOKEN-ZA87452",
-
-    sentAt: "2026-05-14 09:00 AM",
-
-    expiresAt: "2026-05-18 11:59 PM",
-
-    status: "Completed",
-
-    reminderSent: false,
-  },
-];
+import { Invitation } from "@/type/invitation";
+import { invitationsData } from "@/dummyData/invitation";
 
 export default function InvitationsPage() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Invitation[]>(invitationsData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getRequest(`${API_BASE_URL}/invitation`);
 
-        console.log("Fetched Data: invitation", response);
+        console.log("Fetched Data: Invitations", response);
 
-        setData(response);
+        if (response) {
+          setData(response);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -70,50 +45,77 @@ export default function InvitationsPage() {
     {
       header: "Invitation",
 
-      render: (item: any) => (
-        <div className="min-w-[320px]">
+      render: (item: Invitation) => (
+        <div className="min-w-[340px] text-left">
           <div className="flex items-start gap-4">
+            {/* ICON */}
             <div
               className="
-              w-14
-              h-14
-              rounded-2xl
-              bg-linear-to-r
-              from-blue-500
-              to-cyan-600
-              flex
-              items-center
-              justify-center
-              text-white
-              font-bold
-              text-lg
-              shadow-lg
-              shrink-0
-            "
+                h-14
+                w-14
+                rounded-2xl
+                bg-gradient-to-br
+                from-[#0F2B46]
+                to-[#1E4D7B]
+                flex
+                items-center
+                justify-center
+                text-white
+                shadow-sm
+                shrink-0
+              "
             >
-              I
+              <FiSend size={22} />
             </div>
 
+            {/* CONTENT */}
             <div>
-              <h2 className="font-bold text-gray-900 text-base">
-                {item.invitationId}
-              </h2>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="font-semibold text-slate-800 text-[15px]">
+                  {item.invitationId}
+                </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
+                <span
+                  className={`
+                    px-3
+                    py-1
+                    rounded-full
+                    text-[11px]
+                    font-semibold
+                    border
+
+                    ${
+                      item.status === "Completed"
+                        ? "bg-emerald-50 border-emerald-100 text-emerald-700"
+                        : item.status === "Opened"
+                          ? "bg-blue-50 border-blue-100 text-blue-700"
+                          : item.status === "Expired"
+                            ? "bg-red-50 border-red-100 text-red-700"
+                            : "bg-yellow-50 border-yellow-100 text-yellow-700"
+                    }
+                  `}
+                >
+                  {item.status}
+                </span>
+              </div>
+
+              <p className="text-xs text-slate-500 mt-1">
                 Candidate : {item.candidateId}
               </p>
 
-              <div className="mt-3">
+              <div className="mt-4">
                 <span
                   className="
-                  bg-blue-100
-                  text-blue-700
-                  px-3
-                  py-1
-                  rounded-full
-                  text-xs
-                  font-semibold
-                "
+                    px-3
+                    py-1
+                    rounded-full
+                    bg-blue-50
+                    border
+                    border-blue-100
+                    text-blue-700
+                    text-xs
+                    font-medium
+                  "
                 >
                   {item.assessmentId}
                 </span>
@@ -128,19 +130,29 @@ export default function InvitationsPage() {
     {
       header: "Email",
 
-      render: (item: any) => (
-        <div className="min-w-60">
-          <div
-            className="
-            bg-gray-100
-            rounded-2xl
-            px-4
-            py-3
-          "
-          >
-            <h3 className="font-semibold text-gray-800">{item.email}</h3>
+      render: (item: Invitation) => (
+        <div className="min-w-[260px]">
+          <div className="flex items-center gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-slate-100
+                text-slate-700
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiMail />
+            </div>
 
-            <p className="text-xs text-gray-500 mt-1">Candidate Email</p>
+            <div>
+              <h3 className="font-semibold text-slate-800">{item.email}</h3>
+
+              <p className="text-xs text-slate-500 mt-1">Candidate Email</p>
+            </div>
           </div>
         </div>
       ),
@@ -150,24 +162,50 @@ export default function InvitationsPage() {
     {
       header: "Invite Token",
 
-      render: (item: any) => (
-        <div className="min-w-65">
+      render: (item: Invitation) => (
+        <div className="min-w-[280px]">
           <div
             className="
-            bg-linear-to-r
-            from-indigo-100
-            to-blue-100
-            text-indigo-700
-            px-4
-            py-3
-            rounded-2xl
-            font-mono
-            text-sm
-            font-bold
-            shadow-sm
-          "
+              flex
+              items-center
+              gap-3
+              px-4
+              py-3
+              rounded-2xl
+              bg-indigo-50
+              border
+              border-indigo-100
+            "
           >
-            {item.inviteToken}
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-indigo-100
+                text-indigo-700
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiKey />
+            </div>
+
+            <div>
+              <p
+                className="
+                  font-mono
+                  text-sm
+                  font-semibold
+                  text-indigo-700
+                "
+              >
+                {item.inviteToken}
+              </p>
+
+              <p className="text-xs text-slate-500 mt-1">Secure Invite Token</p>
+            </div>
           </div>
         </div>
       ),
@@ -177,19 +215,31 @@ export default function InvitationsPage() {
     {
       header: "Sent At",
 
-      render: (item: any) => (
-        <div className="min-w-50">
-          <div
-            className="
-            bg-gray-100
-            rounded-2xl
-            px-4
-            py-3
-          "
-          >
-            <h3 className="font-semibold text-gray-800">{item.sentAt}</h3>
+      render: (item: Invitation) => (
+        <div className="min-w-[220px]">
+          <div className="flex items-start gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-sky-50
+                text-sky-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiCalendar />
+            </div>
 
-            <p className="text-xs text-gray-500 mt-1">Invitation Sent</p>
+            <div>
+              <h3 className="font-semibold text-slate-800 text-sm">
+                {item.sentAt}
+              </h3>
+
+              <p className="text-xs text-slate-500 mt-1">Invitation Sent</p>
+            </div>
           </div>
         </div>
       ),
@@ -199,52 +249,32 @@ export default function InvitationsPage() {
     {
       header: "Expires At",
 
-      render: (item: any) => (
-        <div className="min-w-55">
-          <div
-            className="
-            bg-yellow-100
-            text-yellow-800
-            rounded-2xl
-            px-4
-            py-3
-            font-semibold
-          "
-          >
-            {item.expiresAt}
+      render: (item: Invitation) => (
+        <div className="min-w-[240px]">
+          <div className="flex items-start gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-amber-50
+                text-amber-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiClock />
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-amber-700 text-sm">
+                {item.expiresAt}
+              </h3>
+
+              <p className="text-xs text-slate-500 mt-1">Expiration Deadline</p>
+            </div>
           </div>
-
-          <p className="text-xs text-gray-500 mt-2">Expiration Deadline</p>
-        </div>
-      ),
-    },
-
-    // STATUS
-    {
-      header: "Status",
-
-      render: (item: any) => (
-        <div
-          className={`
-            px-4
-            py-2
-            rounded-2xl
-            text-xs
-            font-bold
-            w-fit
-
-            ${
-              item.status === "Completed"
-                ? "bg-green-100 text-green-700"
-                : item.status === "Opened"
-                  ? "bg-blue-100 text-blue-700"
-                  : item.status === "Expired"
-                    ? "bg-red-100 text-red-700"
-                    : "bg-yellow-100 text-yellow-700"
-            }
-          `}
-        >
-          {item.status}
         </div>
       ),
     },
@@ -253,25 +283,83 @@ export default function InvitationsPage() {
     {
       header: "Reminder",
 
-      render: (item: any) => (
-        <div className="min-w-45">
-          <div
-            className={`
-              px-4
-              py-3
-              rounded-2xl
-              text-sm
-              font-bold
-              w-fit
+      render: (item: Invitation) => (
+        <div className="min-w-[200px]">
+          <div className="flex items-center gap-3">
+            <div
+              className={`
+                h-10
+                w-10
+                rounded-xl
+                flex
+                items-center
+                justify-center
 
-              ${
-                item.reminderSent
-                  ? "bg-green-100 text-green-700"
-                  : "bg-gray-100 text-gray-700"
-              }
-            `}
-          >
-            {item.reminderSent ? "Reminder Sent" : "No Reminder"}
+                ${
+                  item.reminderSent
+                    ? "bg-emerald-50 text-emerald-600"
+                    : "bg-slate-100 text-slate-500"
+                }
+              `}
+            >
+              <FiCheckCircle />
+            </div>
+
+            <div>
+              <div
+                className={`
+                  inline-flex
+                  items-center
+                  px-3
+                  py-1
+                  rounded-full
+                  text-xs
+                  font-semibold
+
+                  ${
+                    item.reminderSent
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "bg-slate-100 text-slate-700"
+                  }
+                `}
+              >
+                {item.reminderSent ? "Reminder Sent" : "No Reminder"}
+              </div>
+
+              <p className="text-xs text-slate-500 mt-2">Reminder Status</p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // SECURITY
+    {
+      header: "Security",
+
+      render: (item: Invitation) => (
+        <div className="min-w-[180px]">
+          <div className="flex items-center gap-3">
+            <div
+              className="
+                h-10
+                w-10
+                rounded-xl
+                bg-red-50
+                text-red-600
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <FiShield />
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-slate-800">Protected</h3>
+
+              <p className="text-xs text-slate-500 mt-1">Secure Invitation</p>
+            </div>
           </div>
         </div>
       ),
@@ -279,16 +367,25 @@ export default function InvitationsPage() {
   ];
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <ActionButtons
-        addUrl="/dashboard/invitations/add"
-        importUrl="/dashboard/invitations/import"
-        exportUrl="/dashboard/invitations/export"
+    <div
+      className="
+        min-h-screen
+        bg-gradient-to-br
+        from-slate-50
+        via-blue-50/30
+        to-slate-100
+        p-6
+      "
+    >
+      <div className="space-y-6">
+        <ActionButtons
+          addUrl="/dashboard/invitations/add"
+          importUrl="/dashboard/invitations/import"
+          exportUrl="/dashboard/invitations/export"
+        />
 
-        // showExport={false}
-      />
-
-      <DataTable title="Invitations" columns={columns} data={invitationsData} />
+        <DataTable title="Invitations" columns={columns} data={data} />
+      </div>
     </div>
   );
 }

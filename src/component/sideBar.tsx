@@ -8,7 +8,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="w-[250px] bg-white border-r border-slate-200 overflow-y-auto">
+    <aside className="w-62.5 bg-white border-r border-slate-200 overflow-y-auto">
       <div className="p-4">
         <p className="text-[10px] font-bold text-slate-400 tracking-[2px] mb-4">
           MAIN

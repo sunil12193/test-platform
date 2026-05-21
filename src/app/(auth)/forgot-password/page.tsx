@@ -90,7 +90,7 @@ export default function ForgotPasswordPage() {
               type="email"
               placeholder="Enter your email"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e: any) => setValue(e.target.value)}
               className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black"
             />
           ) : (
@@ -98,7 +98,7 @@ export default function ForgotPasswordPage() {
               type="tel"
               placeholder="Enter phone number"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e: any) => setValue(e.target.value)}
               className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black"
             />
           )}
@@ -120,7 +120,7 @@ export default function ForgotPasswordPage() {
                 type="text"
                 placeholder="Enter OTP"
                 value={otp}
-                onChange={(e) => setOtp(e.target.value)}
+                onChange={(e: any) => setOtp(e.target.value)}
                 className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black"
               />
 

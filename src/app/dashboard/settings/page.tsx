@@ -75,7 +75,7 @@ export default function SettingsPage() {
       header: "Company",
 
       render: (item: any) => (
-        <div className="min-w-[300px]">
+        <div className="min-w-75">
           <div className="flex items-center gap-4">
             <img
               src={item.companyLogo}
