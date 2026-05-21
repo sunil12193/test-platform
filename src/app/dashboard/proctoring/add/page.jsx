@@ -2,34 +2,30 @@
 
 import { useState } from "react";
 
-export default function AddCandidatePage() {
+export default function AddProctoringPage() {
 
   const [formData, setFormData] = useState({
+    proctoringId: "",
+
     candidateId: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    profileImage: "",
 
-    resumeUrl: "",
-    linkedinUrl: "",
-    githubUrl: "",
+    assessmentId: "",
 
-    skills: "",
-    experience: "",
-    education: "",
+    webcamSnapshots: "",
 
-    currentStatus: "Applied",
+    tabSwitchCount: "",
 
-    appliedPosition: "",
-    assignedAssessment: "",
+    copyPasteAttempts: "",
 
-    totalScore: "",
-    ranking: "",
+    fullscreenViolations: "",
 
-    createdAt: "",
-    updatedAt: "",
+    suspiciousScore: "",
+
+    recordingUrl: "",
+
+    finalStatus: "Safe",
+
+    monitoredAt: "",
   });
 
   // HANDLE CHANGE
@@ -47,54 +43,47 @@ export default function AddCandidatePage() {
     const finalData = {
       ...formData,
 
-      skills: formData.skills
+      webcamSnapshots: formData.webcamSnapshots
         .split(",")
-        .map((skill) => skill.trim()),
+        .map((item) => item.trim()),
     };
 
     console.log(finalData);
 
-    alert("Candidate Added Successfully 🚀");
+    alert("Proctoring Added Successfully 🚀");
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
-      <div className="
-        max-w-7xl
-        mx-auto
-        bg-white
-        rounded-[30px]
-        shadow-xl
-        overflow-hidden
-        border
-        border-gray-200
-      ">
+      <div className="max-w-7xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
 
         {/* HEADER */}
-        <div className="
-          bg-gradient-to-r
-          from-blue-600
-          to-indigo-600
-          px-8
-          py-6
-        ">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
+
           <h1 className="text-3xl font-bold text-white">
-            Add New Candidate
+            Add Proctoring Record
           </h1>
 
           <p className="text-blue-100 mt-2">
-            Fill all candidate details carefully
+            Fill all proctoring details carefully
           </p>
+
         </div>
 
         {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="p-8"
-        >
+        <form onSubmit={handleSubmit} className="p-8">
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {/* PROCTORING ID */}
+            <InputField
+              label="Proctoring ID"
+              name="proctoringId"
+              value={formData.proctoringId}
+              onChange={handleChange}
+              placeholder="PRC-1001"
+            />
 
             {/* CANDIDATE ID */}
             <InputField
@@ -105,234 +94,124 @@ export default function AddCandidatePage() {
               placeholder="CND-1001"
             />
 
-            {/* FIRST NAME */}
+            {/* ASSESSMENT ID */}
             <InputField
-              label="First Name"
-              name="firstName"
-              value={formData.firstName}
+              label="Assessment ID"
+              name="assessmentId"
+              value={formData.assessmentId}
               onChange={handleChange}
-              placeholder="Enter first name"
+              placeholder="ASM-1001"
             />
 
-            {/* LAST NAME */}
+            {/* TAB SWITCH */}
             <InputField
-              label="Last Name"
-              name="lastName"
-              value={formData.lastName}
+              label="Tab Switch Count"
+              type="number"
+              name="tabSwitchCount"
+              value={formData.tabSwitchCount}
               onChange={handleChange}
-              placeholder="Enter last name"
+              placeholder="2"
             />
 
-            {/* EMAIL */}
+            {/* COPY PASTE */}
             <InputField
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
+              label="Copy Paste Attempts"
+              type="number"
+              name="copyPasteAttempts"
+              value={formData.copyPasteAttempts}
               onChange={handleChange}
-              placeholder="example@gmail.com"
+              placeholder="1"
             />
 
-            {/* PHONE */}
+            {/* FULLSCREEN */}
             <InputField
-              label="Phone"
-              name="phone"
-              value={formData.phone}
+              label="Fullscreen Violations"
+              type="number"
+              name="fullscreenViolations"
+              value={formData.fullscreenViolations}
               onChange={handleChange}
-              placeholder="+91 9876543210"
+              placeholder="0"
             />
 
-            {/* PROFILE IMAGE */}
+            {/* SUSPICIOUS SCORE */}
             <InputField
-              label="Profile Image URL"
-              name="profileImage"
-              value={formData.profileImage}
+              label="Suspicious Score"
+              type="number"
+              name="suspiciousScore"
+              value={formData.suspiciousScore}
               onChange={handleChange}
-              placeholder="https://..."
+              placeholder="28"
             />
 
-            {/* RESUME */}
+            {/* RECORDING URL */}
             <InputField
-              label="Resume URL"
-              name="resumeUrl"
-              value={formData.resumeUrl}
+              label="Recording URL"
+              name="recordingUrl"
+              value={formData.recordingUrl}
               onChange={handleChange}
-              placeholder="https://resume.pdf"
+              placeholder="https://example.com/video.mp4"
             />
 
-            {/* LINKEDIN */}
+            {/* MONITORED AT */}
             <InputField
-              label="LinkedIn URL"
-              name="linkedinUrl"
-              value={formData.linkedinUrl}
+              label="Monitored At"
+              type="datetime-local"
+              name="monitoredAt"
+              value={formData.monitoredAt}
               onChange={handleChange}
-              placeholder="https://linkedin.com"
             />
 
-            {/* GITHUB */}
-            <InputField
-              label="GitHub URL"
-              name="githubUrl"
-              value={formData.githubUrl}
-              onChange={handleChange}
-              placeholder="https://github.com"
-            />
-
-            {/* SKILLS */}
-            <div className="col-span-1 md:col-span-2">
-              <label className="text-sm font-semibold text-gray-700">
-                Skills
-              </label>
-
-              <input
-                type="text"
-                name="skills"
-                value={formData.skills}
-                onChange={handleChange}
-                placeholder="React, Next.js, Node.js"
-                className="
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-2xl
-                  border
-                  border-gray-300
-                  outline-none
-                  focus:ring-2
-                  focus:ring-blue-500
-                "
-              />
-            </div>
-
-            {/* EXPERIENCE */}
-            <InputField
-              label="Experience"
-              name="experience"
-              value={formData.experience}
-              onChange={handleChange}
-              placeholder="2 Years"
-            />
-
-            {/* EDUCATION */}
-            <InputField
-              label="Education"
-              name="education"
-              value={formData.education}
-              onChange={handleChange}
-              placeholder="BCA / MCA"
-            />
-
-            {/* STATUS */}
+            {/* FINAL STATUS */}
             <div>
+
               <label className="text-sm font-semibold text-gray-700">
-                Current Status
+                Final Status
               </label>
 
               <select
-                name="currentStatus"
-                value={formData.currentStatus}
+                name="finalStatus"
+                value={formData.finalStatus}
                 onChange={handleChange}
-                className="
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-2xl
-                  border
-                  border-gray-300
-                  outline-none
-                  focus:ring-2
-                  focus:ring-blue-500
-                "
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option>Applied</option>
-                <option>Invited</option>
-                <option>Completed</option>
-                <option>Rejected</option>
-                <option>Selected</option>
+
+                <option>Safe</option>
+                <option>Warning</option>
+                <option>Suspicious</option>
+                <option>Blocked</option>
+
               </select>
+
             </div>
 
-            {/* POSITION */}
-            <InputField
-              label="Applied Position"
-              name="appliedPosition"
-              value={formData.appliedPosition}
-              onChange={handleChange}
-              placeholder="Frontend Developer"
-            />
+            {/* SNAPSHOTS */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
 
-            {/* ASSESSMENT */}
-            <InputField
-              label="Assigned Assessment"
-              name="assignedAssessment"
-              value={formData.assignedAssessment}
-              onChange={handleChange}
-              placeholder="React Skill Test"
-            />
+              <label className="text-sm font-semibold text-gray-700">
+                Webcam Snapshots
+              </label>
 
-            {/* SCORE */}
-            <InputField
-              label="Total Score"
-              type="number"
-              name="totalScore"
-              value={formData.totalScore}
-              onChange={handleChange}
-              placeholder="88"
-            />
+              <textarea
+                name="webcamSnapshots"
+                value={formData.webcamSnapshots}
+                onChange={handleChange}
+                placeholder="Paste image URLs separated by commas"
+                rows={5}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              />
 
-            {/* RANKING */}
-            <InputField
-              label="Ranking"
-              type="number"
-              name="ranking"
-              value={formData.ranking}
-              onChange={handleChange}
-              placeholder="5"
-            />
-
-            {/* CREATED */}
-            <InputField
-              label="Created At"
-              type="date"
-              name="createdAt"
-              value={formData.createdAt}
-              onChange={handleChange}
-            />
-
-            {/* UPDATED */}
-            <InputField
-              label="Updated At"
-              type="date"
-              name="updatedAt"
-              value={formData.updatedAt}
-              onChange={handleChange}
-            />
+            </div>
 
           </div>
 
-          {/* SUBMIT BUTTON */}
+          {/* BUTTON */}
           <div className="mt-10 flex justify-end">
 
             <button
               type="submit"
-              className="
-                px-8
-                py-4
-                rounded-2xl
-                bg-gradient-to-r
-                from-blue-600
-                to-indigo-600
-                text-white
-                font-semibold
-                shadow-lg
-                hover:scale-105
-                transition-all
-                duration-300
-              "
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
             >
-              Submit Candidate
+              Submit Proctoring
             </button>
 
           </div>
@@ -345,7 +224,7 @@ export default function AddCandidatePage() {
   );
 }
 
-/* INPUT FIELD COMPONENT */
+/* INPUT FIELD */
 function InputField({
   label,
   name,
@@ -354,6 +233,7 @@ function InputField({
   placeholder,
   type = "text",
 }) {
+
   return (
     <div>
 
@@ -367,18 +247,7 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="
-          w-full
-          mt-2
-          px-4
-          py-3
-          rounded-2xl
-          border
-          border-gray-300
-          outline-none
-          focus:ring-2
-          focus:ring-blue-500
-        "
+        className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
       />
 
     </div>

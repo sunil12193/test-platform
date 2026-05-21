@@ -2,6 +2,10 @@
 
 import DataTable from "@/component/table";
 import ActionButtons from "@/component/button";
+import { useEffect, useState } from "react";  
+import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
+
+
 const reportsAnalyticsData = [
   {
     reportId: "RPT-1001",
@@ -53,6 +57,30 @@ const reportsAnalyticsData = [
 ];
 
 export default function ReportsAnalyticsPage() {
+
+    const [data, setData] = useState([]);
+  
+    useEffect(() => {
+  
+      const fetchData = async () => {
+        try {
+  
+          const response = await getRequest(
+            `${API_BASE_URL}/report`
+          );
+  
+          console.log("Fetched Data: report", response);
+  
+          setData(response);
+  
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchData();
+  
+    }, []);
 
   const columns = [
 

@@ -2,6 +2,11 @@
 import React from "react";
 import DataTable from "@/component/table";
 import ActionButtons from "@/component/button";
+import { useEffect, useState } from "react";
+import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
+
+
+
 const candidateData = [
   {
     candidateId: "CND-1001",
@@ -85,6 +90,30 @@ const candidateData = [
 ];
 
 export default function CandidatesPage() {
+
+    const [data, setData] = useState([]);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+
+        const response = await getRequest(
+          `${API_BASE_URL}/candidate`
+        );
+
+        console.log("Fetched Data: candidate", response);
+
+        setData(response);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+
+  }, []);
 
   const columns = [
 

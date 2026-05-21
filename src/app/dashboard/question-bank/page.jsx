@@ -2,6 +2,11 @@
 
 import DataTable from "@/component/table";
 import ActionButtons from "@/component/button";
+import { useEffect, useState } from "react";
+import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
+
+
+
 const questionBankData = [
   {
     questionId: "QST-1001",
@@ -76,6 +81,30 @@ const questionBankData = [
 ];
 
 export default function QuestionBankPage() {
+
+    const [data, setData] = useState([]);
+  
+    useEffect(() => {
+  
+      const fetchData = async () => {
+        try {
+  
+          const response = await getRequest(
+            `${API_BASE_URL}/question-bank`
+          );
+  
+          console.log("Fetched Data: Question Bank ", response);
+  
+          setData(response);
+  
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchData();
+  
+    }, []);
 
   const columns = [
 

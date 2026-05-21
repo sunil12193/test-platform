@@ -2,34 +2,24 @@
 
 import { useState } from "react";
 
-export default function AddCandidatePage() {
+export default function AddBillingPage() {
 
   const [formData, setFormData] = useState({
-    candidateId: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    profileImage: "",
+    companyId: "",
 
-    resumeUrl: "",
-    linkedinUrl: "",
-    githubUrl: "",
+    currentPlan: "",
 
-    skills: "",
-    experience: "",
-    education: "",
+    billingCycle: "Monthly",
 
-    currentStatus: "Applied",
+    totalUsers: "",
 
-    appliedPosition: "",
-    assignedAssessment: "",
+    activeAssessments: "",
 
-    totalScore: "",
-    ranking: "",
+    invoiceHistory: "",
 
-    createdAt: "",
-    updatedAt: "",
+    paymentStatus: "Paid",
+
+    renewalDate: "",
   });
 
   // HANDLE CHANGE
@@ -47,45 +37,36 @@ export default function AddCandidatePage() {
     const finalData = {
       ...formData,
 
-      skills: formData.skills
+      totalUsers: Number(formData.totalUsers),
+
+      activeAssessments: Number(formData.activeAssessments),
+
+      invoiceHistory: formData.invoiceHistory
         .split(",")
-        .map((skill) => skill.trim()),
+        .map((invoice) => invoice.trim()),
     };
 
     console.log(finalData);
 
-    alert("Candidate Added Successfully 🚀");
+    alert("Billing Added Successfully 🚀");
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
-      <div className="
-        max-w-7xl
-        mx-auto
-        bg-white
-        rounded-[30px]
-        shadow-xl
-        overflow-hidden
-        border
-        border-gray-200
-      ">
+      <div className="max-w-5xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
 
         {/* HEADER */}
-        <div className="
-          bg-gradient-to-r
-          from-blue-600
-          to-indigo-600
-          px-8
-          py-6
-        ">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
+
           <h1 className="text-3xl font-bold text-white">
-            Add New Candidate
+            Add Billing Details
           </h1>
 
           <p className="text-blue-100 mt-2">
-            Fill all candidate details carefully
+            Fill all company billing information carefully
           </p>
+
         </div>
 
         {/* FORM */}
@@ -94,219 +75,110 @@ export default function AddCandidatePage() {
           className="p-8"
         >
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            {/* CANDIDATE ID */}
+            {/* COMPANY ID */}
             <InputField
-              label="Candidate ID"
-              name="candidateId"
-              value={formData.candidateId}
+              label="Company ID"
+              name="companyId"
+              value={formData.companyId}
               onChange={handleChange}
-              placeholder="CND-1001"
+              placeholder="CMPNY-1001"
             />
 
-            {/* FIRST NAME */}
+            {/* CURRENT PLAN */}
             <InputField
-              label="First Name"
-              name="firstName"
-              value={formData.firstName}
+              label="Current Plan"
+              name="currentPlan"
+              value={formData.currentPlan}
               onChange={handleChange}
-              placeholder="Enter first name"
+              placeholder="Enterprise Pro"
             />
 
-            {/* LAST NAME */}
-            <InputField
-              label="Last Name"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Enter last name"
-            />
+            {/* BILLING CYCLE */}
+            <div>
 
-            {/* EMAIL */}
-            <InputField
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="example@gmail.com"
-            />
-
-            {/* PHONE */}
-            <InputField
-              label="Phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="+91 9876543210"
-            />
-
-            {/* PROFILE IMAGE */}
-            <InputField
-              label="Profile Image URL"
-              name="profileImage"
-              value={formData.profileImage}
-              onChange={handleChange}
-              placeholder="https://..."
-            />
-
-            {/* RESUME */}
-            <InputField
-              label="Resume URL"
-              name="resumeUrl"
-              value={formData.resumeUrl}
-              onChange={handleChange}
-              placeholder="https://resume.pdf"
-            />
-
-            {/* LINKEDIN */}
-            <InputField
-              label="LinkedIn URL"
-              name="linkedinUrl"
-              value={formData.linkedinUrl}
-              onChange={handleChange}
-              placeholder="https://linkedin.com"
-            />
-
-            {/* GITHUB */}
-            <InputField
-              label="GitHub URL"
-              name="githubUrl"
-              value={formData.githubUrl}
-              onChange={handleChange}
-              placeholder="https://github.com"
-            />
-
-            {/* SKILLS */}
-            <div className="col-span-1 md:col-span-2">
               <label className="text-sm font-semibold text-gray-700">
-                Skills
+                Billing Cycle
+              </label>
+
+              <select
+                name="billingCycle"
+                value={formData.billingCycle}
+                onChange={handleChange}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option>Monthly</option>
+                <option>Quarterly</option>
+                <option>Yearly</option>
+              </select>
+
+            </div>
+
+            {/* TOTAL USERS */}
+            <InputField
+              label="Total Users"
+              type="number"
+              name="totalUsers"
+              value={formData.totalUsers}
+              onChange={handleChange}
+              placeholder="420"
+            />
+
+            {/* ACTIVE ASSESSMENTS */}
+            <InputField
+              label="Active Assessments"
+              type="number"
+              name="activeAssessments"
+              value={formData.activeAssessments}
+              onChange={handleChange}
+              placeholder="28"
+            />
+
+            {/* PAYMENT STATUS */}
+            <div>
+
+              <label className="text-sm font-semibold text-gray-700">
+                Payment Status
+              </label>
+
+              <select
+                name="paymentStatus"
+                value={formData.paymentStatus}
+                onChange={handleChange}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option>Paid</option>
+                <option>Pending</option>
+                <option>Failed</option>
+              </select>
+
+            </div>
+
+            {/* INVOICE HISTORY */}
+            <div className="md:col-span-2">
+
+              <label className="text-sm font-semibold text-gray-700">
+                Invoice History
               </label>
 
               <input
                 type="text"
-                name="skills"
-                value={formData.skills}
+                name="invoiceHistory"
+                value={formData.invoiceHistory}
                 onChange={handleChange}
-                placeholder="React, Next.js, Node.js"
-                className="
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-2xl
-                  border
-                  border-gray-300
-                  outline-none
-                  focus:ring-2
-                  focus:ring-blue-500
-                "
+                placeholder="INV-2026-001, INV-2026-002"
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               />
+
             </div>
 
-            {/* EXPERIENCE */}
+            {/* RENEWAL DATE */}
             <InputField
-              label="Experience"
-              name="experience"
-              value={formData.experience}
-              onChange={handleChange}
-              placeholder="2 Years"
-            />
-
-            {/* EDUCATION */}
-            <InputField
-              label="Education"
-              name="education"
-              value={formData.education}
-              onChange={handleChange}
-              placeholder="BCA / MCA"
-            />
-
-            {/* STATUS */}
-            <div>
-              <label className="text-sm font-semibold text-gray-700">
-                Current Status
-              </label>
-
-              <select
-                name="currentStatus"
-                value={formData.currentStatus}
-                onChange={handleChange}
-                className="
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-2xl
-                  border
-                  border-gray-300
-                  outline-none
-                  focus:ring-2
-                  focus:ring-blue-500
-                "
-              >
-                <option>Applied</option>
-                <option>Invited</option>
-                <option>Completed</option>
-                <option>Rejected</option>
-                <option>Selected</option>
-              </select>
-            </div>
-
-            {/* POSITION */}
-            <InputField
-              label="Applied Position"
-              name="appliedPosition"
-              value={formData.appliedPosition}
-              onChange={handleChange}
-              placeholder="Frontend Developer"
-            />
-
-            {/* ASSESSMENT */}
-            <InputField
-              label="Assigned Assessment"
-              name="assignedAssessment"
-              value={formData.assignedAssessment}
-              onChange={handleChange}
-              placeholder="React Skill Test"
-            />
-
-            {/* SCORE */}
-            <InputField
-              label="Total Score"
-              type="number"
-              name="totalScore"
-              value={formData.totalScore}
-              onChange={handleChange}
-              placeholder="88"
-            />
-
-            {/* RANKING */}
-            <InputField
-              label="Ranking"
-              type="number"
-              name="ranking"
-              value={formData.ranking}
-              onChange={handleChange}
-              placeholder="5"
-            />
-
-            {/* CREATED */}
-            <InputField
-              label="Created At"
+              label="Renewal Date"
               type="date"
-              name="createdAt"
-              value={formData.createdAt}
-              onChange={handleChange}
-            />
-
-            {/* UPDATED */}
-            <InputField
-              label="Updated At"
-              type="date"
-              name="updatedAt"
-              value={formData.updatedAt}
+              name="renewalDate"
+              value={formData.renewalDate}
               onChange={handleChange}
             />
 
@@ -317,22 +189,9 @@ export default function AddCandidatePage() {
 
             <button
               type="submit"
-              className="
-                px-8
-                py-4
-                rounded-2xl
-                bg-gradient-to-r
-                from-blue-600
-                to-indigo-600
-                text-white
-                font-semibold
-                shadow-lg
-                hover:scale-105
-                transition-all
-                duration-300
-              "
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
             >
-              Submit Candidate
+              Submit Billing
             </button>
 
           </div>
@@ -367,18 +226,7 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="
-          w-full
-          mt-2
-          px-4
-          py-3
-          rounded-2xl
-          border
-          border-gray-300
-          outline-none
-          focus:ring-2
-          focus:ring-blue-500
-        "
+        className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
       />
 
     </div>

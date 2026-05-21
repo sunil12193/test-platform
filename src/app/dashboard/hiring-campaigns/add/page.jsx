@@ -2,34 +2,34 @@
 
 import { useState } from "react";
 
-export default function AddCandidatePage() {
+export default function AddCampaignPage() {
 
   const [formData, setFormData] = useState({
-    candidateId: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    profileImage: "",
+    campaignId: "",
 
-    resumeUrl: "",
-    linkedinUrl: "",
-    githubUrl: "",
+    campaignName: "",
 
-    skills: "",
-    experience: "",
-    education: "",
+    positionId: "",
 
-    currentStatus: "Applied",
+    assignedAssessments: "",
 
-    appliedPosition: "",
-    assignedAssessment: "",
+    candidateIds: "",
 
-    totalScore: "",
-    ranking: "",
+    totalInvited: "",
 
-    createdAt: "",
-    updatedAt: "",
+    totalCompleted: "",
+
+    averageScore: "",
+
+    suspiciousActivities: "",
+
+    startDate: "",
+
+    endDate: "",
+
+    status: "Active",
+
+    createdBy: "",
   });
 
   // HANDLE CHANGE
@@ -47,44 +47,52 @@ export default function AddCandidatePage() {
     const finalData = {
       ...formData,
 
-      skills: formData.skills
+      assignedAssessments: formData.assignedAssessments
         .split(",")
-        .map((skill) => skill.trim()),
+        .map((item) => item.trim()),
+
+      candidateIds: formData.candidateIds
+        .split(",")
+        .map((item) => item.trim()),
     };
 
     console.log(finalData);
 
-    alert("Candidate Added Successfully 🚀");
+    alert("Campaign Added Successfully 🚀");
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
-      <div className="
-        max-w-7xl
-        mx-auto
-        bg-white
-        rounded-[30px]
-        shadow-xl
-        overflow-hidden
-        border
-        border-gray-200
-      ">
+      <div
+        className="
+          max-w-7xl
+          mx-auto
+          bg-white
+          rounded-[30px]
+          shadow-xl
+          overflow-hidden
+          border
+          border-gray-200
+        "
+      >
 
         {/* HEADER */}
-        <div className="
-          bg-gradient-to-r
-          from-blue-600
-          to-indigo-600
-          px-8
-          py-6
-        ">
+        <div
+          className="
+            bg-gradient-to-r
+            from-blue-600
+            to-indigo-600
+            px-8
+            py-6
+          "
+        >
           <h1 className="text-3xl font-bold text-white">
-            Add New Candidate
+            Add New Campaign
           </h1>
 
           <p className="text-blue-100 mt-2">
-            Fill all candidate details carefully
+            Fill all campaign details carefully
           </p>
         </div>
 
@@ -96,100 +104,46 @@ export default function AddCandidatePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            {/* CANDIDATE ID */}
+            {/* CAMPAIGN ID */}
             <InputField
-              label="Candidate ID"
-              name="candidateId"
-              value={formData.candidateId}
+              label="Campaign ID"
+              name="campaignId"
+              value={formData.campaignId}
               onChange={handleChange}
-              placeholder="CND-1001"
+              placeholder="CMP-1001"
             />
 
-            {/* FIRST NAME */}
+            {/* CAMPAIGN NAME */}
             <InputField
-              label="First Name"
-              name="firstName"
-              value={formData.firstName}
+              label="Campaign Name"
+              name="campaignName"
+              value={formData.campaignName}
               onChange={handleChange}
-              placeholder="Enter first name"
+              placeholder="Frontend Hiring Drive 2026"
             />
 
-            {/* LAST NAME */}
+            {/* POSITION ID */}
             <InputField
-              label="Last Name"
-              name="lastName"
-              value={formData.lastName}
+              label="Position ID"
+              name="positionId"
+              value={formData.positionId}
               onChange={handleChange}
-              placeholder="Enter last name"
+              placeholder="POS-1001"
             />
 
-            {/* EMAIL */}
-            <InputField
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="example@gmail.com"
-            />
-
-            {/* PHONE */}
-            <InputField
-              label="Phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="+91 9876543210"
-            />
-
-            {/* PROFILE IMAGE */}
-            <InputField
-              label="Profile Image URL"
-              name="profileImage"
-              value={formData.profileImage}
-              onChange={handleChange}
-              placeholder="https://..."
-            />
-
-            {/* RESUME */}
-            <InputField
-              label="Resume URL"
-              name="resumeUrl"
-              value={formData.resumeUrl}
-              onChange={handleChange}
-              placeholder="https://resume.pdf"
-            />
-
-            {/* LINKEDIN */}
-            <InputField
-              label="LinkedIn URL"
-              name="linkedinUrl"
-              value={formData.linkedinUrl}
-              onChange={handleChange}
-              placeholder="https://linkedin.com"
-            />
-
-            {/* GITHUB */}
-            <InputField
-              label="GitHub URL"
-              name="githubUrl"
-              value={formData.githubUrl}
-              onChange={handleChange}
-              placeholder="https://github.com"
-            />
-
-            {/* SKILLS */}
+            {/* ASSIGNED ASSESSMENTS */}
             <div className="col-span-1 md:col-span-2">
+
               <label className="text-sm font-semibold text-gray-700">
-                Skills
+                Assigned Assessments
               </label>
 
               <input
                 type="text"
-                name="skills"
-                value={formData.skills}
+                name="assignedAssessments"
+                value={formData.assignedAssessments}
                 onChange={handleChange}
-                placeholder="React, Next.js, Node.js"
+                placeholder="React Skill Test, JavaScript MCQ"
                 className="
                   w-full
                   mt-2
@@ -203,35 +157,106 @@ export default function AddCandidatePage() {
                   focus:ring-blue-500
                 "
               />
+
             </div>
 
-            {/* EXPERIENCE */}
+            {/* CANDIDATE IDS */}
+            <div className="col-span-1 md:col-span-2">
+
+              <label className="text-sm font-semibold text-gray-700">
+                Candidate IDs
+              </label>
+
+              <input
+                type="text"
+                name="candidateIds"
+                value={formData.candidateIds}
+                onChange={handleChange}
+                placeholder="CND-1001, CND-1002"
+                className="
+                  w-full
+                  mt-2
+                  px-4
+                  py-3
+                  rounded-2xl
+                  border
+                  border-gray-300
+                  outline-none
+                  focus:ring-2
+                  focus:ring-blue-500
+                "
+              />
+
+            </div>
+
+            {/* TOTAL INVITED */}
             <InputField
-              label="Experience"
-              name="experience"
-              value={formData.experience}
+              label="Total Invited"
+              type="number"
+              name="totalInvited"
+              value={formData.totalInvited}
               onChange={handleChange}
-              placeholder="2 Years"
+              placeholder="150"
             />
 
-            {/* EDUCATION */}
+            {/* TOTAL COMPLETED */}
             <InputField
-              label="Education"
-              name="education"
-              value={formData.education}
+              label="Total Completed"
+              type="number"
+              name="totalCompleted"
+              value={formData.totalCompleted}
               onChange={handleChange}
-              placeholder="BCA / MCA"
+              placeholder="96"
+            />
+
+            {/* AVERAGE SCORE */}
+            <InputField
+              label="Average Score"
+              type="number"
+              name="averageScore"
+              value={formData.averageScore}
+              onChange={handleChange}
+              placeholder="78"
+            />
+
+            {/* SUSPICIOUS ACTIVITIES */}
+            <InputField
+              label="Suspicious Activities"
+              type="number"
+              name="suspiciousActivities"
+              value={formData.suspiciousActivities}
+              onChange={handleChange}
+              placeholder="3"
+            />
+
+            {/* START DATE */}
+            <InputField
+              label="Start Date"
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+            />
+
+            {/* END DATE */}
+            <InputField
+              label="End Date"
+              type="date"
+              name="endDate"
+              value={formData.endDate}
+              onChange={handleChange}
             />
 
             {/* STATUS */}
             <div>
+
               <label className="text-sm font-semibold text-gray-700">
-                Current Status
+                Status
               </label>
 
               <select
-                name="currentStatus"
-                value={formData.currentStatus}
+                name="status"
+                value={formData.status}
                 onChange={handleChange}
                 className="
                   w-full
@@ -246,68 +271,21 @@ export default function AddCandidatePage() {
                   focus:ring-blue-500
                 "
               >
-                <option>Applied</option>
-                <option>Invited</option>
+                <option>Active</option>
                 <option>Completed</option>
-                <option>Rejected</option>
-                <option>Selected</option>
+                <option>Draft</option>
+                <option>Paused</option>
               </select>
+
             </div>
 
-            {/* POSITION */}
+            {/* CREATED BY */}
             <InputField
-              label="Applied Position"
-              name="appliedPosition"
-              value={formData.appliedPosition}
+              label="Created By"
+              name="createdBy"
+              value={formData.createdBy}
               onChange={handleChange}
-              placeholder="Frontend Developer"
-            />
-
-            {/* ASSESSMENT */}
-            <InputField
-              label="Assigned Assessment"
-              name="assignedAssessment"
-              value={formData.assignedAssessment}
-              onChange={handleChange}
-              placeholder="React Skill Test"
-            />
-
-            {/* SCORE */}
-            <InputField
-              label="Total Score"
-              type="number"
-              name="totalScore"
-              value={formData.totalScore}
-              onChange={handleChange}
-              placeholder="88"
-            />
-
-            {/* RANKING */}
-            <InputField
-              label="Ranking"
-              type="number"
-              name="ranking"
-              value={formData.ranking}
-              onChange={handleChange}
-              placeholder="5"
-            />
-
-            {/* CREATED */}
-            <InputField
-              label="Created At"
-              type="date"
-              name="createdAt"
-              value={formData.createdAt}
-              onChange={handleChange}
-            />
-
-            {/* UPDATED */}
-            <InputField
-              label="Updated At"
-              type="date"
-              name="updatedAt"
-              value={formData.updatedAt}
-              onChange={handleChange}
+              placeholder="Sunil Kumar"
             />
 
           </div>
@@ -332,7 +310,7 @@ export default function AddCandidatePage() {
                 duration-300
               "
             >
-              Submit Candidate
+              Submit Campaign
             </button>
 
           </div>

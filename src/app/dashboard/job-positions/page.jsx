@@ -2,7 +2,8 @@
 
 import DataTable from "@/component/table";
 import ActionButtons from "@/component/button";
-
+import { useEffect, useState } from "react";
+import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
 
 const jobPositionsData = [
   {
@@ -79,6 +80,30 @@ const jobPositionsData = [
 ];
 
 export default function JobPositionsPage() {
+
+  const [data, setData] = useState([]);
+  
+  useEffect(() => {
+  
+    const fetchData = async () => {
+      try {
+  
+        const response = await getRequest(
+          `${API_BASE_URL}/job-position`
+        );
+  
+        console.log("Fetched Data:job position", response);
+  
+        setData(response);
+  
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+  
+  }, []);
 
   const columns = [
 

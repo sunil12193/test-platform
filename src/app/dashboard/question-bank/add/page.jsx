@@ -2,34 +2,38 @@
 
 import { useState } from "react";
 
-export default function AddCandidatePage() {
+export default function AddQuestionPage() {
 
   const [formData, setFormData] = useState({
-    candidateId: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    profileImage: "",
+    questionId: "",
 
-    resumeUrl: "",
-    linkedinUrl: "",
-    githubUrl: "",
+    questionType: "MCQ",
 
-    skills: "",
-    experience: "",
-    education: "",
+    category: "",
+    subCategory: "",
 
-    currentStatus: "Applied",
+    difficultyLevel: "Medium",
 
-    appliedPosition: "",
-    assignedAssessment: "",
+    question: "",
 
-    totalScore: "",
-    ranking: "",
+    options: "",
+
+    correctAnswer: "",
+
+    explanation: "",
+
+    marks: "",
+
+    tags: "",
+
+    totalAttempts: "",
+    correctAttempts: "",
+
+    status: "Published",
+
+    createdBy: "",
 
     createdAt: "",
-    updatedAt: "",
   });
 
   // HANDLE CHANGE
@@ -47,252 +51,182 @@ export default function AddCandidatePage() {
     const finalData = {
       ...formData,
 
-      skills: formData.skills
-        .split(",")
-        .map((skill) => skill.trim()),
+      options: formData.options.split(",").map((item) => item.trim()),
+
+      tags: formData.tags.split(",").map((item) => item.trim()),
     };
 
     console.log(finalData);
 
-    alert("Candidate Added Successfully 🚀");
+    alert("Question Added Successfully 🚀");
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
-      <div className="
-        max-w-7xl
-        mx-auto
-        bg-white
-        rounded-[30px]
-        shadow-xl
-        overflow-hidden
-        border
-        border-gray-200
-      ">
+      <div className="max-w-7xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
 
         {/* HEADER */}
-        <div className="
-          bg-gradient-to-r
-          from-blue-600
-          to-indigo-600
-          px-8
-          py-6
-        ">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
+
           <h1 className="text-3xl font-bold text-white">
-            Add New Candidate
+            Add New Question
           </h1>
 
           <p className="text-blue-100 mt-2">
-            Fill all candidate details carefully
+            Fill all question details carefully
           </p>
+
         </div>
 
         {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="p-8"
-        >
+        <form onSubmit={handleSubmit} className="p-8">
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            {/* CANDIDATE ID */}
+            {/* QUESTION ID */}
             <InputField
-              label="Candidate ID"
-              name="candidateId"
-              value={formData.candidateId}
+              label="Question ID"
+              name="questionId"
+              value={formData.questionId}
               onChange={handleChange}
-              placeholder="CND-1001"
+              placeholder="QST-1001"
             />
 
-            {/* FIRST NAME */}
-            <InputField
-              label="First Name"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              placeholder="Enter first name"
-            />
-
-            {/* LAST NAME */}
-            <InputField
-              label="Last Name"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Enter last name"
-            />
-
-            {/* EMAIL */}
-            <InputField
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="example@gmail.com"
-            />
-
-            {/* PHONE */}
-            <InputField
-              label="Phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="+91 9876543210"
-            />
-
-            {/* PROFILE IMAGE */}
-            <InputField
-              label="Profile Image URL"
-              name="profileImage"
-              value={formData.profileImage}
-              onChange={handleChange}
-              placeholder="https://..."
-            />
-
-            {/* RESUME */}
-            <InputField
-              label="Resume URL"
-              name="resumeUrl"
-              value={formData.resumeUrl}
-              onChange={handleChange}
-              placeholder="https://resume.pdf"
-            />
-
-            {/* LINKEDIN */}
-            <InputField
-              label="LinkedIn URL"
-              name="linkedinUrl"
-              value={formData.linkedinUrl}
-              onChange={handleChange}
-              placeholder="https://linkedin.com"
-            />
-
-            {/* GITHUB */}
-            <InputField
-              label="GitHub URL"
-              name="githubUrl"
-              value={formData.githubUrl}
-              onChange={handleChange}
-              placeholder="https://github.com"
-            />
-
-            {/* SKILLS */}
-            <div className="col-span-1 md:col-span-2">
-              <label className="text-sm font-semibold text-gray-700">
-                Skills
-              </label>
-
-              <input
-                type="text"
-                name="skills"
-                value={formData.skills}
-                onChange={handleChange}
-                placeholder="React, Next.js, Node.js"
-                className="
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-2xl
-                  border
-                  border-gray-300
-                  outline-none
-                  focus:ring-2
-                  focus:ring-blue-500
-                "
-              />
-            </div>
-
-            {/* EXPERIENCE */}
-            <InputField
-              label="Experience"
-              name="experience"
-              value={formData.experience}
-              onChange={handleChange}
-              placeholder="2 Years"
-            />
-
-            {/* EDUCATION */}
-            <InputField
-              label="Education"
-              name="education"
-              value={formData.education}
-              onChange={handleChange}
-              placeholder="BCA / MCA"
-            />
-
-            {/* STATUS */}
+            {/* QUESTION TYPE */}
             <div>
+
               <label className="text-sm font-semibold text-gray-700">
-                Current Status
+                Question Type
               </label>
 
               <select
-                name="currentStatus"
-                value={formData.currentStatus}
+                name="questionType"
+                value={formData.questionType}
                 onChange={handleChange}
-                className="
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-2xl
-                  border
-                  border-gray-300
-                  outline-none
-                  focus:ring-2
-                  focus:ring-blue-500
-                "
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option>Applied</option>
-                <option>Invited</option>
-                <option>Completed</option>
-                <option>Rejected</option>
-                <option>Selected</option>
+
+                <option>MCQ</option>
+                <option>Coding</option>
+                <option>True/False</option>
+                <option>Short Answer</option>
+
               </select>
+
             </div>
 
-            {/* POSITION */}
+            {/* CATEGORY */}
             <InputField
-              label="Applied Position"
-              name="appliedPosition"
-              value={formData.appliedPosition}
+              label="Category"
+              name="category"
+              value={formData.category}
               onChange={handleChange}
-              placeholder="Frontend Developer"
+              placeholder="Frontend"
             />
 
-            {/* ASSESSMENT */}
+            {/* SUB CATEGORY */}
             <InputField
-              label="Assigned Assessment"
-              name="assignedAssessment"
-              value={formData.assignedAssessment}
+              label="Sub Category"
+              name="subCategory"
+              value={formData.subCategory}
               onChange={handleChange}
-              placeholder="React Skill Test"
+              placeholder="React"
             />
 
-            {/* SCORE */}
+            {/* DIFFICULTY */}
+            <div>
+
+              <label className="text-sm font-semibold text-gray-700">
+                Difficulty Level
+              </label>
+
+              <select
+                name="difficultyLevel"
+                value={formData.difficultyLevel}
+                onChange={handleChange}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              >
+
+                <option>Easy</option>
+                <option>Medium</option>
+                <option>Hard</option>
+
+              </select>
+
+            </div>
+
+            {/* MARKS */}
             <InputField
-              label="Total Score"
+              label="Marks"
               type="number"
-              name="totalScore"
-              value={formData.totalScore}
-              onChange={handleChange}
-              placeholder="88"
-            />
-
-            {/* RANKING */}
-            <InputField
-              label="Ranking"
-              type="number"
-              name="ranking"
-              value={formData.ranking}
+              name="marks"
+              value={formData.marks}
               onChange={handleChange}
               placeholder="5"
             />
 
-            {/* CREATED */}
+            {/* CORRECT ANSWER */}
+            <InputField
+              label="Correct Answer"
+              name="correctAnswer"
+              value={formData.correctAnswer}
+              onChange={handleChange}
+              placeholder="useState"
+            />
+
+            {/* TOTAL ATTEMPTS */}
+            <InputField
+              label="Total Attempts"
+              type="number"
+              name="totalAttempts"
+              value={formData.totalAttempts}
+              onChange={handleChange}
+              placeholder="120"
+            />
+
+            {/* CORRECT ATTEMPTS */}
+            <InputField
+              label="Correct Attempts"
+              type="number"
+              name="correctAttempts"
+              value={formData.correctAttempts}
+              onChange={handleChange}
+              placeholder="94"
+            />
+
+            {/* STATUS */}
+            <div>
+
+              <label className="text-sm font-semibold text-gray-700">
+                Status
+              </label>
+
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              >
+
+                <option>Published</option>
+                <option>Draft</option>
+                <option>Archived</option>
+
+              </select>
+
+            </div>
+
+            {/* CREATED BY */}
+            <InputField
+              label="Created By"
+              name="createdBy"
+              value={formData.createdBy}
+              onChange={handleChange}
+              placeholder="Admin"
+            />
+
+            {/* CREATED AT */}
             <InputField
               label="Created At"
               type="date"
@@ -301,38 +235,88 @@ export default function AddCandidatePage() {
               onChange={handleChange}
             />
 
-            {/* UPDATED */}
-            <InputField
-              label="Updated At"
-              type="date"
-              name="updatedAt"
-              value={formData.updatedAt}
-              onChange={handleChange}
-            />
+            {/* OPTIONS */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
+
+              <label className="text-sm font-semibold text-gray-700">
+                Options
+              </label>
+
+              <textarea
+                name="options"
+                value={formData.options}
+                onChange={handleChange}
+                placeholder="useFetch, useState, useReducer, useMemo"
+                rows={4}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+            </div>
+
+            {/* TAGS */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
+
+              <label className="text-sm font-semibold text-gray-700">
+                Tags
+              </label>
+
+              <input
+                type="text"
+                name="tags"
+                value={formData.tags}
+                onChange={handleChange}
+                placeholder="React, Hooks, JavaScript"
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+            </div>
+
+            {/* QUESTION */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
+
+              <label className="text-sm font-semibold text-gray-700">
+                Question
+              </label>
+
+              <textarea
+                name="question"
+                value={formData.question}
+                onChange={handleChange}
+                placeholder="Write your question here..."
+                rows={5}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+            </div>
+
+            {/* EXPLANATION */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
+
+              <label className="text-sm font-semibold text-gray-700">
+                Explanation
+              </label>
+
+              <textarea
+                name="explanation"
+                value={formData.explanation}
+                onChange={handleChange}
+                placeholder="Write explanation..."
+                rows={5}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+            </div>
 
           </div>
 
-          {/* SUBMIT BUTTON */}
+          {/* BUTTON */}
           <div className="mt-10 flex justify-end">
 
             <button
               type="submit"
-              className="
-                px-8
-                py-4
-                rounded-2xl
-                bg-gradient-to-r
-                from-blue-600
-                to-indigo-600
-                text-white
-                font-semibold
-                shadow-lg
-                hover:scale-105
-                transition-all
-                duration-300
-              "
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
             >
-              Submit Candidate
+              Submit Question
             </button>
 
           </div>
@@ -345,7 +329,7 @@ export default function AddCandidatePage() {
   );
 }
 
-/* INPUT FIELD COMPONENT */
+/* INPUT FIELD */
 function InputField({
   label,
   name,
@@ -354,6 +338,7 @@ function InputField({
   placeholder,
   type = "text",
 }) {
+
   return (
     <div>
 
@@ -367,18 +352,7 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="
-          w-full
-          mt-2
-          px-4
-          py-3
-          rounded-2xl
-          border
-          border-gray-300
-          outline-none
-          focus:ring-2
-          focus:ring-blue-500
-        "
+        className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
       />
 
     </div>

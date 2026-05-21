@@ -2,34 +2,24 @@
 
 import { useState } from "react";
 
-export default function AddCandidatePage() {
+export default function AddPositionPage() {
 
   const [formData, setFormData] = useState({
-    candidateId: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    profileImage: "",
-
-    resumeUrl: "",
-    linkedinUrl: "",
-    githubUrl: "",
-
-    skills: "",
-    experience: "",
-    education: "",
-
-    currentStatus: "Applied",
-
-    appliedPosition: "",
+    positionId: "",
+    title: "",
+    department: "",
+    location: "",
+    employmentType: "Full-time",
+    experienceRequired: "",
+    salaryRange: "",
+    requiredSkills: "",
+    description: "",
     assignedAssessment: "",
-
-    totalScore: "",
-    ranking: "",
-
+    openings: "",
+    applicants: "",
+    shortlisted: "",
+    status: "Open",
     createdAt: "",
-    updatedAt: "",
   });
 
   // HANDLE CHANGE
@@ -47,220 +37,111 @@ export default function AddCandidatePage() {
     const finalData = {
       ...formData,
 
-      skills: formData.skills
+      requiredSkills: formData.requiredSkills
         .split(",")
         .map((skill) => skill.trim()),
     };
 
     console.log(finalData);
 
-    alert("Candidate Added Successfully 🚀");
+    alert("Position Added Successfully 🚀");
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
-      <div className="
-        max-w-7xl
-        mx-auto
-        bg-white
-        rounded-[30px]
-        shadow-xl
-        overflow-hidden
-        border
-        border-gray-200
-      ">
+      <div className="max-w-7xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
 
         {/* HEADER */}
-        <div className="
-          bg-gradient-to-r
-          from-blue-600
-          to-indigo-600
-          px-8
-          py-6
-        ">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
           <h1 className="text-3xl font-bold text-white">
-            Add New Candidate
+            Add New Position
           </h1>
 
           <p className="text-blue-100 mt-2">
-            Fill all candidate details carefully
+            Fill all position details carefully
           </p>
         </div>
 
         {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="p-8"
-        >
+        <form onSubmit={handleSubmit} className="p-8">
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            {/* CANDIDATE ID */}
+            {/* POSITION ID */}
             <InputField
-              label="Candidate ID"
-              name="candidateId"
-              value={formData.candidateId}
+              label="Position ID"
+              name="positionId"
+              value={formData.positionId}
               onChange={handleChange}
-              placeholder="CND-1001"
+              placeholder="POS-1001"
             />
 
-            {/* FIRST NAME */}
+            {/* TITLE */}
             <InputField
-              label="First Name"
-              name="firstName"
-              value={formData.firstName}
+              label="Job Title"
+              name="title"
+              value={formData.title}
               onChange={handleChange}
-              placeholder="Enter first name"
+              placeholder="Frontend Developer"
             />
 
-            {/* LAST NAME */}
+            {/* DEPARTMENT */}
             <InputField
-              label="Last Name"
-              name="lastName"
-              value={formData.lastName}
+              label="Department"
+              name="department"
+              value={formData.department}
               onChange={handleChange}
-              placeholder="Enter last name"
+              placeholder="Engineering"
             />
 
-            {/* EMAIL */}
+            {/* LOCATION */}
             <InputField
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
+              label="Location"
+              name="location"
+              value={formData.location}
               onChange={handleChange}
-              placeholder="example@gmail.com"
+              placeholder="Delhi, India"
             />
 
-            {/* PHONE */}
-            <InputField
-              label="Phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="+91 9876543210"
-            />
+            {/* EMPLOYMENT TYPE */}
+            <div>
 
-            {/* PROFILE IMAGE */}
-            <InputField
-              label="Profile Image URL"
-              name="profileImage"
-              value={formData.profileImage}
-              onChange={handleChange}
-              placeholder="https://..."
-            />
-
-            {/* RESUME */}
-            <InputField
-              label="Resume URL"
-              name="resumeUrl"
-              value={formData.resumeUrl}
-              onChange={handleChange}
-              placeholder="https://resume.pdf"
-            />
-
-            {/* LINKEDIN */}
-            <InputField
-              label="LinkedIn URL"
-              name="linkedinUrl"
-              value={formData.linkedinUrl}
-              onChange={handleChange}
-              placeholder="https://linkedin.com"
-            />
-
-            {/* GITHUB */}
-            <InputField
-              label="GitHub URL"
-              name="githubUrl"
-              value={formData.githubUrl}
-              onChange={handleChange}
-              placeholder="https://github.com"
-            />
-
-            {/* SKILLS */}
-            <div className="col-span-1 md:col-span-2">
               <label className="text-sm font-semibold text-gray-700">
-                Skills
+                Employment Type
               </label>
 
-              <input
-                type="text"
-                name="skills"
-                value={formData.skills}
+              <select
+                name="employmentType"
+                value={formData.employmentType}
                 onChange={handleChange}
-                placeholder="React, Next.js, Node.js"
-                className="
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-2xl
-                  border
-                  border-gray-300
-                  outline-none
-                  focus:ring-2
-                  focus:ring-blue-500
-                "
-              />
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option>Full-time</option>
+                <option>Part-time</option>
+                <option>Internship</option>
+                <option>Contract</option>
+                <option>Remote</option>
+              </select>
+
             </div>
 
             {/* EXPERIENCE */}
             <InputField
-              label="Experience"
-              name="experience"
-              value={formData.experience}
+              label="Experience Required"
+              name="experienceRequired"
+              value={formData.experienceRequired}
               onChange={handleChange}
-              placeholder="2 Years"
+              placeholder="2+ Years"
             />
 
-            {/* EDUCATION */}
+            {/* SALARY */}
             <InputField
-              label="Education"
-              name="education"
-              value={formData.education}
+              label="Salary Range"
+              name="salaryRange"
+              value={formData.salaryRange}
               onChange={handleChange}
-              placeholder="BCA / MCA"
-            />
-
-            {/* STATUS */}
-            <div>
-              <label className="text-sm font-semibold text-gray-700">
-                Current Status
-              </label>
-
-              <select
-                name="currentStatus"
-                value={formData.currentStatus}
-                onChange={handleChange}
-                className="
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-2xl
-                  border
-                  border-gray-300
-                  outline-none
-                  focus:ring-2
-                  focus:ring-blue-500
-                "
-              >
-                <option>Applied</option>
-                <option>Invited</option>
-                <option>Completed</option>
-                <option>Rejected</option>
-                <option>Selected</option>
-              </select>
-            </div>
-
-            {/* POSITION */}
-            <InputField
-              label="Applied Position"
-              name="appliedPosition"
-              value={formData.appliedPosition}
-              onChange={handleChange}
-              placeholder="Frontend Developer"
+              placeholder="₹8 LPA - ₹12 LPA"
             />
 
             {/* ASSESSMENT */}
@@ -269,30 +150,60 @@ export default function AddCandidatePage() {
               name="assignedAssessment"
               value={formData.assignedAssessment}
               onChange={handleChange}
-              placeholder="React Skill Test"
+              placeholder="Frontend React Assessment"
             />
 
-            {/* SCORE */}
+            {/* OPENINGS */}
             <InputField
-              label="Total Score"
+              label="Openings"
               type="number"
-              name="totalScore"
-              value={formData.totalScore}
+              name="openings"
+              value={formData.openings}
               onChange={handleChange}
-              placeholder="88"
+              placeholder="4"
             />
 
-            {/* RANKING */}
+            {/* APPLICANTS */}
             <InputField
-              label="Ranking"
+              label="Applicants"
               type="number"
-              name="ranking"
-              value={formData.ranking}
+              name="applicants"
+              value={formData.applicants}
               onChange={handleChange}
-              placeholder="5"
+              placeholder="128"
             />
 
-            {/* CREATED */}
+            {/* SHORTLISTED */}
+            <InputField
+              label="Shortlisted"
+              type="number"
+              name="shortlisted"
+              value={formData.shortlisted}
+              onChange={handleChange}
+              placeholder="42"
+            />
+
+            {/* STATUS */}
+            <div>
+
+              <label className="text-sm font-semibold text-gray-700">
+                Status
+              </label>
+
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option>Open</option>
+                <option>Closed</option>
+                <option>Paused</option>
+              </select>
+
+            </div>
+
+            {/* CREATED AT */}
             <InputField
               label="Created At"
               type="date"
@@ -301,38 +212,52 @@ export default function AddCandidatePage() {
               onChange={handleChange}
             />
 
-            {/* UPDATED */}
-            <InputField
-              label="Updated At"
-              type="date"
-              name="updatedAt"
-              value={formData.updatedAt}
-              onChange={handleChange}
-            />
+            {/* REQUIRED SKILLS */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
+
+              <label className="text-sm font-semibold text-gray-700">
+                Required Skills
+              </label>
+
+              <input
+                type="text"
+                name="requiredSkills"
+                value={formData.requiredSkills}
+                onChange={handleChange}
+                placeholder="React, Next.js, TailwindCSS, JavaScript"
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+            </div>
+
+            {/* DESCRIPTION */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
+
+              <label className="text-sm font-semibold text-gray-700">
+                Job Description
+              </label>
+
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Write job description..."
+                rows={5}
+                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+            </div>
 
           </div>
 
-          {/* SUBMIT BUTTON */}
+          {/* BUTTON */}
           <div className="mt-10 flex justify-end">
 
             <button
               type="submit"
-              className="
-                px-8
-                py-4
-                rounded-2xl
-                bg-gradient-to-r
-                from-blue-600
-                to-indigo-600
-                text-white
-                font-semibold
-                shadow-lg
-                hover:scale-105
-                transition-all
-                duration-300
-              "
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
             >
-              Submit Candidate
+              Submit Position
             </button>
 
           </div>
@@ -345,7 +270,7 @@ export default function AddCandidatePage() {
   );
 }
 
-/* INPUT FIELD COMPONENT */
+/* INPUT FIELD */
 function InputField({
   label,
   name,
@@ -354,6 +279,7 @@ function InputField({
   placeholder,
   type = "text",
 }) {
+
   return (
     <div>
 
@@ -367,18 +293,7 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="
-          w-full
-          mt-2
-          px-4
-          py-3
-          rounded-2xl
-          border
-          border-gray-300
-          outline-none
-          focus:ring-2
-          focus:ring-blue-500
-        "
+        className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
       />
 
     </div>
