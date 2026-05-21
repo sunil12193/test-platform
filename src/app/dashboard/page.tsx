@@ -79,7 +79,7 @@ export default function RTestDashboard() {
           relative
           overflow-hidden
           rounded-3xl
-          bg-gradient-to-r
+          bg-linear-to-r
           from-[#0F2B46]
           via-[#163A5C]
           to-[#1E4D7B]
@@ -166,7 +166,7 @@ export default function RTestDashboard() {
               </div>
 
               <div
-                className={`h-14 w-14 rounded-2xl bg-gradient-to-br ${item.color}`}
+                className={`h-14 w-14 rounded-2xl bg-linear-to-br ${item.color}`}
               />
             </div>
 
@@ -199,7 +199,7 @@ export default function RTestDashboard() {
               </button>
             </div>
 
-            <div className="h-80 rounded-3xl bg-gradient-to-br from-slate-50 to-blue-50 border border-slate-100 flex items-center justify-center text-slate-400 text-lg font-medium">
+            <div className="h-80 rounded-3xl bg-linear-to-br from-slate-50 to-blue-50 border border-slate-100 flex items-center justify-center text-slate-400 text-lg font-medium">
               Analytics Chart Area
             </div>
           </div>
@@ -318,7 +318,7 @@ export default function RTestDashboard() {
           </div>
 
           {/* SECURITY */}
-          <div className="rounded-3xl bg-gradient-to-br from-red-500 to-rose-600 p-6 text-white shadow-xl">
+          <div className="rounded-3xl bg-linear-to-br from-red-500 to-rose-600 p-6 text-white shadow-xl">
             <p className="text-sm text-red-100">AI Proctoring Enabled</p>
 
             <h3 className="text-3xl font-bold mt-3">14 Alerts</h3>

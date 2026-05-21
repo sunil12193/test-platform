@@ -54,7 +54,7 @@ export default function InvitationsPage() {
                 h-14
                 w-14
                 rounded-2xl
-                bg-gradient-to-br
+                bg-linear-to-br
                 from-[#0F2B46]
                 to-[#1E4D7B]
                 flex
@@ -163,7 +163,7 @@ export default function InvitationsPage() {
       header: "Invite Token",
 
       render: (item: Invitation) => (
-        <div className="min-w-[280px]">
+        <div className="min-w-70">
           <div
             className="
               flex
@@ -216,7 +216,7 @@ export default function InvitationsPage() {
       header: "Sent At",
 
       render: (item: Invitation) => (
-        <div className="min-w-[220px]">
+        <div className="min-w-65">
           <div className="flex items-start gap-3">
             <div
               className="
@@ -370,7 +370,7 @@ export default function InvitationsPage() {
     <div
       className="
         min-h-screen
-        bg-gradient-to-br
+        bg-linear-to-br
         from-slate-50
         via-blue-50/30
         to-slate-100

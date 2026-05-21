@@ -43,7 +43,7 @@ export default function JobPositionsPage() {
       header: "Position",
 
       render: (item: JobPosition) => (
-        <div className="min-w-[360px] text-left">
+        <div className="min-w-90 text-left">
           <div className="flex items-start gap-4">
             {/* ICON */}
             <div
@@ -51,7 +51,7 @@ export default function JobPositionsPage() {
                 h-14
                 w-14
                 rounded-2xl
-                bg-gradient-to-br
+                bg-linear-to-br
                 from-[#0F2B46]
                 to-[#1E4D7B]
                 flex
@@ -265,7 +265,7 @@ export default function JobPositionsPage() {
       header: "Hiring Stats",
 
       render: (item: JobPosition) => (
-        <div className="min-w-[220px]">
+        <div className="min-w-65">
           <div className="flex items-center gap-3 mb-4">
             <div
               className="
@@ -340,7 +340,7 @@ export default function JobPositionsPage() {
     <div
       className="
         min-h-screen
-        bg-gradient-to-br
+        bg-linear-to-br
         from-slate-50
         via-blue-50/30
         to-slate-100

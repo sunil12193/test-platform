@@ -42,7 +42,7 @@ export default function AssessmentsPage() {
                 h-14
                 w-14
                 rounded-2xl
-                bg-gradient-to-br
+                bg-linear-to-br
                 from-[#0F2B46]
                 to-[#1E4D7B]
                 flex
@@ -279,7 +279,7 @@ export default function AssessmentsPage() {
     <div
       className="
         min-h-screen
-        bg-gradient-to-br
+        bg-linear-to-br
         from-slate-50
         via-blue-50/30
         to-slate-100

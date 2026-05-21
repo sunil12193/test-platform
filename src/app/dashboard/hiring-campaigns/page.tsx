@@ -45,7 +45,7 @@ export default function HiringCampaignsPage() {
       header: "Campaign",
 
       render: (item: HiringCampaign) => (
-        <div className="min-w-[360px] text-left">
+        <div className="min-w-90 text-left">
           <div className="flex items-start gap-4">
             {/* ICON */}
             <div
@@ -53,7 +53,7 @@ export default function HiringCampaignsPage() {
                 h-14
                 w-14
                 rounded-2xl
-                bg-gradient-to-br
+                bg-linear-to-br
                 from-[#0F2B46]
                 to-[#1E4D7B]
                 flex
@@ -124,7 +124,7 @@ export default function HiringCampaignsPage() {
       header: "Assessments",
 
       render: (item: HiringCampaign) => (
-        <div className="flex flex-wrap gap-2 min-w-[280px]">
+        <div className="flex flex-wrap gap-2 min-w-70">
           {item.assignedAssessments.map((assessment: string, index: number) => (
             <span
               key={index}
@@ -152,7 +152,7 @@ export default function HiringCampaignsPage() {
       header: "Candidates",
 
       render: (item: HiringCampaign) => (
-        <div className="min-w-[220px]">
+        <div className="min-w-65">
           <div className="flex items-center gap-3 mb-4">
             <div
               className="
@@ -208,7 +208,7 @@ export default function HiringCampaignsPage() {
             : 0;
 
         return (
-          <div className="min-w-[220px]">
+          <div className="min-w-65">
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm text-slate-500">Completion</span>
 
@@ -222,7 +222,7 @@ export default function HiringCampaignsPage() {
                 className="
                   h-full
                   rounded-full
-                  bg-gradient-to-r
+                  bg-linear-to-r
                   from-emerald-500
                   to-green-600
                 "
@@ -249,14 +249,14 @@ export default function HiringCampaignsPage() {
       header: "Average Score",
 
       render: (item: HiringCampaign) => (
-        <div className="min-w-[220px]">
+        <div className="min-w-65">
           <div className="flex items-center gap-4">
             <div
               className="
                 h-14
                 w-14
                 rounded-2xl
-                bg-gradient-to-br
+                bg-linear-to-br
                 from-amber-400
                 to-orange-500
                 text-white
@@ -286,7 +286,7 @@ export default function HiringCampaignsPage() {
       header: "Security",
 
       render: (item: HiringCampaign) => (
-        <div className="min-w-[180px]">
+        <div className="min-w-45">
           <div className="flex items-center gap-3">
             <div
               className="
@@ -322,7 +322,7 @@ export default function HiringCampaignsPage() {
       header: "Timeline",
 
       render: (item: HiringCampaign) => (
-        <div className="min-w-[200px]">
+        <div className="min-w-50">
           <div className="flex items-start gap-3">
             <div
               className="
@@ -356,7 +356,7 @@ export default function HiringCampaignsPage() {
       header: "Created By",
 
       render: (item: HiringCampaign) => (
-        <div className="min-w-[180px]">
+        <div className="min-w-45">
           <div className="flex items-center gap-3">
             <div
               className="
@@ -388,7 +388,7 @@ export default function HiringCampaignsPage() {
     <div
       className="
         min-h-screen
-        bg-gradient-to-br
+        bg-linear-to-br
         from-slate-50
         via-blue-50/30
         to-slate-100
