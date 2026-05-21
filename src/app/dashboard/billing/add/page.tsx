@@ -2,8 +2,16 @@
 
 import { useState } from "react";
 
-export default function AddBillingPage() {
+type InputFieldProps = {
+  label: string;
+  name: string;
+  value: string | number;
+  onChange: (e: any) => void;
+  placeholder?: string | undefined;
+  type?: string;
+};
 
+export default function AddBillingPage() {
   const [formData, setFormData] = useState({
     companyId: "",
 
@@ -23,7 +31,7 @@ export default function AddBillingPage() {
   });
 
   // HANDLE CHANGE
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -31,7 +39,7 @@ export default function AddBillingPage() {
   };
 
   // SUBMIT
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const finalData = {
@@ -53,30 +61,19 @@ export default function AddBillingPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
       <div className="max-w-5xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
-
         {/* HEADER */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
-
-          <h1 className="text-3xl font-bold text-white">
-            Add Billing Details
-          </h1>
+        <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-6">
+          <h1 className="text-3xl font-bold text-white">Add Billing Details</h1>
 
           <p className="text-blue-100 mt-2">
             Fill all company billing information carefully
           </p>
-
         </div>
 
         {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="p-8"
-        >
-
+        <form onSubmit={handleSubmit} className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
             {/* COMPANY ID */}
             <InputField
               label="Company ID"
@@ -97,7 +94,6 @@ export default function AddBillingPage() {
 
             {/* BILLING CYCLE */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Billing Cycle
               </label>
@@ -112,7 +108,6 @@ export default function AddBillingPage() {
                 <option>Quarterly</option>
                 <option>Yearly</option>
               </select>
-
             </div>
 
             {/* TOTAL USERS */}
@@ -137,7 +132,6 @@ export default function AddBillingPage() {
 
             {/* PAYMENT STATUS */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Payment Status
               </label>
@@ -152,12 +146,10 @@ export default function AddBillingPage() {
                 <option>Pending</option>
                 <option>Failed</option>
               </select>
-
             </div>
 
             {/* INVOICE HISTORY */}
             <div className="md:col-span-2">
-
               <label className="text-sm font-semibold text-gray-700">
                 Invoice History
               </label>
@@ -170,7 +162,6 @@ export default function AddBillingPage() {
                 placeholder="INV-2026-001, INV-2026-002"
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               />
-
             </div>
 
             {/* RENEWAL DATE */}
@@ -180,26 +171,21 @@ export default function AddBillingPage() {
               name="renewalDate"
               value={formData.renewalDate}
               onChange={handleChange}
+              placeholder={undefined}
             />
-
           </div>
 
           {/* SUBMIT BUTTON */}
           <div className="mt-10 flex justify-end">
-
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
             >
               Submit Billing
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }
@@ -212,13 +198,10 @@ function InputField({
   onChange,
   placeholder,
   type = "text",
-}) {
+}: InputFieldProps) {
   return (
     <div>
-
-      <label className="text-sm font-semibold text-gray-700">
-        {label}
-      </label>
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
 
       <input
         type={type}
@@ -228,7 +211,6 @@ function InputField({
         placeholder={placeholder}
         className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
       />
-
     </div>
   );
 }

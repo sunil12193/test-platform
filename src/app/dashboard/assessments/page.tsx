@@ -1,9 +1,8 @@
 "use client";
-import DataTable from "@/component/table";
-import ActionButtons from "@/component/button";
 import { useEffect, useState } from "react";
-import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
-
+import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import ActionButtons from "../../../component/button";
+import DataTable from "../../../component/table";
 
 // const assessmentData = [
 //   {
@@ -74,46 +73,38 @@ import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
 // ];
 
 export default function AssessmentsPage() {
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
-
-        const response = await getRequest(
-          `${API_BASE_URL}/assessment`
-        );
+        const response = await getRequest(`${API_BASE_URL}/assessment`);
 
         console.log("Fetched Data: assessment", response.data);
 
         setData(response);
-
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-
   }, []);
 
   const columns = [
-
     // ASSESSMENT
     {
       header: "Assessment",
 
-      render: (item) => (
-        <div className="min-w-[280px]">
+      render: (item: any) => (
+        <div className="min-w-70">
           <div className="flex items-center gap-4">
-
-            <div className="
+            <div
+              className="
               w-14
               h-14
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r
               from-indigo-500
               to-blue-600
               flex
@@ -123,7 +114,8 @@ export default function AssessmentsPage() {
               font-bold
               text-lg
               shadow-lg
-            ">
+            "
+            >
               {item.title.charAt(0)}
             </div>
 
@@ -132,9 +124,7 @@ export default function AssessmentsPage() {
                 {item.title}
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
-                {item.assessmentId}
-              </p>
+              <p className="text-xs text-gray-500 mt-1">{item.assessmentId}</p>
             </div>
           </div>
 
@@ -149,8 +139,9 @@ export default function AssessmentsPage() {
     {
       header: "Type",
 
-      render: (item) => (
-        <div className="
+      render: (item: any) => (
+        <div
+          className="
           bg-blue-100
           text-blue-700
           px-4
@@ -159,7 +150,8 @@ export default function AssessmentsPage() {
           text-xs
           font-bold
           w-fit
-        ">
+        "
+        >
           {item.assessmentType}
         </div>
       ),
@@ -169,15 +161,13 @@ export default function AssessmentsPage() {
     {
       header: "Questions",
 
-      render: (item) => (
-        <div className="min-w-[160px]">
+      render: (item: any) => (
+        <div className="min-w-40">
           <h3 className="font-bold text-gray-800 text-lg">
             {item.totalQuestions}
           </h3>
 
-          <p className="text-xs text-gray-500 mt-1">
-            Total Questions
-          </p>
+          <p className="text-xs text-gray-500 mt-1">Total Questions</p>
         </div>
       ),
     },
@@ -186,23 +176,16 @@ export default function AssessmentsPage() {
     {
       header: "Marks",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
+      render: (item: any) => (
+        <div className="min-w-45">
           <div className="flex justify-between mb-2">
-            <span className="text-sm font-semibold text-gray-700">
-              Total
-            </span>
+            <span className="text-sm font-semibold text-gray-700">Total</span>
 
-            <span className="font-bold text-indigo-700">
-              {item.totalMarks}
-            </span>
+            <span className="font-bold text-indigo-700">{item.totalMarks}</span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-sm font-semibold text-gray-700">
-              Passing
-            </span>
+            <span className="text-sm font-semibold text-gray-700">Passing</span>
 
             <span className="font-bold text-green-600">
               {item.passingMarks}
@@ -216,15 +199,13 @@ export default function AssessmentsPage() {
     {
       header: "Duration",
 
-      render: (item) => (
-        <div className="min-w-[140px]">
+      render: (item: any) => (
+        <div className="min-w-35">
           <h3 className="font-bold text-gray-800 text-lg">
             {item.duration} Min
           </h3>
 
-          <p className="text-xs text-gray-500 mt-1">
-            Assessment Time
-          </p>
+          <p className="text-xs text-gray-500 mt-1">Assessment Time</p>
         </div>
       ),
     },
@@ -233,7 +214,7 @@ export default function AssessmentsPage() {
     {
       header: "Difficulty",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-4
@@ -243,11 +224,12 @@ export default function AssessmentsPage() {
             font-bold
             w-fit
 
-            ${item.difficultyLevel === "Hard"
-              ? "bg-red-100 text-red-700"
-              : item.difficultyLevel === "Medium"
-                ? "bg-yellow-100 text-yellow-700"
-                : "bg-green-100 text-green-700"
+            ${
+              item.difficultyLevel === "Hard"
+                ? "bg-red-100 text-red-700"
+                : item.difficultyLevel === "Medium"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-green-100 text-green-700"
             }
           `}
         >
@@ -260,13 +242,10 @@ export default function AssessmentsPage() {
     {
       header: "Candidates",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
+      render: (item: any) => (
+        <div className="min-w-45">
           <div className="flex justify-between mb-3">
-            <span className="text-sm text-gray-600">
-              Invited
-            </span>
+            <span className="text-sm text-gray-600">Invited</span>
 
             <span className="font-bold text-gray-800">
               {item.totalCandidates}
@@ -274,9 +253,7 @@ export default function AssessmentsPage() {
           </div>
 
           <div className="flex justify-between">
-            <span className="text-sm text-gray-600">
-              Completed
-            </span>
+            <span className="text-sm text-gray-600">Completed</span>
 
             <span className="font-bold text-green-600">
               {item.completedAttempts}
@@ -290,17 +267,14 @@ export default function AssessmentsPage() {
     {
       header: "Average Score",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
+      render: (item: any) => (
+        <div className="min-w-45  ">
           <div className="flex items-center justify-between mb-2">
             <span className="font-bold text-blue-700">
               {item.averageScore}%
             </span>
 
-            <span className="text-xs text-gray-500">
-              Avg Score
-            </span>
+            <span className="text-xs text-gray-500">Avg Score</span>
           </div>
 
           <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
@@ -308,7 +282,7 @@ export default function AssessmentsPage() {
               className="
                 h-full
                 rounded-full
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-blue-500
                 to-indigo-600
               "
@@ -325,47 +299,48 @@ export default function AssessmentsPage() {
     {
       header: "Security",
 
-      render: (item) => (
-        <div className="min-w-[200px] space-y-2">
-
+      render: (item: any) => (
+        <div className="min-w-50 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">
-              Randomized
-            </span>
+            <span className="text-sm text-gray-600">Randomized</span>
 
-            <span className={`
+            <span
+              className={`
               text-xs
               font-bold
               px-3
               py-1
               rounded-full
 
-              ${item.randomizeQuestions
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
+              ${
+                item.randomizeQuestions
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
               }
-            `}>
+            `}
+            >
               {item.randomizeQuestions ? "Enabled" : "Disabled"}
             </span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">
-              Negative Marking
-            </span>
+            <span className="text-sm text-gray-600">Negative Marking</span>
 
-            <span className={`
+            <span
+              className={`
               text-xs
               font-bold
               px-3
               py-1
               rounded-full
 
-              ${item.negativeMarking
-                ? "bg-red-100 text-red-700"
-                : "bg-gray-100 text-gray-700"
+              ${
+                item.negativeMarking
+                  ? "bg-red-100 text-red-700"
+                  : "bg-gray-100 text-gray-700"
               }
-            `}>
+            `}
+            >
               {item.negativeMarking ? "Active" : "Off"}
             </span>
           </div>
@@ -377,7 +352,7 @@ export default function AssessmentsPage() {
     {
       header: "Status",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-4
@@ -387,11 +362,12 @@ export default function AssessmentsPage() {
             font-bold
             w-fit
 
-            ${item.status === "Active"
-              ? "bg-green-100 text-green-700"
-              : item.status === "Draft"
-                ? "bg-yellow-100 text-yellow-700"
-                : "bg-gray-100 text-gray-700"
+            ${
+              item.status === "Active"
+                ? "bg-green-100 text-green-700"
+                : item.status === "Draft"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-gray-100 text-gray-700"
             }
           `}
         >
@@ -404,15 +380,11 @@ export default function AssessmentsPage() {
     {
       header: "Timeline",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-          <p className="font-semibold text-gray-700">
-            {item.startDate}
-          </p>
+      render: (item: any) => (
+        <div className="min-w-45">
+          <p className="font-semibold text-gray-700">{item.startDate}</p>
 
-          <p className="text-xs text-gray-500 mt-1">
-            to {item.endDate}
-          </p>
+          <p className="text-xs text-gray-500 mt-1">to {item.endDate}</p>
         </div>
       ),
     },
@@ -425,15 +397,14 @@ export default function AssessmentsPage() {
         importUrl="/dashboard/assessments/import"
         exportUrl="/dashboard/assessments/export"
 
-      // showExport={false}
+        // showExport={false}
       />
 
       <DataTable
         title="Assessments"
         columns={columns}
         data={data}
-
-        onEdit={(item) => {
+        onEdit={(item: any) => {
           console.log("Edit Data:", item);
         }}
       />

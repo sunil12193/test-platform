@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 export default function AddPositionPage() {
-
   const [formData, setFormData] = useState({
     positionId: "",
     title: "",
@@ -49,14 +48,10 @@ export default function AddPositionPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
       <div className="max-w-7xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
-
         {/* HEADER */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
-          <h1 className="text-3xl font-bold text-white">
-            Add New Position
-          </h1>
+        <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-6">
+          <h1 className="text-3xl font-bold text-white">Add New Position</h1>
 
           <p className="text-blue-100 mt-2">
             Fill all position details carefully
@@ -65,9 +60,7 @@ export default function AddPositionPage() {
 
         {/* FORM */}
         <form onSubmit={handleSubmit} className="p-8">
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
             {/* POSITION ID */}
             <InputField
               label="Position ID"
@@ -106,7 +99,6 @@ export default function AddPositionPage() {
 
             {/* EMPLOYMENT TYPE */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Employment Type
               </label>
@@ -123,7 +115,6 @@ export default function AddPositionPage() {
                 <option>Contract</option>
                 <option>Remote</option>
               </select>
-
             </div>
 
             {/* EXPERIENCE */}
@@ -185,7 +176,6 @@ export default function AddPositionPage() {
 
             {/* STATUS */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Status
               </label>
@@ -200,7 +190,6 @@ export default function AddPositionPage() {
                 <option>Closed</option>
                 <option>Paused</option>
               </select>
-
             </div>
 
             {/* CREATED AT */}
@@ -214,7 +203,6 @@ export default function AddPositionPage() {
 
             {/* REQUIRED SKILLS */}
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-
               <label className="text-sm font-semibold text-gray-700">
                 Required Skills
               </label>
@@ -227,12 +215,10 @@ export default function AddPositionPage() {
                 placeholder="React, Next.js, TailwindCSS, JavaScript"
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               />
-
             </div>
 
             {/* DESCRIPTION */}
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-
               <label className="text-sm font-semibold text-gray-700">
                 Job Description
               </label>
@@ -245,27 +231,20 @@ export default function AddPositionPage() {
                 rows={5}
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               />
-
             </div>
-
           </div>
 
           {/* BUTTON */}
           <div className="mt-10 flex justify-end">
-
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
             >
               Submit Position
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }
@@ -279,13 +258,9 @@ function InputField({
   placeholder,
   type = "text",
 }) {
-
   return (
     <div>
-
-      <label className="text-sm font-semibold text-gray-700">
-        {label}
-      </label>
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
 
       <input
         type={type}
@@ -295,7 +270,6 @@ function InputField({
         placeholder={placeholder}
         className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
       />
-
     </div>
   );
 }

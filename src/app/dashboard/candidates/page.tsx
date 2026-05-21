@@ -1,11 +1,9 @@
 "use client";
 import React from "react";
-import DataTable from "@/component/table";
-import ActionButtons from "@/component/button";
 import { useEffect, useState } from "react";
-import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
-
-
+import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import ActionButtons from "../../../component/button";
+import DataTable from "../../../component/table";
 
 const candidateData = [
   {
@@ -90,40 +88,114 @@ const candidateData = [
 ];
 
 export default function CandidatesPage() {
-
-    const [data, setData] = useState([]);
+  const [data, setData] = useState<typeof candidateData>([]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
-
-        const response = await getRequest(
-          `${API_BASE_URL}/candidate`
-        );
+        const response = await getRequest(`${API_BASE_URL}/candidate`);
 
         console.log("Fetched Data: candidate", response);
 
         setData(response);
-
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-
   }, []);
 
   const columns = [
-
     // CANDIDATE
     {
       header: "Candidate",
 
-      render: (item) => (
-        <div className="flex items-center gap-4 min-w-[250px]">
-
+      render: (item: {
+        profileImage: string | Blob | undefined;
+        firstName:
+          | string
+          | number
+          | bigint
+          | boolean
+          | React.ReactElement<
+              unknown,
+              string | React.JSXElementConstructor<any>
+            >
+          | Iterable<React.ReactNode>
+          | React.ReactPortal
+          | Promise<
+              | string
+              | number
+              | bigint
+              | boolean
+              | React.ReactPortal
+              | React.ReactElement<
+                  unknown,
+                  string | React.JSXElementConstructor<any>
+                >
+              | Iterable<React.ReactNode>
+              | null
+              | undefined
+            >
+          | null
+          | undefined;
+        lastName:
+          | string
+          | number
+          | bigint
+          | boolean
+          | React.ReactElement<
+              unknown,
+              string | React.JSXElementConstructor<any>
+            >
+          | Iterable<React.ReactNode>
+          | React.ReactPortal
+          | Promise<
+              | string
+              | number
+              | bigint
+              | boolean
+              | React.ReactPortal
+              | React.ReactElement<
+                  unknown,
+                  string | React.JSXElementConstructor<any>
+                >
+              | Iterable<React.ReactNode>
+              | null
+              | undefined
+            >
+          | null
+          | undefined;
+        candidateId:
+          | string
+          | number
+          | bigint
+          | boolean
+          | React.ReactElement<
+              unknown,
+              string | React.JSXElementConstructor<any>
+            >
+          | Iterable<React.ReactNode>
+          | React.ReactPortal
+          | Promise<
+              | string
+              | number
+              | bigint
+              | boolean
+              | React.ReactPortal
+              | React.ReactElement<
+                  unknown,
+                  string | React.JSXElementConstructor<any>
+                >
+              | Iterable<React.ReactNode>
+              | null
+              | undefined
+            >
+          | null
+          | undefined;
+      }) => (
+        <div className="flex items-center gap-4 min-w-62.5">
           <div className="relative">
             <img
               src={item.profileImage}
@@ -139,7 +211,8 @@ export default function CandidatesPage() {
               "
             />
 
-            <span className="
+            <span
+              className="
               absolute
               -bottom-1
               -right-1
@@ -149,7 +222,8 @@ export default function CandidatesPage() {
               border-2
               border-white
               bg-green-500
-            " />
+            "
+            />
           </div>
 
           <div>
@@ -157,9 +231,7 @@ export default function CandidatesPage() {
               {item.firstName} {item.lastName}
             </h2>
 
-            <p className="text-xs text-gray-500 mt-1">
-              {item.candidateId}
-            </p>
+            <p className="text-xs text-gray-500 mt-1">{item.candidateId}</p>
           </div>
         </div>
       ),
@@ -169,15 +241,11 @@ export default function CandidatesPage() {
     {
       header: "Contact",
 
-      render: (item) => (
-        <div className="min-w-[220px]">
-          <p className="font-medium text-gray-800">
-            {item.email}
-          </p>
+      render: (item: any) => (
+        <div className="min-w-55">
+          <p className="font-medium text-gray-800">{item.email}</p>
 
-          <p className="text-xs text-gray-500 mt-1">
-            {item.phone}
-          </p>
+          <p className="text-xs text-gray-500 mt-1">{item.phone}</p>
         </div>
       ),
     },
@@ -186,8 +254,8 @@ export default function CandidatesPage() {
     {
       header: "Skills",
 
-      render: (item) => (
-        <div className="flex flex-wrap gap-2 min-w-[220px]">
+      render: (item: { skills: any[] }) => (
+        <div className="flex flex-wrap gap-2 min-w-55">
           {item.skills.map((skill, index) => (
             <span
               key={index}
@@ -197,7 +265,7 @@ export default function CandidatesPage() {
                 rounded-full
                 text-xs
                 font-semibold
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-blue-100
                 to-indigo-100
                 text-blue-700
@@ -214,10 +282,8 @@ export default function CandidatesPage() {
     {
       header: "Experience",
 
-      render: (item) => (
-        <div className="font-semibold text-gray-700">
-          {item.experience}
-        </div>
+      render: (item: any) => (
+        <div className="font-semibold text-gray-700">{item.experience}</div>
       ),
     },
 
@@ -225,8 +291,9 @@ export default function CandidatesPage() {
     {
       header: "Education",
 
-      render: (item) => (
-        <div className="
+      render: (item: { education: string }) => (
+        <div
+          className="
           bg-purple-100
           text-purple-700
           px-4
@@ -235,7 +302,8 @@ export default function CandidatesPage() {
           text-xs
           font-bold
           w-fit
-        ">
+        "
+        >
           {item.education}
         </div>
       ),
@@ -245,15 +313,11 @@ export default function CandidatesPage() {
     {
       header: "Position",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-          <p className="font-semibold text-gray-800">
-            {item.appliedPosition}
-          </p>
+      render: (item: { appliedPosition: string }) => (
+        <div className="min-w-45">
+          <p className="font-semibold text-gray-800">{item.appliedPosition}</p>
 
-          <p className="text-xs text-gray-500 mt-1">
-            Applied Role
-          </p>
+          <p className="text-xs text-gray-500 mt-1">Applied Role</p>
         </div>
       ),
     },
@@ -262,16 +326,18 @@ export default function CandidatesPage() {
     {
       header: "Assessment",
 
-      render: (item) => (
-        <div className="
+      render: (item: { assignedAssessment: string }) => (
+        <div
+          className="
           bg-gray-100
           px-4
           py-2
           rounded-2xl
           text-gray-700
           font-medium
-          min-w-[180px]
-        ">
+          min-w-45
+        "
+        >
           {item.assignedAssessment}
         </div>
       ),
@@ -281,22 +347,17 @@ export default function CandidatesPage() {
     {
       header: "Score",
 
-      render: (item) => (
-        <div className="min-w-[160px]">
-
+      render: (item: { totalScore: number }) => (
+        <div className="min-w-40">
           <div className="flex items-center justify-between mb-2">
-            <span className="font-bold text-blue-700">
-              {item.totalScore}%
-            </span>
+            <span className="font-bold text-blue-700">{item.totalScore}%</span>
 
-            <span className="text-xs text-gray-500">
-              Score
-            </span>
+            <span className="text-xs text-gray-500">Score</span>
           </div>
 
           <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600"
+              className="h-full rounded-full bg-linear-to-r from-blue-500 to-indigo-600"
               style={{
                 width: `${item.totalScore}%`,
               }}
@@ -310,8 +371,9 @@ export default function CandidatesPage() {
     {
       header: "Rank",
 
-      render: (item) => (
-        <div className="
+      render: (item: { ranking: number }) => (
+        <div
+          className="
           bg-yellow-100
           text-yellow-700
           px-4
@@ -319,7 +381,8 @@ export default function CandidatesPage() {
           rounded-2xl
           font-bold
           w-fit
-        ">
+        "
+        >
           #{item.ranking}
         </div>
       ),
@@ -329,7 +392,7 @@ export default function CandidatesPage() {
     {
       header: "Status",
 
-      render: (item) => (
+      render: (item: { currentStatus: string }) => (
         <div
           className={`
             px-4
@@ -339,11 +402,12 @@ export default function CandidatesPage() {
             font-bold
             w-fit
 
-            ${item.currentStatus === "Completed"
-              ? "bg-green-100 text-green-700"
-              : item.currentStatus === "Selected"
-                ? "bg-blue-100 text-blue-700"
-                : "bg-gray-100 text-gray-700"
+            ${
+              item.currentStatus === "Completed"
+                ? "bg-green-100 text-green-700"
+                : item.currentStatus === "Selected"
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-gray-100 text-gray-700"
             }
           `}
         >
@@ -356,9 +420,12 @@ export default function CandidatesPage() {
     {
       header: "Links",
 
-      render: (item) => (
-        <div className="flex flex-col gap-2 min-w-[120px]">
-
+      render: (item: {
+        resumeUrl: string;
+        linkedinUrl: string;
+        githubUrl: string;
+      }) => (
+        <div className="flex flex-col gap-2 min-w-30">
           <a
             href={item.resumeUrl}
             target="_blank"
@@ -390,17 +457,14 @@ export default function CandidatesPage() {
     {
       header: "Created",
 
-      render: (item) => (
-        <div className="text-gray-500 font-medium">
-          {item.createdAt}
-        </div>
+      render: (item: any) => (
+        <div className="text-gray-500 font-medium">{item.createdAt}</div>
       ),
     },
   ];
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
-
       <ActionButtons
         addUrl="/dashboard/candidates/add"
         importUrl="/dashboard/candidates/import"
@@ -409,13 +473,11 @@ export default function CandidatesPage() {
         // showExport={false}
       />
 
-
       <DataTable
         title="Candidates"
-        columns={columns}
+        columns={columns || []}
         data={candidateData}
-
-        onEdit={(item) => {
+        onEdit={(item: any) => {
           console.log("Edit Data:", item);
         }}
       />

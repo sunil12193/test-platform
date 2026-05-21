@@ -1,11 +1,8 @@
 "use client";
-
-import DataTable from "@/component/table";
-import ActionButtons from "@/component/button";
 import { useEffect, useState } from "react";
-import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
-
-
+import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import ActionButtons from "../../../component/button";
+import DataTable from "../../../component/table";
 
 const billingPlansData = [
   {
@@ -19,11 +16,7 @@ const billingPlansData = [
 
     activeAssessments: 28,
 
-    invoiceHistory: [
-      "INV-2026-001",
-      "INV-2026-002",
-      "INV-2026-003",
-    ],
+    invoiceHistory: ["INV-2026-001", "INV-2026-002", "INV-2026-003"],
 
     paymentStatus: "Paid",
 
@@ -41,10 +34,7 @@ const billingPlansData = [
 
     activeAssessments: 7,
 
-    invoiceHistory: [
-      "INV-2026-011",
-      "INV-2026-012",
-    ],
+    invoiceHistory: ["INV-2026-011", "INV-2026-012"],
 
     paymentStatus: "Pending",
 
@@ -53,48 +43,38 @@ const billingPlansData = [
 ];
 
 export default function BillingPlansPage() {
+  const [data, setData] = useState([]);
 
-    const [data, setData] = useState([]);
-  
-    useEffect(() => {
-  
-      const fetchData = async () => {
-        try {
-  
-          const response = await getRequest(
-            `${API_BASE_URL}/billing`
-          );
-  
-          console.log("Fetched Data: billing", response);
-  
-          setData(response);
-  
-        } catch (error) {
-          console.log(error);
-        }
-      };
-  
-      fetchData();
-  
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getRequest(`${API_BASE_URL}/billing`);
 
+        console.log("Fetched Data: billing", response);
+
+        setData(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
-
     // COMPANY
     {
       header: "Company",
 
-      render: (item) => (
-        <div className="min-w-[280px]">
-
+      render: (item: any) => (
+        <div className="min-w-70">
           <div className="flex items-start gap-4">
-
-            <div className="
+            <div
+              className="
               w-14
               h-14
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r
               from-violet-500
               to-purple-600
               flex
@@ -105,22 +85,18 @@ export default function BillingPlansPage() {
               text-lg
               shadow-lg
               shrink-0
-            ">
+            "
+            >
               C
             </div>
 
             <div>
-
               <h2 className="font-bold text-gray-900 text-base">
                 {item.companyId}
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
-                SaaS Client Account
-              </p>
-
+              <p className="text-xs text-gray-500 mt-1">SaaS Client Account</p>
             </div>
-
           </div>
         </div>
       ),
@@ -130,11 +106,11 @@ export default function BillingPlansPage() {
     {
       header: "Current Plan",
 
-      render: (item) => (
-        <div className="min-w-[220px]">
-
-          <div className="
-            bg-gradient-to-r
+      render: (item: any) => (
+        <div className="min-w-55">
+          <div
+            className="
+            bg-linear-to-r
             from-indigo-500
             to-blue-600
             text-white
@@ -142,18 +118,14 @@ export default function BillingPlansPage() {
             py-4
             rounded-2xl
             shadow-md
-          ">
-
-            <h3 className="font-bold text-base">
-              {item.currentPlan}
-            </h3>
+          "
+          >
+            <h3 className="font-bold text-base">{item.currentPlan}</h3>
 
             <p className="text-xs text-indigo-100 mt-1">
               {item.billingCycle} Billing
             </p>
-
           </div>
-
         </div>
       ),
     },
@@ -162,16 +134,13 @@ export default function BillingPlansPage() {
     {
       header: "Users & Assessments",
 
-      render: (item) => (
-        <div className="min-w-[240px] space-y-3">
-
+      render: (item: any) => (
+        <div className="min-w-60 space-y-3">
           <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-600">Total Users</span>
 
-            <span className="text-sm text-gray-600">
-              Total Users
-            </span>
-
-            <span className="
+            <span
+              className="
               bg-blue-100
               text-blue-700
               px-3
@@ -179,19 +148,17 @@ export default function BillingPlansPage() {
               rounded-full
               text-xs
               font-bold
-            ">
+            "
+            >
               {item.totalUsers}
             </span>
-
           </div>
 
           <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-600">Active Assessments</span>
 
-            <span className="text-sm text-gray-600">
-              Active Assessments
-            </span>
-
-            <span className="
+            <span
+              className="
               bg-green-100
               text-green-700
               px-3
@@ -199,12 +166,11 @@ export default function BillingPlansPage() {
               rounded-full
               text-xs
               font-bold
-            ">
+            "
+            >
               {item.activeAssessments}
             </span>
-
           </div>
-
         </div>
       ),
     },
@@ -213,15 +179,16 @@ export default function BillingPlansPage() {
     {
       header: "Invoice History",
 
-      render: (item) => (
-        <div className="
+      render: (item: any) => (
+        <div
+          className="
           flex
           flex-wrap
           gap-2
-          min-w-[280px]
-        ">
-
-          {item.invoiceHistory.map((invoice, index) => (
+          min-w-70
+        "
+        >
+          {item.invoiceHistory.map((invoice: any, index: any) => (
             <span
               key={index}
               className="
@@ -230,7 +197,7 @@ export default function BillingPlansPage() {
                 rounded-xl
                 text-xs
                 font-semibold
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-gray-100
                 to-gray-200
                 text-gray-700
@@ -240,7 +207,6 @@ export default function BillingPlansPage() {
               {invoice}
             </span>
           ))}
-
         </div>
       ),
     },
@@ -249,7 +215,7 @@ export default function BillingPlansPage() {
     {
       header: "Payment Status",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-5
@@ -260,11 +226,12 @@ export default function BillingPlansPage() {
             w-fit
             shadow-sm
 
-            ${item.paymentStatus === "Paid"
-              ? "bg-green-100 text-green-700"
-              : item.paymentStatus === "Pending"
-                ? "bg-yellow-100 text-yellow-700"
-                : "bg-red-100 text-red-700"
+            ${
+              item.paymentStatus === "Paid"
+                ? "bg-green-100 text-green-700"
+                : item.paymentStatus === "Pending"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-red-100 text-red-700"
             }
           `}
         >
@@ -277,29 +244,23 @@ export default function BillingPlansPage() {
     {
       header: "Renewal Date",
 
-      render: (item) => (
-        <div className="min-w-[220px]">
-
-          <div className="
-            bg-gradient-to-r
+      render: (item: any) => (
+        <div className="min-w-55">
+          <div
+            className="
+            bg-linear-to-r
             from-orange-100
             to-yellow-100
             rounded-2xl
             px-5
             py-4
             shadow-sm
-          ">
+          "
+          >
+            <h3 className="font-bold text-gray-800">{item.renewalDate}</h3>
 
-            <h3 className="font-bold text-gray-800">
-              {item.renewalDate}
-            </h3>
-
-            <p className="text-xs text-gray-600 mt-1">
-              Subscription Renewal
-            </p>
-
+            <p className="text-xs text-gray-600 mt-1">Subscription Renewal</p>
           </div>
-
         </div>
       ),
     },
@@ -308,43 +269,32 @@ export default function BillingPlansPage() {
     {
       header: "Plan Usage",
 
-      render: (item) => {
-
+      render: (item: any) => {
         const usage =
-          item.totalUsers > 300
-            ? 85
-            : item.totalUsers > 100
-              ? 60
-              : 35;
+          item.totalUsers > 300 ? 85 : item.totalUsers > 100 ? 60 : 35;
 
         return (
-          <div className="min-w-[240px]">
-
+          <div className="min-w-60">
             <div className="flex items-center justify-between mb-2">
+              <span className="font-bold text-indigo-700">{usage}%</span>
 
-              <span className="font-bold text-indigo-700">
-                {usage}%
-              </span>
-
-              <span className="text-xs text-gray-500">
-                Resource Usage
-              </span>
-
+              <span className="text-xs text-gray-500">Resource Usage</span>
             </div>
 
-            <div className="
+            <div
+              className="
               w-full
               h-3
               rounded-full
               bg-gray-200
               overflow-hidden
-            ">
-
+            "
+            >
               <div
                 className="
                   h-full
                   rounded-full
-                  bg-gradient-to-r
+                  bg-linear-to-r
                   from-indigo-500
                   to-purple-600
                 "
@@ -352,9 +302,7 @@ export default function BillingPlansPage() {
                   width: `${usage}%`,
                 }}
               />
-
             </div>
-
           </div>
         );
       },
@@ -363,13 +311,12 @@ export default function BillingPlansPage() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-
       <ActionButtons
         addUrl="/dashboard/billing/add"
         importUrl="/dashboard/billing/import"
         exportUrl="/dashboard/billing/export"
 
-      // showExport={false}
+        // showExport={false}
       />
 
       <DataTable
@@ -377,7 +324,6 @@ export default function BillingPlansPage() {
         columns={columns}
         data={billingPlansData}
       />
-
     </div>
   );
 }

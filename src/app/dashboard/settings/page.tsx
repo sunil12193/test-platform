@@ -1,16 +1,14 @@
 "use client";
-
-import DataTable from "@/component/table";
-import ActionButtons from "@/component/button";
 import { useEffect, useState } from "react";
-import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
+import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import ActionButtons from "../../../component/button";
+import DataTable from "../../../component/table";
 
 const settingsData = [
   {
     companyName: "TechHire Solutions",
 
-    companyLogo:
-      "https://images.unsplash.com/photo-1560179707-f14e90ef3623",
+    companyLogo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623",
 
     supportEmail: "support@techhire.com",
 
@@ -32,8 +30,7 @@ const settingsData = [
   {
     companyName: "NextGen Recruiters",
 
-    companyLogo:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978",
+    companyLogo: "https://images.unsplash.com/photo-1552664730-d307ca884978",
 
     supportEmail: "help@nextgenrecruiters.com",
 
@@ -54,42 +51,32 @@ const settingsData = [
 ];
 
 export default function SettingsPage() {
-
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
-
-        const response = await getRequest(
-          `${API_BASE_URL}/setting`
-        );
+        const response = await getRequest(`${API_BASE_URL}/setting`);
 
         console.log("Fetched Data setting :", response);
 
         setData(response);
-
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-
   }, []);
 
   const columns = [
-
     // COMPANY
     {
       header: "Company",
 
-      render: (item) => (
+      render: (item: any) => (
         <div className="min-w-[300px]">
-
           <div className="flex items-center gap-4">
-
             <img
               src={item.companyLogo}
               alt="company-logo"
@@ -105,19 +92,13 @@ export default function SettingsPage() {
             />
 
             <div>
-
               <h2 className="font-bold text-gray-900 text-base">
                 {item.companyName}
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
-                Company Workspace
-              </p>
-
+              <p className="text-xs text-gray-500 mt-1">Company Workspace</p>
             </div>
-
           </div>
-
         </div>
       ),
     },
@@ -126,26 +107,20 @@ export default function SettingsPage() {
     {
       header: "Support Details",
 
-      render: (item) => (
-        <div className="min-w-[260px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-65">
+          <div
+            className="
             bg-gray-100
             rounded-2xl
             px-4
             py-4
-          ">
+          "
+          >
+            <h3 className="font-semibold text-gray-800">{item.supportEmail}</h3>
 
-            <h3 className="font-semibold text-gray-800">
-              {item.supportEmail}
-            </h3>
-
-            <p className="text-xs text-gray-500 mt-2">
-              Support Contact Email
-            </p>
-
+            <p className="text-xs text-gray-500 mt-2">Support Contact Email</p>
           </div>
-
         </div>
       ),
     },
@@ -154,10 +129,10 @@ export default function SettingsPage() {
     {
       header: "Timezone",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-45">
+          <div
+            className="
             bg-blue-100
             text-blue-700
             px-5
@@ -165,10 +140,10 @@ export default function SettingsPage() {
             rounded-2xl
             font-semibold
             shadow-sm
-          ">
+          "
+          >
             {item.timezone}
           </div>
-
         </div>
       ),
     },
@@ -177,11 +152,9 @@ export default function SettingsPage() {
     {
       header: "Branding",
 
-      render: (item) => (
-        <div className="min-w-[220px]">
-
+      render: (item: any) => (
+        <div className="min-w-55">
           <div className="flex items-center gap-4">
-
             <div
               className="
                 w-14
@@ -197,19 +170,11 @@ export default function SettingsPage() {
             />
 
             <div>
+              <h3 className="font-bold text-gray-800">{item.brandingColor}</h3>
 
-              <h3 className="font-bold text-gray-800">
-                {item.brandingColor}
-              </h3>
-
-              <p className="text-xs text-gray-500 mt-1">
-                Brand Primary Color
-              </p>
-
+              <p className="text-xs text-gray-500 mt-1">Brand Primary Color</p>
             </div>
-
           </div>
-
         </div>
       ),
     },
@@ -218,9 +183,8 @@ export default function SettingsPage() {
     {
       header: "Proctoring",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
+      render: (item: any) => (
+        <div className="min-w-45">
           <div
             className={`
               px-4
@@ -237,11 +201,8 @@ export default function SettingsPage() {
               }
             `}
           >
-            {item.enableProctoring
-              ? "Enabled"
-              : "Disabled"}
+            {item.enableProctoring ? "Enabled" : "Disabled"}
           </div>
-
         </div>
       ),
     },
@@ -250,9 +211,8 @@ export default function SettingsPage() {
     {
       header: "Retest Access",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
+      render: (item: any) => (
+        <div className="min-w-45">
           <div
             className={`
               px-4
@@ -269,11 +229,8 @@ export default function SettingsPage() {
               }
             `}
           >
-            {item.allowRetest
-              ? "Allowed"
-              : "Restricted"}
+            {item.allowRetest ? "Allowed" : "Restricted"}
           </div>
-
         </div>
       ),
     },
@@ -282,9 +239,8 @@ export default function SettingsPage() {
     {
       header: "Notifications",
 
-      render: (item) => (
-        <div className="min-w-[200px]">
-
+      render: (item: any) => (
+        <div className="min-w-50">
           <div
             className={`
               px-4
@@ -301,11 +257,8 @@ export default function SettingsPage() {
               }
             `}
           >
-            {item.emailNotifications
-              ? "Email Enabled"
-              : "Email Disabled"}
+            {item.emailNotifications ? "Email Enabled" : "Email Disabled"}
           </div>
-
         </div>
       ),
     },
@@ -314,11 +267,11 @@ export default function SettingsPage() {
     {
       header: "Custom Domain",
 
-      render: (item) => (
-        <div className="min-w-[260px]">
-
-          <div className="
-            bg-gradient-to-r
+      render: (item: any) => (
+        <div className="min-w-65">
+          <div
+            className="
+            bg-linear-to-r
             from-indigo-100
             to-purple-100
             text-indigo-700
@@ -327,10 +280,10 @@ export default function SettingsPage() {
             py-4
             font-semibold
             shadow-sm
-          ">
+          "
+          >
             {item.customDomain}
           </div>
-
         </div>
       ),
     },
@@ -339,26 +292,20 @@ export default function SettingsPage() {
     {
       header: "Created At",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-45">
+          <div
+            className="
             bg-gray-100
             rounded-2xl
             px-4
             py-4
-          ">
+          "
+          >
+            <h3 className="font-semibold text-gray-800">{item.createdAt}</h3>
 
-            <h3 className="font-semibold text-gray-800">
-              {item.createdAt}
-            </h3>
-
-            <p className="text-xs text-gray-500 mt-1">
-              Workspace Created
-            </p>
-
+            <p className="text-xs text-gray-500 mt-1">Workspace Created</p>
           </div>
-
         </div>
       ),
     },
@@ -366,13 +313,11 @@ export default function SettingsPage() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-
       <DataTable
         title="Platform Settings"
         columns={columns}
         data={settingsData}
       />
-
     </div>
   );
 }

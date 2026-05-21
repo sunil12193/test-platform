@@ -12,11 +12,11 @@ export default function ActionButtons({
   showImport = true,
   showExport = true,
 }) {
-
   const router = useRouter();
 
   return (
-    <div className="
+    <div
+      className="
       flex
       flex-col
       md:flex-row
@@ -25,11 +25,10 @@ export default function ActionButtons({
       gap-4
       mb-4
       w-full
-    ">
-
+    "
+    >
       {/* LEFT SIDE */}
       <div>
-
         {showAdd && (
           <button
             onClick={() => router.push(addUrl)}
@@ -40,7 +39,7 @@ export default function ActionButtons({
               px-6
               py-3
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r
               from-blue-600
               to-indigo-600
               text-white
@@ -56,12 +55,10 @@ export default function ActionButtons({
             Add
           </button>
         )}
-
       </div>
 
       {/* RIGHT SIDE */}
       <div className="flex items-center gap-4 ml-auto">
-
         {/* IMPORT */}
         {showImport && (
           <button
@@ -101,7 +98,7 @@ export default function ActionButtons({
               px-6
               py-3
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r
               from-emerald-500
               to-green-600
               text-white
@@ -117,9 +114,7 @@ export default function ActionButtons({
             Export
           </button>
         )}
-
       </div>
-
     </div>
   );
 }

@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 export default function AddCampaignPage() {
-
   const [formData, setFormData] = useState({
     campaignId: "",
 
@@ -49,11 +48,11 @@ export default function AddCampaignPage() {
 
       assignedAssessments: formData.assignedAssessments
         .split(",")
-        .map((item) => item.trim()),
+        .map((item: any) => item.trim()),
 
       candidateIds: formData.candidateIds
         .split(",")
-        .map((item) => item.trim()),
+        .map((item: any) => item.trim()),
     };
 
     console.log(finalData);
@@ -63,7 +62,6 @@ export default function AddCampaignPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
       <div
         className="
           max-w-7xl
@@ -76,20 +74,17 @@ export default function AddCampaignPage() {
           border-gray-200
         "
       >
-
         {/* HEADER */}
         <div
           className="
-            bg-gradient-to-r
+            bg-linear-to-r
             from-blue-600
             to-indigo-600
             px-8
             py-6
           "
         >
-          <h1 className="text-3xl font-bold text-white">
-            Add New Campaign
-          </h1>
+          <h1 className="text-3xl font-bold text-white">Add New Campaign</h1>
 
           <p className="text-blue-100 mt-2">
             Fill all campaign details carefully
@@ -97,13 +92,8 @@ export default function AddCampaignPage() {
         </div>
 
         {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="p-8"
-        >
-
+        <form onSubmit={handleSubmit} className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
             {/* CAMPAIGN ID */}
             <InputField
               label="Campaign ID"
@@ -133,7 +123,6 @@ export default function AddCampaignPage() {
 
             {/* ASSIGNED ASSESSMENTS */}
             <div className="col-span-1 md:col-span-2">
-
               <label className="text-sm font-semibold text-gray-700">
                 Assigned Assessments
               </label>
@@ -157,12 +146,10 @@ export default function AddCampaignPage() {
                   focus:ring-blue-500
                 "
               />
-
             </div>
 
             {/* CANDIDATE IDS */}
             <div className="col-span-1 md:col-span-2">
-
               <label className="text-sm font-semibold text-gray-700">
                 Candidate IDs
               </label>
@@ -186,7 +173,6 @@ export default function AddCampaignPage() {
                   focus:ring-blue-500
                 "
               />
-
             </div>
 
             {/* TOTAL INVITED */}
@@ -249,7 +235,6 @@ export default function AddCampaignPage() {
 
             {/* STATUS */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Status
               </label>
@@ -276,7 +261,6 @@ export default function AddCampaignPage() {
                 <option>Draft</option>
                 <option>Paused</option>
               </select>
-
             </div>
 
             {/* CREATED BY */}
@@ -287,19 +271,17 @@ export default function AddCampaignPage() {
               onChange={handleChange}
               placeholder="Sunil Kumar"
             />
-
           </div>
 
           {/* SUBMIT BUTTON */}
           <div className="mt-10 flex justify-end">
-
             <button
               type="submit"
               className="
                 px-8
                 py-4
                 rounded-2xl
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-blue-600
                 to-indigo-600
                 text-white
@@ -312,13 +294,9 @@ export default function AddCampaignPage() {
             >
               Submit Campaign
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }
@@ -334,10 +312,7 @@ function InputField({
 }) {
   return (
     <div>
-
-      <label className="text-sm font-semibold text-gray-700">
-        {label}
-      </label>
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
 
       <input
         type={type}
@@ -358,7 +333,6 @@ function InputField({
           focus:ring-blue-500
         "
       />
-
     </div>
   );
 }

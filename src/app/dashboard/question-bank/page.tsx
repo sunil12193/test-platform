@@ -1,11 +1,8 @@
 "use client";
-
-import DataTable from "@/component/table";
-import ActionButtons from "@/component/button";
 import { useEffect, useState } from "react";
-import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
-
-
+import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import ActionButtons from "../../../component/button";
+import DataTable from "../../../component/table";
 
 const questionBankData = [
   {
@@ -21,12 +18,7 @@ const questionBankData = [
     question:
       "Which React Hook is used for managing state inside functional components?",
 
-    options: [
-      "useFetch",
-      "useState",
-      "useReducer",
-      "useMemo",
-    ],
+    options: ["useFetch", "useState", "useReducer", "useMemo"],
 
     correctAnswer: "useState",
 
@@ -81,47 +73,38 @@ const questionBankData = [
 ];
 
 export default function QuestionBankPage() {
+  const [data, setData] = useState([]);
 
-    const [data, setData] = useState([]);
-  
-    useEffect(() => {
-  
-      const fetchData = async () => {
-        try {
-  
-          const response = await getRequest(
-            `${API_BASE_URL}/question-bank`
-          );
-  
-          console.log("Fetched Data: Question Bank ", response);
-  
-          setData(response);
-  
-        } catch (error) {
-          console.log(error);
-        }
-      };
-  
-      fetchData();
-  
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getRequest(`${API_BASE_URL}/question-bank`);
+
+        console.log("Fetched Data: Question Bank ", response);
+
+        setData(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
-
     // QUESTION
     {
       header: "Question",
 
-      render: (item) => (
-        <div className="min-w-[380px]">
-
+      render: (item: any) => (
+        <div className="min-w-95">
           <div className="flex items-start gap-4">
-
-            <div className="
+            <div
+              className="
               w-14
               h-14
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r
               from-purple-500
               to-indigo-600
               flex
@@ -131,7 +114,8 @@ export default function QuestionBankPage() {
               font-bold
               shadow-lg
               shrink-0
-            ">
+            "
+            >
               Q
             </div>
 
@@ -140,9 +124,7 @@ export default function QuestionBankPage() {
                 {item.question}
               </h2>
 
-              <p className="text-xs text-gray-500 mt-2">
-                {item.questionId}
-              </p>
+              <p className="text-xs text-gray-500 mt-2">{item.questionId}</p>
             </div>
           </div>
         </div>
@@ -153,7 +135,7 @@ export default function QuestionBankPage() {
     {
       header: "Type",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-4
@@ -163,11 +145,12 @@ export default function QuestionBankPage() {
             font-bold
             w-fit
 
-            ${item.questionType === "Coding"
-              ? "bg-indigo-100 text-indigo-700"
-              : item.questionType === "MCQ"
-                ? "bg-blue-100 text-blue-700"
-                : "bg-yellow-100 text-yellow-700"
+            ${
+              item.questionType === "Coding"
+                ? "bg-indigo-100 text-indigo-700"
+                : item.questionType === "MCQ"
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-yellow-100 text-yellow-700"
             }
           `}
         >
@@ -180,15 +163,11 @@ export default function QuestionBankPage() {
     {
       header: "Category",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-          <h3 className="font-bold text-gray-800">
-            {item.category}
-          </h3>
+      render: (item: any) => (
+        <div className="min-w-45">
+          <h3 className="font-bold text-gray-800">{item.category}</h3>
 
-          <p className="text-xs text-gray-500 mt-1">
-            {item.subCategory}
-          </p>
+          <p className="text-xs text-gray-500 mt-1">{item.subCategory}</p>
         </div>
       ),
     },
@@ -197,7 +176,7 @@ export default function QuestionBankPage() {
     {
       header: "Difficulty",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-4
@@ -207,11 +186,12 @@ export default function QuestionBankPage() {
             font-bold
             w-fit
 
-            ${item.difficultyLevel === "Hard"
-              ? "bg-red-100 text-red-700"
-              : item.difficultyLevel === "Medium"
-                ? "bg-yellow-100 text-yellow-700"
-                : "bg-green-100 text-green-700"
+            ${
+              item.difficultyLevel === "Hard"
+                ? "bg-red-100 text-red-700"
+                : item.difficultyLevel === "Medium"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-green-100 text-green-700"
             }
           `}
         >
@@ -224,11 +204,10 @@ export default function QuestionBankPage() {
     {
       header: "Options",
 
-      render: (item) => (
-        <div className="space-y-2 min-w-[260px]">
-
+      render: (item: any) => (
+        <div className="space-y-2 min-w-65">
           {item.options.length > 0 ? (
-            item.options.map((option, index) => (
+            item.options.map((option: any, index: any) => (
               <div
                 key={index}
                 className={`
@@ -238,9 +217,10 @@ export default function QuestionBankPage() {
                   text-sm
                   border
 
-                  ${option === item.correctAnswer
-                    ? "bg-green-50 border-green-200 text-green-700 font-semibold"
-                    : "bg-gray-50 border-gray-200 text-gray-600"
+                  ${
+                    option === item.correctAnswer
+                      ? "bg-green-50 border-green-200 text-green-700 font-semibold"
+                      : "bg-gray-50 border-gray-200 text-gray-600"
                   }
                 `}
               >
@@ -248,7 +228,8 @@ export default function QuestionBankPage() {
               </div>
             ))
           ) : (
-            <div className="
+            <div
+              className="
               bg-indigo-50
               text-indigo-700
               px-4
@@ -256,7 +237,8 @@ export default function QuestionBankPage() {
               rounded-xl
               text-sm
               font-medium
-            ">
+            "
+            >
               Coding Based Question
             </div>
           )}
@@ -268,8 +250,9 @@ export default function QuestionBankPage() {
     {
       header: "Marks",
 
-      render: (item) => (
-        <div className="
+      render: (item: any) => (
+        <div
+          className="
           bg-blue-100
           text-blue-700
           px-4
@@ -277,7 +260,8 @@ export default function QuestionBankPage() {
           rounded-2xl
           font-bold
           w-fit
-        ">
+        "
+        >
           {item.marks} Marks
         </div>
       ),
@@ -287,10 +271,9 @@ export default function QuestionBankPage() {
     {
       header: "Tags",
 
-      render: (item) => (
-        <div className="flex flex-wrap gap-2 min-w-[220px]">
-
-          {item.tags.map((tag, index) => (
+      render: (item: any) => (
+        <div className="flex flex-wrap gap-2 min-w-55">
+          {item.tags.map((tag: any, index: any) => (
             <span
               key={index}
               className="
@@ -299,7 +282,7 @@ export default function QuestionBankPage() {
                 rounded-full
                 text-xs
                 font-semibold
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-gray-100
                 to-gray-200
                 text-gray-700
@@ -316,23 +299,17 @@ export default function QuestionBankPage() {
     {
       header: "Performance",
 
-      render: (item) => {
-
+      render: (item: any) => {
         const percentage = Math.round(
-          (item.correctAttempts / item.totalAttempts) * 100
+          (item.correctAttempts / item.totalAttempts) * 100,
         );
 
         return (
-          <div className="min-w-[220px]">
-
+          <div className="min-w-55">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-indigo-700">
-                {percentage}%
-              </span>
+              <span className="font-bold text-indigo-700">{percentage}%</span>
 
-              <span className="text-xs text-gray-500">
-                Accuracy
-              </span>
+              <span className="text-xs text-gray-500">Accuracy</span>
             </div>
 
             <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
@@ -340,7 +317,7 @@ export default function QuestionBankPage() {
                 className="
                   h-full
                   rounded-full
-                  bg-gradient-to-r
+                  bg-linear-to-r
                   from-indigo-500
                   to-purple-600
                 "
@@ -351,13 +328,9 @@ export default function QuestionBankPage() {
             </div>
 
             <div className="flex justify-between mt-3 text-xs text-gray-500">
-              <span>
-                Attempts: {item.totalAttempts}
-              </span>
+              <span>Attempts: {item.totalAttempts}</span>
 
-              <span>
-                Correct: {item.correctAttempts}
-              </span>
+              <span>Correct: {item.correctAttempts}</span>
             </div>
           </div>
         );
@@ -368,7 +341,7 @@ export default function QuestionBankPage() {
     {
       header: "Status",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-4
@@ -378,9 +351,10 @@ export default function QuestionBankPage() {
             font-bold
             w-fit
 
-            ${item.status === "Published"
-              ? "bg-green-100 text-green-700"
-              : "bg-yellow-100 text-yellow-700"
+            ${
+              item.status === "Published"
+                ? "bg-green-100 text-green-700"
+                : "bg-yellow-100 text-yellow-700"
             }
           `}
         >
@@ -393,15 +367,11 @@ export default function QuestionBankPage() {
     {
       header: "Created",
 
-      render: (item) => (
-        <div className="min-w-[160px]">
-          <p className="font-semibold text-gray-700">
-            {item.createdBy}
-          </p>
+      render: (item: any) => (
+        <div className="min-w-40">
+          <p className="font-semibold text-gray-700">{item.createdBy}</p>
 
-          <p className="text-xs text-gray-500 mt-1">
-            {item.createdAt}
-          </p>
+          <p className="text-xs text-gray-500 mt-1">{item.createdAt}</p>
         </div>
       ),
     },
@@ -409,22 +379,19 @@ export default function QuestionBankPage() {
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
-
       <ActionButtons
         addUrl="/dashboard/question-bank/add"
         importUrl="/dashboard/question-bank/import"
         exportUrl="/dashboard/question-bank/export"
 
-      // showExport={false}
+        // showExport={false}
       />
-
 
       <DataTable
         title="Question Bank"
         columns={columns}
         data={questionBankData}
-
-        onEdit={(item) => {
+        onEdit={(item: any) => {
           console.log("Edit Data:", item);
         }}
       />

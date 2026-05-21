@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 export default function AddInvitationPage() {
-
   const [formData, setFormData] = useState({
     invitationId: "",
 
@@ -26,15 +25,11 @@ export default function AddInvitationPage() {
 
   // HANDLE CHANGE
   const handleChange = (e) => {
-
     const { name, value, type, checked } = e.target;
 
     setFormData({
       ...formData,
-      [name]:
-        type === "checkbox"
-          ? checked
-          : value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -49,7 +44,6 @@ export default function AddInvitationPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
       <div
         className="
           max-w-5xl
@@ -62,36 +56,26 @@ export default function AddInvitationPage() {
           border-gray-200
         "
       >
-
         {/* HEADER */}
         <div
           className="
-            bg-gradient-to-r
+            bg-linear-to-r
             from-blue-600
             to-indigo-600
             px-8
             py-6
           "
         >
-
-          <h1 className="text-3xl font-bold text-white">
-            Add New Invitation
-          </h1>
+          <h1 className="text-3xl font-bold text-white">Add New Invitation</h1>
 
           <p className="text-blue-100 mt-2">
             Fill all invitation details carefully
           </p>
-
         </div>
 
         {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="p-8"
-        >
-
+        <form onSubmit={handleSubmit} className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
             {/* INVITATION ID */}
             <InputField
               label="Invitation ID"
@@ -158,7 +142,6 @@ export default function AddInvitationPage() {
 
             {/* STATUS */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Status
               </label>
@@ -185,12 +168,10 @@ export default function AddInvitationPage() {
                 <option>Completed</option>
                 <option>Expired</option>
               </select>
-
             </div>
 
             {/* REMINDER SENT */}
             <div className="flex items-center gap-3 mt-8">
-
               <input
                 type="checkbox"
                 name="reminderSent"
@@ -202,21 +183,18 @@ export default function AddInvitationPage() {
               <label className="text-sm font-semibold text-gray-700">
                 Reminder Sent
               </label>
-
             </div>
-
           </div>
 
           {/* SUBMIT BUTTON */}
           <div className="mt-10 flex justify-end">
-
             <button
               type="submit"
               className="
                 px-8
                 py-4
                 rounded-2xl
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-blue-600
                 to-indigo-600
                 text-white
@@ -229,13 +207,9 @@ export default function AddInvitationPage() {
             >
               Submit Invitation
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }
@@ -251,10 +225,7 @@ function InputField({
 }) {
   return (
     <div>
-
-      <label className="text-sm font-semibold text-gray-700">
-        {label}
-      </label>
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
 
       <input
         type={type}
@@ -275,7 +246,6 @@ function InputField({
           focus:ring-blue-500
         "
       />
-
     </div>
   );
 }

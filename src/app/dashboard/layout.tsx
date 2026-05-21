@@ -1,16 +1,15 @@
 "use client";
 
-import NavbarDashboard from "@/component/navbarDashbord";
-import Sidebar from "@/component/sideBar";
-import { navItems } from "@/util/navItem";
+import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import { navItems } from "../../util/navItem";
+import NavbarDashboard from "../../component/navbarDashbord";
+import Sidebar from "../../component/sideBar";
 
-
-export default function DashboardLayout({ children }) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
-  const currentItem =
-    navItems.find((item) => item.href === pathname);
+  const currentItem = navItems.find((item: any) => item.href === pathname);
 
   const title = currentItem?.label || "Dashboard";
 
@@ -25,9 +24,7 @@ export default function DashboardLayout({ children }) {
         <Sidebar />
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-7">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

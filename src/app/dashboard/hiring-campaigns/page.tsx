@@ -1,10 +1,15 @@
 "use client";
-
-import DataTable from "@/component/table";
-import ActionButtons from "@/component/button";
-import { useEffect, useState } from "react";
-import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
-
+import {
+  useEffect,
+  useState,
+  type JSXElementConstructor,
+  type ReactElement,
+  type ReactNode,
+  type ReactPortal,
+} from "react";
+import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import ActionButtons from "../../../component/button";
+import DataTable from "../../../component/table";
 
 const hiringCampaignData = [
   {
@@ -20,11 +25,7 @@ const hiringCampaignData = [
       "Frontend Coding Round",
     ],
 
-    candidateIds: [
-      "CND-1001",
-      "CND-1002",
-      "CND-1003",
-    ],
+    candidateIds: ["CND-1001", "CND-1002", "CND-1003"],
 
     totalInvited: 150,
     totalCompleted: 96,
@@ -48,15 +49,9 @@ const hiringCampaignData = [
 
     positionId: "POS-1002",
 
-    assignedAssessments: [
-      "Node.js Assessment",
-      "MongoDB Quiz",
-    ],
+    assignedAssessments: ["Node.js Assessment", "MongoDB Quiz"],
 
-    candidateIds: [
-      "CND-2001",
-      "CND-2002",
-    ],
+    candidateIds: ["CND-2001", "CND-2002"],
 
     totalInvited: 80,
     totalCompleted: 80,
@@ -75,47 +70,38 @@ const hiringCampaignData = [
 ];
 
 export default function HiringCampaignsPage() {
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
-
-        const response = await getRequest(
-          `${API_BASE_URL}/hiring-campaigns`
-        );
+        const response = await getRequest(`${API_BASE_URL}/hiring-campaigns`);
 
         console.log("Fetched Data: hiring campaigns", response);
 
         setData(response);
-
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-
   }, []);
 
   const columns = [
-
     // CAMPAIGN
     {
       header: "Campaign",
 
-      render: (item) => (
+      render: (item: any) => (
         <div className="min-w-[320px]">
-
           <div className="flex items-start gap-4">
-
-            <div className="
+            <div
+              className="
               w-14
               h-14
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r
               from-pink-500
               to-purple-600
               flex
@@ -126,7 +112,8 @@ export default function HiringCampaignsPage() {
               text-lg
               shadow-lg
               shrink-0
-            ">
+            "
+            >
               {item.campaignName.charAt(0)}
             </div>
 
@@ -135,12 +122,11 @@ export default function HiringCampaignsPage() {
                 {item.campaignName}
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
-                {item.campaignId}
-              </p>
+              <p className="text-xs text-gray-500 mt-1">{item.campaignId}</p>
 
               <div className="mt-3">
-                <span className="
+                <span
+                  className="
                   bg-blue-100
                   text-blue-700
                   px-3
@@ -148,7 +134,8 @@ export default function HiringCampaignsPage() {
                   rounded-full
                   text-xs
                   font-semibold
-                ">
+                "
+                >
                   Position : {item.positionId}
                 </span>
               </div>
@@ -162,15 +149,16 @@ export default function HiringCampaignsPage() {
     {
       header: "Assessments",
 
-      render: (item) => (
-        <div className="
+      render: (item: any) => (
+        <div
+          className="
           flex
           flex-wrap
           gap-2
-          min-w-[280px]
-        ">
-
-          {item.assignedAssessments.map((assessment, index) => (
+          min-w-70
+        "
+        >
+          {item.assignedAssessments.map((assessment: any, index: any) => (
             <span
               key={index}
               className="
@@ -179,7 +167,7 @@ export default function HiringCampaignsPage() {
                 rounded-full
                 text-xs
                 font-semibold
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-indigo-100
                 to-blue-100
                 text-indigo-700
@@ -196,15 +184,13 @@ export default function HiringCampaignsPage() {
     {
       header: "Candidates",
 
-      render: (item) => (
-        <div className="min-w-[220px]">
-
+      render: (item: any) => (
+        <div className="min-w-55">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-gray-600">
-              Total Invited
-            </span>
+            <span className="text-sm text-gray-600">Total Invited</span>
 
-            <span className="
+            <span
+              className="
               bg-blue-100
               text-blue-700
               px-3
@@ -212,17 +198,17 @@ export default function HiringCampaignsPage() {
               rounded-full
               text-xs
               font-bold
-            ">
+            "
+            >
               {item.totalInvited}
             </span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">
-              Completed
-            </span>
+            <span className="text-sm text-gray-600">Completed</span>
 
-            <span className="
+            <span
+              className="
               bg-green-100
               text-green-700
               px-3
@@ -230,7 +216,8 @@ export default function HiringCampaignsPage() {
               rounded-full
               text-xs
               font-bold
-            ">
+            "
+            >
               {item.totalCompleted}
             </span>
           </div>
@@ -242,37 +229,35 @@ export default function HiringCampaignsPage() {
     {
       header: "Completion",
 
-      render: (item) => {
-
+      render: (item: any) => {
         const completionRate = Math.round(
-          (item.totalCompleted / item.totalInvited) * 100
+          (item.totalCompleted / item.totalInvited) * 100,
         );
 
         return (
-          <div className="min-w-[220px]">
-
+          <div className="min-w-55">
             <div className="flex items-center justify-between mb-2">
               <span className="font-bold text-green-700">
                 {completionRate}%
               </span>
 
-              <span className="text-xs text-gray-500">
-                Completion Rate
-              </span>
+              <span className="text-xs text-gray-500">Completion Rate</span>
             </div>
 
-            <div className="
+            <div
+              className="
               w-full
               h-2
               rounded-full
               bg-gray-200
               overflow-hidden
-            ">
+            "
+            >
               <div
                 className="
                   h-full
                   rounded-full
-                  bg-gradient-to-r
+                  bg-linear-to-r
                   from-green-500
                   to-emerald-600
                 "
@@ -290,16 +275,15 @@ export default function HiringCampaignsPage() {
     {
       header: "Average Score",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
+      render: (item: any) => (
+        <div className="min-w-45">
           <div className="flex items-center gap-3">
-
-            <div className="
+            <div
+              className="
               w-14
               h-14
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r
               from-yellow-400
               to-orange-500
               text-white
@@ -309,18 +293,15 @@ export default function HiringCampaignsPage() {
               font-bold
               text-lg
               shadow-lg
-            ">
+            "
+            >
               {item.averageScore}%
             </div>
 
             <div>
-              <h3 className="font-semibold text-gray-800">
-                Avg Performance
-              </h3>
+              <h3 className="font-semibold text-gray-800">Avg Performance</h3>
 
-              <p className="text-xs text-gray-500 mt-1">
-                Candidate Score
-              </p>
+              <p className="text-xs text-gray-500 mt-1">Candidate Score</p>
             </div>
           </div>
         </div>
@@ -331,10 +312,10 @@ export default function HiringCampaignsPage() {
     {
       header: "Security",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-45">
+          <div
+            className="
             bg-red-100
             text-red-700
             px-4
@@ -343,13 +324,12 @@ export default function HiringCampaignsPage() {
             font-bold
             text-sm
             w-fit
-          ">
+          "
+          >
             {item.suspiciousActivities} Suspicious
           </div>
 
-          <p className="text-xs text-gray-500 mt-2">
-            Activities Detected
-          </p>
+          <p className="text-xs text-gray-500 mt-2">Activities Detected</p>
         </div>
       ),
     },
@@ -358,22 +338,19 @@ export default function HiringCampaignsPage() {
     {
       header: "Timeline",
 
-      render: (item) => (
-        <div className="min-w-[200px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-55">
+          <div
+            className="
             bg-gray-100
             rounded-2xl
             px-4
             py-3
-          ">
-            <p className="font-semibold text-gray-800">
-              {item.startDate}
-            </p>
+          "
+          >
+            <p className="font-semibold text-gray-800">{item.startDate}</p>
 
-            <p className="text-xs text-gray-500 mt-1">
-              to {item.endDate}
-            </p>
+            <p className="text-xs text-gray-500 mt-1">to {item.endDate}</p>
           </div>
         </div>
       ),
@@ -383,7 +360,7 @@ export default function HiringCampaignsPage() {
     {
       header: "Status",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-4
@@ -393,9 +370,10 @@ export default function HiringCampaignsPage() {
             font-bold
             w-fit
 
-            ${item.status === "Active"
-              ? "bg-green-100 text-green-700"
-              : "bg-gray-100 text-gray-700"
+            ${
+              item.status === "Active"
+                ? "bg-green-100 text-green-700"
+                : "bg-gray-100 text-gray-700"
             }
           `}
         >
@@ -408,16 +386,11 @@ export default function HiringCampaignsPage() {
     {
       header: "Created By",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
+      render: (item: any) => (
+        <div className="min-w-45">
+          <h3 className="font-semibold text-gray-800">{item.createdBy}</h3>
 
-          <h3 className="font-semibold text-gray-800">
-            {item.createdBy}
-          </h3>
-
-          <p className="text-xs text-gray-500 mt-1">
-            Campaign Manager
-          </p>
+          <p className="text-xs text-gray-500 mt-1">Campaign Manager</p>
         </div>
       ),
     },
@@ -425,13 +398,12 @@ export default function HiringCampaignsPage() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-
       <ActionButtons
         addUrl="/dashboard/hiring-campaigns/add"
         importUrl="/dashboard/hiring-campaigns/import"
         exportUrl="/dashboard/hiring-campaigns/export"
 
-      // showExport={false}
+        // showExport={false}
       />
 
       <DataTable
@@ -439,7 +411,6 @@ export default function HiringCampaignsPage() {
         columns={columns}
         data={hiringCampaignData}
       />
-
     </div>
   );
 }

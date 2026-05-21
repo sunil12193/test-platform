@@ -6,24 +6,22 @@ import { CiBellOn, CiSettings } from "react-icons/ci";
 
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
-import {
-  FiUser,
-  FiSettings,
-  FiHelpCircle,
-  FiHeadphones,
-} from "react-icons/fi";
+import { FiUser, FiSettings, FiHelpCircle, FiHeadphones } from "react-icons/fi";
 
+type NavbarDashboardProps = {
+  title: string;
+};
 
-const NavbarDashboard = ({ title }) => {
+const NavbarDashboard = ({ title }: NavbarDashboardProps) => {
   const [open, setOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    function handleClickOutside(event) {
+    function handleClickOutside(event: MouseEvent) {
       if (
         dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
+        !dropdownRef.current.contains(event.target as Node)
       ) {
         setOpen(false);
       }
@@ -32,44 +30,29 @@ const NavbarDashboard = ({ title }) => {
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener(
-        "mousedown",
-        handleClickOutside
-      );
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
   return (
-    <nav
-      className="h-16 bg-[#0f2744] flex items-center px-2 gap-5 shadow-md"
-    >
+    <nav className="h-16 bg-[#0f2744] flex items-center px-2 gap-5 shadow-md">
       {/* Left */}
       <div className="flex items-center gap-6">
         <Link href="/">
-          <Image
-            src="/gleefix_logo.svg"
-            alt="logo"
-            width={140}
-            height={140}
-          />
+          <Image src="/gleefix_logo.svg" alt="logo" width={140} height={140} />
         </Link>
 
         <div>
-          <h1 className="text-white text-xl font-bold">
-            {title}
-          </h1>
+          <h1 className="text-white text-xl font-bold">{title}</h1>
 
           <p className="text-sm text-slate-400">
-            Home &gt;{" "}
-            <span className="text-white font-semibold">
-              {title}
-            </span>
+            Home &gt; <span className="text-white font-semibold">{title}</span>
           </p>
         </div>
       </div>
 
       {/* Search */}
       <div className="flex-1 flex justify-center">
-        <div className="w-full max-w-[520px] bg-[#1e3a5f] border border-[#2d4f73] rounded-full px-5 py-2 flex items-center gap-2">
+        <div className="w-full max-w-130 bg-[#1e3a5f] border border-[#2d4f73] rounded-md px-5 py-2 flex items-center gap-2">
           <input
             type="text"
             placeholder="Search everything..."
@@ -93,19 +76,16 @@ const NavbarDashboard = ({ title }) => {
             <div className="w-8 h-8 rounded-full bg-indigo-500" />
 
             <div className="text-left">
-              <p className="text-white text-sm font-semibold">
-                Admin User
-              </p>
+              <p className="text-white text-sm font-semibold">Admin User</p>
 
-              <p className="text-slate-400 text-xs">
-                Administrator
-              </p>
+              <p className="text-slate-400 text-xs">Administrator</p>
             </div>
 
             <ChevronDown
               size={18}
-              className={`text-white transition-transform duration-200 ${open ? "rotate-180" : ""
-                }`}
+              className={`text-white transition-transform duration-200 ${
+                open ? "rotate-180" : ""
+              }`}
             />
           </button>
 

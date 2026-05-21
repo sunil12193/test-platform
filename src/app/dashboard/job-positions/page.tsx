@@ -1,9 +1,8 @@
 "use client";
-
-import DataTable from "@/component/table";
-import ActionButtons from "@/component/button";
 import { useEffect, useState } from "react";
-import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
+import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import ActionButtons from "../../../component/button";
+import DataTable from "../../../component/table";
 
 const jobPositionsData = [
   {
@@ -19,12 +18,7 @@ const jobPositionsData = [
 
     salaryRange: "₹8 LPA - ₹12 LPA",
 
-    requiredSkills: [
-      "React",
-      "Next.js",
-      "TailwindCSS",
-      "JavaScript",
-    ],
+    requiredSkills: ["React", "Next.js", "TailwindCSS", "JavaScript"],
 
     description:
       "Looking for a skilled frontend developer with strong React and UI experience.",
@@ -55,12 +49,7 @@ const jobPositionsData = [
 
     salaryRange: "₹25K / Month",
 
-    requiredSkills: [
-      "Node.js",
-      "MongoDB",
-      "Express",
-      "REST API",
-    ],
+    requiredSkills: ["Node.js", "MongoDB", "Express", "REST API"],
 
     description:
       "Hiring backend interns for API development and database management.",
@@ -80,47 +69,38 @@ const jobPositionsData = [
 ];
 
 export default function JobPositionsPage() {
-
   const [data, setData] = useState([]);
-  
+
   useEffect(() => {
-  
     const fetchData = async () => {
       try {
-  
-        const response = await getRequest(
-          `${API_BASE_URL}/job-position`
-        );
-  
+        const response = await getRequest(`${API_BASE_URL}/job-position`);
+
         console.log("Fetched Data:job position", response);
-  
+
         setData(response);
-  
       } catch (error) {
         console.log(error);
       }
     };
-  
+
     fetchData();
-  
   }, []);
 
   const columns = [
-
     // POSITION
     {
       header: "Position",
 
-      render: (item) => (
-        <div className="min-w-[280px]">
-
+      render: (item: any) => (
+        <div className="min-w-70">
           <div className="flex items-start gap-4">
-
-            <div className="
+            <div
+              className="
               w-14
               h-14
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r  
               from-blue-500
               to-indigo-600
               flex
@@ -131,7 +111,8 @@ export default function JobPositionsPage() {
               text-lg
               shadow-lg
               shrink-0
-            ">
+            "
+            >
               {item.title.charAt(0)}
             </div>
 
@@ -140,13 +121,11 @@ export default function JobPositionsPage() {
                 {item.title}
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
-                {item.positionId}
-              </p>
+              <p className="text-xs text-gray-500 mt-1">{item.positionId}</p>
 
               <div className="flex items-center gap-2 mt-3">
-
-                <span className="
+                <span
+                  className="
                   bg-gray-100
                   text-gray-700
                   px-3
@@ -154,11 +133,13 @@ export default function JobPositionsPage() {
                   rounded-full
                   text-xs
                   font-semibold
-                ">
+                "
+                >
                   {item.department}
                 </span>
 
-                <span className="
+                <span
+                  className="
                   bg-blue-100
                   text-blue-700
                   px-3
@@ -166,7 +147,8 @@ export default function JobPositionsPage() {
                   rounded-full
                   text-xs
                   font-semibold
-                ">
+                "
+                >
                   {item.location}
                 </span>
               </div>
@@ -184,10 +166,10 @@ export default function JobPositionsPage() {
     {
       header: "Employment",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-45">
+          <div
+            className="
             bg-indigo-100
             text-indigo-700
             px-4
@@ -196,7 +178,8 @@ export default function JobPositionsPage() {
             text-xs
             font-bold
             w-fit
-          ">
+          "
+          >
             {item.employmentType}
           </div>
 
@@ -211,16 +194,13 @@ export default function JobPositionsPage() {
     {
       header: "Salary",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
+      render: (item: any) => (
+        <div className="min-w-45">
           <h3 className="font-bold text-green-600 text-lg">
             {item.salaryRange}
           </h3>
 
-          <p className="text-xs text-gray-500 mt-1">
-            Compensation
-          </p>
+          <p className="text-xs text-gray-500 mt-1">Compensation</p>
         </div>
       ),
     },
@@ -229,15 +209,16 @@ export default function JobPositionsPage() {
     {
       header: "Required Skills",
 
-      render: (item) => (
-        <div className="
+      render: (item: any) => (
+        <div
+          className="
           flex
           flex-wrap
           gap-2
-          min-w-[250px]
-        ">
-
-          {item.requiredSkills.map((skill, index) => (
+          min-w-62.5
+        "
+        >
+          {item.requiredSkills.map((skill: any, index: any) => (
             <span
               key={index}
               className="
@@ -246,7 +227,7 @@ export default function JobPositionsPage() {
                 rounded-full
                 text-xs
                 font-semibold
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-blue-100
                 to-indigo-100
                 text-blue-700
@@ -263,16 +244,18 @@ export default function JobPositionsPage() {
     {
       header: "Assessment",
 
-      render: (item) => (
-        <div className="
+      render: (item: any) => (
+        <div
+          className="
           bg-gray-100
           px-4
           py-3
           rounded-2xl
           text-gray-700
           font-medium
-          min-w-[220px]
-        ">
+          min-w-55
+        "
+        >
           {item.assignedAssessment}
         </div>
       ),
@@ -282,15 +265,13 @@ export default function JobPositionsPage() {
     {
       header: "Hiring Stats",
 
-      render: (item) => (
-        <div className="min-w-[220px] space-y-3">
-
+      render: (item: any) => (
+        <div className="min-w-55 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">
-              Openings
-            </span>
+            <span className="text-sm text-gray-600">Openings</span>
 
-            <span className="
+            <span
+              className="
               bg-green-100
               text-green-700
               px-3
@@ -298,29 +279,22 @@ export default function JobPositionsPage() {
               rounded-full
               text-xs
               font-bold
-            ">
+            "
+            >
               {item.openings}
             </span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">
-              Applicants
-            </span>
+            <span className="text-sm text-gray-600">Applicants</span>
 
-            <span className="font-bold text-gray-800">
-              {item.applicants}
-            </span>
+            <span className="font-bold text-gray-800">{item.applicants}</span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">
-              Shortlisted
-            </span>
+            <span className="text-sm text-gray-600">Shortlisted</span>
 
-            <span className="font-bold text-blue-700">
-              {item.shortlisted}
-            </span>
+            <span className="font-bold text-blue-700">{item.shortlisted}</span>
           </div>
         </div>
       ),
@@ -330,7 +304,7 @@ export default function JobPositionsPage() {
     {
       header: "Status",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-4
@@ -340,9 +314,10 @@ export default function JobPositionsPage() {
             font-bold
             w-fit
 
-            ${item.status === "Open"
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
+            ${
+              item.status === "Open"
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
             }
           `}
         >
@@ -355,16 +330,11 @@ export default function JobPositionsPage() {
     {
       header: "Created",
 
-      render: (item) => (
-        <div className="min-w-[160px]">
+      render: (item: any) => (
+        <div className="min-w-40">
+          <p className="font-semibold text-gray-700">{item.createdAt}</p>
 
-          <p className="font-semibold text-gray-700">
-            {item.createdAt}
-          </p>
-
-          <p className="text-xs text-gray-500 mt-1">
-            Published Date
-          </p>
+          <p className="text-xs text-gray-500 mt-1">Published Date</p>
         </div>
       ),
     },
@@ -372,22 +342,19 @@ export default function JobPositionsPage() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-
       <ActionButtons
         addUrl="/dashboard/job-positions/add"
         importUrl="/dashboard/job-positions/import"
         exportUrl="/dashboard/job-positions/export"
 
-      // showExport={false}
+        // showExport={false}
       />
-
 
       <DataTable
         title="Candidates"
         columns={columns}
         data={jobPositionsData}
-
-        onEdit={(item) => {
+        onEdit={(item: any) => {
           console.log("Edit Data:", item);
         }}
       />

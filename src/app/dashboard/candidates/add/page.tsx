@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 export default function AddCandidatePage() {
-
   const [formData, setFormData] = useState({
     candidateId: "",
     firstName: "",
@@ -47,9 +46,7 @@ export default function AddCandidatePage() {
     const finalData = {
       ...formData,
 
-      skills: formData.skills
-        .split(",")
-        .map((skill) => skill.trim()),
+      skills: formData.skills.split(",").map((skill) => skill.trim()),
     };
 
     console.log(finalData);
@@ -59,8 +56,8 @@ export default function AddCandidatePage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
-      <div className="
+      <div
+        className="
         max-w-7xl
         mx-auto
         bg-white
@@ -69,19 +66,19 @@ export default function AddCandidatePage() {
         overflow-hidden
         border
         border-gray-200
-      ">
-
+      "
+      >
         {/* HEADER */}
-        <div className="
-          bg-gradient-to-r
+        <div
+          className="
+          bg-linear-to-r
           from-blue-600
           to-indigo-600
           px-8
           py-6
-        ">
-          <h1 className="text-3xl font-bold text-white">
-            Add New Candidate
-          </h1>
+        "
+        >
+          <h1 className="text-3xl font-bold text-white">Add New Candidate</h1>
 
           <p className="text-blue-100 mt-2">
             Fill all candidate details carefully
@@ -89,13 +86,8 @@ export default function AddCandidatePage() {
         </div>
 
         {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="p-8"
-        >
-
+        <form onSubmit={handleSubmit} className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
             {/* CANDIDATE ID */}
             <InputField
               label="Candidate ID"
@@ -309,19 +301,17 @@ export default function AddCandidatePage() {
               value={formData.updatedAt}
               onChange={handleChange}
             />
-
           </div>
 
           {/* SUBMIT BUTTON */}
           <div className="mt-10 flex justify-end">
-
             <button
               type="submit"
               className="
                 px-8
                 py-4
                 rounded-2xl
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-blue-600
                 to-indigo-600
                 text-white
@@ -334,13 +324,9 @@ export default function AddCandidatePage() {
             >
               Submit Candidate
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }
@@ -356,10 +342,7 @@ function InputField({
 }) {
   return (
     <div>
-
-      <label className="text-sm font-semibold text-gray-700">
-        {label}
-      </label>
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
 
       <input
         type={type}
@@ -380,7 +363,6 @@ function InputField({
           focus:ring-blue-500
         "
       />
-
     </div>
   );
 }

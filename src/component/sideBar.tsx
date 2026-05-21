@@ -1,8 +1,8 @@
 "use client";
 
-import { navItems } from "@/util/navItem";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { navItems } from "../util/navItem";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -15,7 +15,7 @@ const Sidebar = () => {
         </p>
 
         <div className="space-y-2">
-          {navItems.map((item) => {
+          {navItems.map((item: any) => {
             const isActive = pathname === item.href;
 
             return (
@@ -34,9 +34,7 @@ const Sidebar = () => {
                 {/* ICON */}
                 <div
                   className={`mt-1 text-lg ${
-                    isActive
-                      ? "text-blue-600"
-                      : "text-slate-500"
+                    isActive ? "text-blue-600" : "text-slate-500"
                   }`}
                 >
                   <item.icon />
@@ -46,17 +44,13 @@ const Sidebar = () => {
                 <div>
                   <div
                     className={`text-sm font-semibold ${
-                      isActive
-                        ? "text-blue-600"
-                        : "text-slate-800"
+                      isActive ? "text-blue-600" : "text-slate-800"
                     }`}
                   >
                     {item.label}
                   </div>
 
-                  <div className="text-xs text-slate-400">
-                    {item.sub}
-                  </div>
+                  <div className="text-xs text-slate-400">{item.sub}</div>
                 </div>
               </Link>
             );

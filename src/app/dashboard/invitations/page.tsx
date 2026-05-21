@@ -1,9 +1,8 @@
 "use client";
-
-import DataTable from "@/component/table";
-import ActionButtons from "@/component/button";
 import { useEffect, useState } from "react";
-import { API_BASE_URL, getRequest } from "@/util/APIGeneric";
+import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import ActionButtons from "../../../component/button";
+import DataTable from "../../../component/table";
 
 const invitationsData = [
   {
@@ -48,47 +47,38 @@ const invitationsData = [
 ];
 
 export default function InvitationsPage() {
+  const [data, setData] = useState([]);
 
-    const [data, setData] = useState([]);
-  
-    useEffect(() => {
-  
-      const fetchData = async () => {
-        try {
-  
-          const response = await getRequest(
-            `${API_BASE_URL}/invitation`
-          );
-  
-          console.log("Fetched Data: invitation", response);
-  
-          setData(response);
-  
-        } catch (error) {
-          console.log(error);
-        }
-      };
-  
-      fetchData();
-  
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getRequest(`${API_BASE_URL}/invitation`);
+
+        console.log("Fetched Data: invitation", response);
+
+        setData(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
-
     // INVITATION
     {
       header: "Invitation",
 
-      render: (item) => (
+      render: (item: any) => (
         <div className="min-w-[320px]">
-
           <div className="flex items-start gap-4">
-
-            <div className="
+            <div
+              className="
               w-14
               h-14
               rounded-2xl
-              bg-gradient-to-r
+              bg-linear-to-r
               from-blue-500
               to-cyan-600
               flex
@@ -99,12 +89,12 @@ export default function InvitationsPage() {
               text-lg
               shadow-lg
               shrink-0
-            ">
+            "
+            >
               I
             </div>
 
             <div>
-
               <h2 className="font-bold text-gray-900 text-base">
                 {item.invitationId}
               </h2>
@@ -114,8 +104,8 @@ export default function InvitationsPage() {
               </p>
 
               <div className="mt-3">
-
-                <span className="
+                <span
+                  className="
                   bg-blue-100
                   text-blue-700
                   px-3
@@ -123,14 +113,12 @@ export default function InvitationsPage() {
                   rounded-full
                   text-xs
                   font-semibold
-                ">
+                "
+                >
                   {item.assessmentId}
                 </span>
-
               </div>
-
             </div>
-
           </div>
         </div>
       ),
@@ -140,26 +128,20 @@ export default function InvitationsPage() {
     {
       header: "Email",
 
-      render: (item) => (
-        <div className="min-w-[240px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-60">
+          <div
+            className="
             bg-gray-100
             rounded-2xl
             px-4
             py-3
-          ">
+          "
+          >
+            <h3 className="font-semibold text-gray-800">{item.email}</h3>
 
-            <h3 className="font-semibold text-gray-800">
-              {item.email}
-            </h3>
-
-            <p className="text-xs text-gray-500 mt-1">
-              Candidate Email
-            </p>
-
+            <p className="text-xs text-gray-500 mt-1">Candidate Email</p>
           </div>
-
         </div>
       ),
     },
@@ -168,11 +150,11 @@ export default function InvitationsPage() {
     {
       header: "Invite Token",
 
-      render: (item) => (
-        <div className="min-w-[260px]">
-
-          <div className="
-            bg-gradient-to-r
+      render: (item: any) => (
+        <div className="min-w-65">
+          <div
+            className="
+            bg-linear-to-r
             from-indigo-100
             to-blue-100
             text-indigo-700
@@ -183,10 +165,10 @@ export default function InvitationsPage() {
             text-sm
             font-bold
             shadow-sm
-          ">
+          "
+          >
             {item.inviteToken}
           </div>
-
         </div>
       ),
     },
@@ -195,26 +177,20 @@ export default function InvitationsPage() {
     {
       header: "Sent At",
 
-      render: (item) => (
-        <div className="min-w-[200px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-50">
+          <div
+            className="
             bg-gray-100
             rounded-2xl
             px-4
             py-3
-          ">
+          "
+          >
+            <h3 className="font-semibold text-gray-800">{item.sentAt}</h3>
 
-            <h3 className="font-semibold text-gray-800">
-              {item.sentAt}
-            </h3>
-
-            <p className="text-xs text-gray-500 mt-1">
-              Invitation Sent
-            </p>
-
+            <p className="text-xs text-gray-500 mt-1">Invitation Sent</p>
           </div>
-
         </div>
       ),
     },
@@ -223,24 +199,22 @@ export default function InvitationsPage() {
     {
       header: "Expires At",
 
-      render: (item) => (
-        <div className="min-w-[220px]">
-
-          <div className="
+      render: (item: any) => (
+        <div className="min-w-55">
+          <div
+            className="
             bg-yellow-100
             text-yellow-800
             rounded-2xl
             px-4
             py-3
             font-semibold
-          ">
+          "
+          >
             {item.expiresAt}
           </div>
 
-          <p className="text-xs text-gray-500 mt-2">
-            Expiration Deadline
-          </p>
-
+          <p className="text-xs text-gray-500 mt-2">Expiration Deadline</p>
         </div>
       ),
     },
@@ -249,7 +223,7 @@ export default function InvitationsPage() {
     {
       header: "Status",
 
-      render: (item) => (
+      render: (item: any) => (
         <div
           className={`
             px-4
@@ -259,13 +233,14 @@ export default function InvitationsPage() {
             font-bold
             w-fit
 
-            ${item.status === "Completed"
-              ? "bg-green-100 text-green-700"
-              : item.status === "Opened"
-                ? "bg-blue-100 text-blue-700"
-                : item.status === "Expired"
-                  ? "bg-red-100 text-red-700"
-                  : "bg-yellow-100 text-yellow-700"
+            ${
+              item.status === "Completed"
+                ? "bg-green-100 text-green-700"
+                : item.status === "Opened"
+                  ? "bg-blue-100 text-blue-700"
+                  : item.status === "Expired"
+                    ? "bg-red-100 text-red-700"
+                    : "bg-yellow-100 text-yellow-700"
             }
           `}
         >
@@ -278,9 +253,8 @@ export default function InvitationsPage() {
     {
       header: "Reminder",
 
-      render: (item) => (
-        <div className="min-w-[180px]">
-
+      render: (item: any) => (
+        <div className="min-w-45">
           <div
             className={`
               px-4
@@ -290,17 +264,15 @@ export default function InvitationsPage() {
               font-bold
               w-fit
 
-              ${item.reminderSent
-                ? "bg-green-100 text-green-700"
-                : "bg-gray-100 text-gray-700"
+              ${
+                item.reminderSent
+                  ? "bg-green-100 text-green-700"
+                  : "bg-gray-100 text-gray-700"
               }
             `}
           >
-            {item.reminderSent
-              ? "Reminder Sent"
-              : "No Reminder"}
+            {item.reminderSent ? "Reminder Sent" : "No Reminder"}
           </div>
-
         </div>
       ),
     },
@@ -308,21 +280,15 @@ export default function InvitationsPage() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-
       <ActionButtons
         addUrl="/dashboard/invitations/add"
         importUrl="/dashboard/invitations/import"
         exportUrl="/dashboard/invitations/export"
 
-      // showExport={false}
+        // showExport={false}
       />
 
-      <DataTable
-        title="Invitations"
-        columns={columns}
-        data={invitationsData}
-      />
-
+      <DataTable title="Invitations" columns={columns} data={invitationsData} />
     </div>
   );
 }

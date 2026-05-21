@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 export default function AddQuestionPage() {
-
   const [formData, setFormData] = useState({
     questionId: "",
 
@@ -51,9 +50,9 @@ export default function AddQuestionPage() {
     const finalData = {
       ...formData,
 
-      options: formData.options.split(",").map((item) => item.trim()),
+      options: formData.options.split(",").map((item: any) => item.trim()),
 
-      tags: formData.tags.split(",").map((item) => item.trim()),
+      tags: formData.tags.split(",").map((item: any) => item.trim()),
     };
 
     console.log(finalData);
@@ -63,27 +62,19 @@ export default function AddQuestionPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
       <div className="max-w-7xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
-
         {/* HEADER */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
-
-          <h1 className="text-3xl font-bold text-white">
-            Add New Question
-          </h1>
+        <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-6">
+          <h1 className="text-3xl font-bold text-white">Add New Question</h1>
 
           <p className="text-blue-100 mt-2">
             Fill all question details carefully
           </p>
-
         </div>
 
         {/* FORM */}
         <form onSubmit={handleSubmit} className="p-8">
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
             {/* QUESTION ID */}
             <InputField
               label="Question ID"
@@ -95,7 +86,6 @@ export default function AddQuestionPage() {
 
             {/* QUESTION TYPE */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Question Type
               </label>
@@ -106,14 +96,11 @@ export default function AddQuestionPage() {
                 onChange={handleChange}
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               >
-
                 <option>MCQ</option>
                 <option>Coding</option>
                 <option>True/False</option>
                 <option>Short Answer</option>
-
               </select>
-
             </div>
 
             {/* CATEGORY */}
@@ -136,7 +123,6 @@ export default function AddQuestionPage() {
 
             {/* DIFFICULTY */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Difficulty Level
               </label>
@@ -147,13 +133,10 @@ export default function AddQuestionPage() {
                 onChange={handleChange}
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               >
-
                 <option>Easy</option>
                 <option>Medium</option>
                 <option>Hard</option>
-
               </select>
-
             </div>
 
             {/* MARKS */}
@@ -197,7 +180,6 @@ export default function AddQuestionPage() {
 
             {/* STATUS */}
             <div>
-
               <label className="text-sm font-semibold text-gray-700">
                 Status
               </label>
@@ -208,13 +190,10 @@ export default function AddQuestionPage() {
                 onChange={handleChange}
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               >
-
                 <option>Published</option>
                 <option>Draft</option>
                 <option>Archived</option>
-
               </select>
-
             </div>
 
             {/* CREATED BY */}
@@ -237,7 +216,6 @@ export default function AddQuestionPage() {
 
             {/* OPTIONS */}
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-
               <label className="text-sm font-semibold text-gray-700">
                 Options
               </label>
@@ -250,12 +228,10 @@ export default function AddQuestionPage() {
                 rows={4}
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               />
-
             </div>
 
             {/* TAGS */}
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-
               <label className="text-sm font-semibold text-gray-700">
                 Tags
               </label>
@@ -268,12 +244,10 @@ export default function AddQuestionPage() {
                 placeholder="React, Hooks, JavaScript"
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               />
-
             </div>
 
             {/* QUESTION */}
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-
               <label className="text-sm font-semibold text-gray-700">
                 Question
               </label>
@@ -286,12 +260,10 @@ export default function AddQuestionPage() {
                 rows={5}
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               />
-
             </div>
 
             {/* EXPLANATION */}
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-
               <label className="text-sm font-semibold text-gray-700">
                 Explanation
               </label>
@@ -304,27 +276,20 @@ export default function AddQuestionPage() {
                 rows={5}
                 className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
               />
-
             </div>
-
           </div>
 
           {/* BUTTON */}
           <div className="mt-10 flex justify-end">
-
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
             >
               Submit Question
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }
@@ -338,13 +303,9 @@ function InputField({
   placeholder,
   type = "text",
 }) {
-
   return (
     <div>
-
-      <label className="text-sm font-semibold text-gray-700">
-        {label}
-      </label>
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
 
       <input
         type={type}
@@ -354,7 +315,6 @@ function InputField({
         placeholder={placeholder}
         className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
       />
-
     </div>
   );
 }

@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 export default function AddSettingsPage() {
-
   const [formData, setFormData] = useState({
     companyName: "",
 
@@ -47,27 +46,19 @@ export default function AddSettingsPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
       <div className="max-w-7xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
-
         {/* HEADER */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
-
-          <h1 className="text-3xl font-bold text-white">
-            Platform Settings
-          </h1>
+        <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-6">
+          <h1 className="text-3xl font-bold text-white">Platform Settings</h1>
 
           <p className="text-blue-100 mt-2">
             Configure company and platform settings
           </p>
-
         </div>
 
         {/* FORM */}
         <form onSubmit={handleSubmit} className="p-8">
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
             {/* COMPANY NAME */}
             <InputField
               label="Company Name"
@@ -131,12 +122,10 @@ export default function AddSettingsPage() {
               value={formData.createdAt}
               onChange={handleChange}
             />
-
           </div>
 
           {/* TOGGLES */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-
             <CheckboxField
               label="Enable Proctoring"
               name="enableProctoring"
@@ -157,25 +146,19 @@ export default function AddSettingsPage() {
               checked={formData.emailNotifications}
               onChange={handleChange}
             />
-
           </div>
 
           {/* BUTTON */}
           <div className="mt-10 flex justify-end">
-
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
             >
               Save Settings
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }
@@ -189,13 +172,9 @@ function InputField({
   placeholder,
   type = "text",
 }) {
-
   return (
     <div>
-
-      <label className="text-sm font-semibold text-gray-700">
-        {label}
-      </label>
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
 
       <input
         type={type}
@@ -205,22 +184,14 @@ function InputField({
         placeholder={placeholder}
         className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
       />
-
     </div>
   );
 }
 
 /* CHECKBOX FIELD */
-function CheckboxField({
-  label,
-  name,
-  checked,
-  onChange,
-}) {
-
+function CheckboxField({ label, name, checked, onChange }) {
   return (
     <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4">
-
       <input
         type="checkbox"
         name={name}
@@ -229,10 +200,7 @@ function CheckboxField({
         className="h-5 w-5"
       />
 
-      <label className="text-sm font-semibold text-gray-700">
-        {label}
-      </label>
-
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
     </div>
   );
 }
