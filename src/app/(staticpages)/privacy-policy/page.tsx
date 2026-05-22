@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function GleefixPrivacyPolicyPage() {
   const sections = [
@@ -36,54 +37,6 @@ export default function GleefixPrivacyPolicyPage() {
 
   return (
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
-      {/* NAVBAR */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* LOGO */}
-          <div className="flex items-center gap-4">
-            <div className="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-md flex items-center justify-center overflow-hidden">
-              <Image
-                src="/gleeffix_logo.jpeg"
-                alt="Gleefix"
-                width={50}
-                height={50}
-                className="object-contain"
-              />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-black text-[#0F2B46]">Gleefix</h2>
-
-              <p className="text-xs text-slate-500 mt-1">
-                Consulting Talent. Building Futures.
-              </p>
-            </div>
-          </div>
-
-          {/* NAV */}
-          <div className="hidden lg:flex items-center gap-10 text-sm font-semibold text-slate-600">
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Home
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Services
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Platform
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Contact
-            </button>
-          </div>
-
-          <button className="h-11 px-6 rounded-xl bg-[#0F2B46] hover:bg-[#163a5c] text-white font-semibold shadow-sm hover:shadow-lg transition-all duration-200">
-            Get Started
-          </button>
-        </div>
-      </header>
 
       {/* HERO */}
       <section className="relative py-28 px-6 overflow-hidden">
@@ -255,9 +208,13 @@ export default function GleefixPrivacyPolicyPage() {
                 </p>
 
                 <div className="flex flex-wrap items-center gap-5 mt-10">
-                  <button className="h-14 px-8 rounded-2xl bg-white text-[#0F2B46] font-black hover:scale-[1.02] transition-all duration-200">
-                    Contact Support
-                  </button>
+                  <Link
+                    href="/contact-us"
+                  >
+                    <button className="h-14 px-8 cursor-pointer rounded-2xl bg-white text-[#0F2B46] font-black hover:scale-[1.02] transition-all duration-200">
+                      Contact Support
+                    </button>
+                  </Link>
 
                   <button className="h-14 px-8 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md text-white font-black hover:bg-white/20 transition-all duration-200">
                     compliance@gleefix.com
@@ -268,93 +225,6 @@ export default function GleefixPrivacyPolicyPage() {
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="bg-[#0F172A] text-white px-6 py-16">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12">
-          <div>
-            <div className="flex items-center gap-4">
-              <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center overflow-hidden">
-                <Image
-                  src="/gleeffix_logo.jpeg"
-                  alt="Gleefix"
-                  width={50}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
-
-              <div>
-                <h2 className="text-xl font-bold">Gleefix</h2>
-
-                <p className="text-xs text-slate-400 mt-1">
-                  Consulting Talent. Building Futures.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-slate-400 leading-relaxed mt-6 max-w-sm">
-              AI-powered recruitment platform for enterprise hiring and
-              assessments.
-            </p>
-          </div>
-
-          {[
-            {
-              title: "Company",
-              items: ["About", "Careers", "Blogs", "Contact"],
-            },
-            {
-              title: "Platform",
-              items: [
-                "Assessments",
-                "Analytics",
-                "AI Proctoring",
-                "Integrations",
-              ],
-            },
-            {
-              title: "Resources",
-              items: ["Help Center", "Documentation", "Privacy", "Terms"],
-            },
-          ].map((section, index) => (
-            <div key={index}>
-              <h3 className="font-bold text-lg mb-5">{section.title}</h3>
-
-              <div className="space-y-4">
-                {section.items.map((item, idx) => (
-                  <button
-                    key={idx}
-                    className="block text-slate-400 hover:text-white transition-all duration-200"
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="max-w-7xl mx-auto border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-slate-500">
-            © 2026 Gleefix. All rights reserved.
-          </p>
-
-          <div className="flex items-center gap-6 text-sm text-slate-500">
-            <button className="hover:text-white transition-all duration-200">
-              Privacy
-            </button>
-
-            <button className="hover:text-white transition-all duration-200">
-              Terms
-            </button>
-
-            <button className="hover:text-white transition-all duration-200">
-              Security
-            </button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

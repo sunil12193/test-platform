@@ -1,16 +1,73 @@
+"use client";
+import { useState } from "react";  
+import Link from "next/link";
 import Image from "next/image";
+import { BarChart3, Bot, FileCheck } from "lucide-react";
+import {
+  FilePlus2,
+  UserPlus,
+  ShieldCheck,
+} from "lucide-react";
+
+import {
+  Plus,
+  Minus,
+  HelpCircle,
+} from "lucide-react";
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const faqs: FAQItem[] = [
+  {
+    question:
+      "How does AI proctoring work?",
+
+    answer:
+      "Gleefix uses AI-powered webcam monitoring, screen tracking, tab-switch detection, and suspicious activity analysis to ensure secure online assessments.",
+  },
+
+  {
+    question:
+      "Can we create custom assessments?",
+
+    answer:
+      "Yes. You can create coding tests, MCQs, aptitude assessments, and fully customized enterprise hiring workflows.",
+  },
+
+  {
+    question:
+      "Does Gleefix support coding interviews?",
+
+    answer:
+      "Absolutely. Gleefix provides live coding environments, multiple programming language support, real-time execution, and evaluation systems.",
+  },
+
+  {
+    question:
+      "Can enterprises integrate ATS systems?",
+
+    answer:
+      "Yes. Gleefix supports seamless ATS and HRMS integrations for enterprise-grade recruitment automation.",
+  },
+];
 
 export default function GleefixHomepage() {
   const services = [
     {
+      icon: Bot,
       title: "AI Recruitment",
       desc: "Automate hiring workflows with AI-powered candidate screening and assessment intelligence.",
     },
     {
+      icon: FileCheck,
       title: "Skill Assessments",
       desc: "Create customizable coding, aptitude, and technical assessments with proctoring.",
     },
     {
+      icon: BarChart3,
       title: "Hiring Analytics",
       desc: "Track hiring campaigns, completion rates, candidate quality, and recruitment ROI.",
     },
@@ -35,104 +92,58 @@ export default function GleefixHomepage() {
     },
   ];
 
+  const steps = [
+    {
+      title: "Create Assessment",
+
+      description:
+        "Build coding tests, MCQs, and enterprise assessments with ease.",
+
+      icon: FilePlus2,
+    },
+
+    {
+      title: "Invite Candidates",
+
+      description:
+        "Invite and manage candidates through automated workflows.",
+
+      icon: UserPlus,
+    },
+
+    {
+      title: "AI Based Monitoring",
+
+      description:
+        "Advanced AI proctoring with webcam, screen, and tab monitoring.",
+
+      icon: ShieldCheck,
+    },
+
+    {
+      title: "Analyze Results",
+
+      description:
+        "Get deep hiring insights and performance analytics instantly.",
+
+      icon: BarChart3,
+    },
+  ];
+
+  const [openIndex, setOpenIndex] =
+    useState<number | null>(0);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(
+      openIndex === index
+        ? null
+        : index
+    );
+  };
+
+
   return (
     <div className="min-h-screen bg-[#F6F8FC] overflow-hidden">
-      {/* NAVBAR */}
-      <header
-        className="
-          sticky
-          top-0
-          z-50
-          backdrop-blur-xl
-          bg-white/80
-          border-b
-          border-slate-200/80
-        "
-      >
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* LOGO */}
-          <div className="flex items-center gap-4">
-            <Image
-              src="/logo.jpeg"
-              alt="Gleefix"
-              width={100}
-              height={100}
-              className="object-contain"
-            />
-
-            <div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Consulting Talent. Building Futures.
-              </p>
-            </div>
-          </div>
-
-          {/* NAV LINKS */}
-          <div className="hidden lg:flex items-center gap-10 text-sm font-medium text-slate-600">
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Home
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Services
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Platform
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Pricing
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Contact
-            </button>
-          </div>
-
-          {/* ACTIONS */}
-          <div className="flex items-center gap-3">
-            <button
-              className="
-                hidden
-                md:flex
-                h-11
-                px-5
-                rounded-xl
-                border
-                border-slate-200
-                bg-white
-                text-slate-700
-                font-medium
-                hover:shadow-md
-                transition-all
-                duration-200
-              "
-            >
-              Login
-            </button>
-
-            <button
-              className="
-                h-11
-                px-6
-                rounded-xl
-                bg-[#0F2B46]
-                hover:bg-[#163a5c]
-                text-white
-                font-semibold
-                shadow-sm
-                hover:shadow-lg
-                transition-all
-                duration-200
-              "
-            >
-              Get Started
-            </button>
-          </div>
-        </div>
-      </header>
-
       {/* HERO SECTION */}
       <section className="relative py-24 px-6">
         {/* BG GLOW */}
@@ -206,6 +217,7 @@ export default function GleefixHomepage() {
                   hover:scale-[1.02]
                   transition-all
                   duration-200
+                  cursor-pointer
                 "
               >
                 Start Free Trial
@@ -226,6 +238,7 @@ export default function GleefixHomepage() {
                   hover:shadow-md
                   transition-all
                   duration-200
+                  cursor-pointer
                 "
               >
                 Watch Demo
@@ -427,13 +440,24 @@ export default function GleefixHomepage() {
                 className="
                   h-16
                   w-16
-                  rounded-2xl
+                  rounded-full
                   bg-linear-to-br
                   from-[#0F2B46]
                   to-[#1E4D7B]
                   mb-6
+                  flex
+                  items-center
+                  justify-center
                 "
-              />
+              >
+                {service.icon && (
+                  <service.icon
+                    size={38}
+                    color="#FFFFFF"
+                    className="m-4"
+                  />
+                )}
+              </div>
 
               <h3 className="text-2xl font-bold text-slate-900">
                 {service.title}
@@ -496,13 +520,15 @@ export default function GleefixHomepage() {
             {
               name: "Rahul Verma",
               role: "HR Director",
+              image: "/user1.jpeg",
               company: "TechNova",
               review:
                 "Gleefix reduced our hiring cycle by 45% while improving assessment accuracy.",
             },
             {
-              name: "Neha Sharma",
+              name: "Ankit Sharma",
               role: "Talent Lead",
+              image: "/user1.jpeg",
               company: "InnoSoft",
               review:
                 "The AI proctoring and analytics completely transformed our remote hiring process.",
@@ -510,6 +536,7 @@ export default function GleefixHomepage() {
             {
               name: "Amit Kapoor",
               role: "VP Engineering",
+              image: "/user1.jpeg",
               company: "CodeGrid",
               review:
                 "The assessment platform is extremely scalable, modern, and enterprise-ready.",
@@ -534,12 +561,21 @@ export default function GleefixHomepage() {
                   className="
                     h-14
                     w-14
-                    rounded-2xl
+                    rounded-full
                     bg-linear-to-br
                     from-[#0F2B46]
                     to-[#1E4D7B]
+                    overflow-hidden
                   "
-                />
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={56}
+                    height={56}
+                    className="object-cover"
+                  />
+                </div>
 
                 <div>
                   <h3 className="font-bold text-slate-900">{item.name}</h3>
@@ -570,57 +606,109 @@ export default function GleefixHomepage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-            {[
-              "Create Assessment",
-              "Invite Candidates",
-              "AI Based Monitoring",
-              "Analyze Results",
-            ].map((step, index) => (
-              <div
-                key={index}
-                className="
-                  relative
-                  rounded-[28px]
-                  bg-[#F8FAFC]
-                  border
-                  border-slate-200
-                  p-8
-                  overflow-hidden
-                "
-              >
+            {steps.map((step, index) => {
+              const Icon = step.icon;
+
+              return (
                 <div
+                  key={index}
                   className="
-                    absolute
-                    top-5
-                    right-5
-                    text-6xl
-                    font-black
-                    text-slate-100
-                  "
+          group
+          relative
+          rounded-[28px]
+          bg-white
+          border
+          border-slate-200
+          p-8
+          overflow-hidden
+          shadow-sm
+          hover:shadow-2xl
+          hover:-translate-y-2
+          transition-all
+          duration-300
+        "
                 >
-                  0{index + 1}
+                  {/* BACKGROUND NUMBER */}
+                  <div
+                    className="
+            absolute
+            top-5
+            right-5
+            text-7xl
+            font-black
+            text-slate-100
+            group-hover:text-slate-200
+            transition-all
+          "
+                  >
+                    0{index + 1}
+                  </div>
+
+                  {/* ICON */}
+                  <div
+                    className="
+            relative
+            z-10
+            h-16
+            w-16
+            rounded-full
+            bg-gradient-to-br
+            from-[#0F2B46]
+            to-[#1E4D7B]
+            flex
+            items-center
+            justify-center
+            shadow-lg
+            group-hover:scale-110
+            transition-transform
+            duration-300
+          "
+                  >
+                    <Icon className="text-white w-8 h-8" />
+                  </div>
+
+                  {/* CONTENT */}
+                  <div className="relative z-10">
+                    <h3
+                      className="
+              text-xl
+              font-bold
+              text-slate-900
+              mt-7
+            "
+                    >
+                      {step.title}
+                    </h3>
+
+                    <p
+                      className="
+              text-slate-500
+              leading-relaxed
+              mt-4
+            "
+                    >
+                      {step.description}
+                    </p>
+                  </div>
+
+                  {/* HOVER GLOW */}
+                  <div
+                    className="
+            absolute
+            inset-0
+            opacity-0
+            group-hover:opacity-100
+            transition-all
+            duration-500
+            bg-gradient-to-br
+            from-blue-50/40
+            to-transparent
+            pointer-events-none
+          "
+                  />
                 </div>
-
-                <div
-                  className="
-                    h-14
-                    w-14
-                    rounded-2xl
-                    bg-linear-to-br
-                    from-[#0F2B46]
-                    to-[#1E4D7B]
-                    mb-6
-                  "
-                />
-
-                <h3 className="text-xl font-bold text-slate-900">{step}</h3>
-
-                <p className="text-slate-500 leading-relaxed mt-4">
-                  Seamlessly manage enterprise-grade recruitment workflows with
-                  intelligent automation.
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -692,57 +780,247 @@ export default function GleefixHomepage() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-slate-50 py-24 px-6 border-y border-slate-200">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-slate-900">
-              Frequently Asked Questions
-            </h2>
+      <section
+      className="
+        relative
+        overflow-hidden
+        bg-gradient-to-b
+        from-slate-50
+        to-white
+        py-28
+        px-6
+      "
+    >
+      {/* BACKGROUND GLOW */}
+      <div
+        className="
+          absolute
+          top-0
+          left-1/2
+          -translate-x-1/2
+          w-[600px]
+          h-[600px]
+          bg-blue-100/40
+          blur-3xl
+          rounded-full
+          pointer-events-none
+        "
+      />
 
-            <p className="text-slate-500 text-lg mt-6">
-              Everything you need to know about the Gleefix hiring platform.
-            </p>
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* HEADER */}
+        <div className="text-center mb-20">
+          <div
+            className="
+              inline-flex
+              items-center
+              gap-2
+              px-5
+              py-2
+              rounded-full
+              bg-blue-50
+              border
+              border-blue-100
+              text-blue-700
+              text-sm
+              font-semibold
+              mb-6
+            "
+          >
+            <HelpCircle className="w-4 h-4" />
+
+            Frequently Asked Questions
           </div>
 
-          <div className="space-y-5">
-            {[
-              "How does AI proctoring work?",
-              "Can we create custom assessments?",
-              "Does Gleefix support coding interviews?",
-              "Can enterprises integrate ATS systems?",
-            ].map((faq, index) => (
+          <h2
+            className="
+              text-4xl
+              md:text-5xl
+              font-black
+              text-slate-900
+              leading-tight
+            "
+          >
+            Have Questions?
+            <br />
+
+            We’ve Got Answers.
+          </h2>
+
+          <p
+            className="
+              text-slate-500
+              text-lg
+              mt-6
+              max-w-2xl
+              mx-auto
+              leading-relaxed
+            "
+          >
+            Everything you need to know
+            about the Gleefix AI-powered
+            recruitment and assessment
+            platform.
+          </p>
+        </div>
+
+        {/* FAQ LIST */}
+        <div className="space-y-6">
+          {faqs.map((faq, index) => {
+            const isOpen =
+              openIndex === index;
+
+            return (
               <div
                 key={index}
-                className="
-                  rounded-3xl
-                  bg-white
+                className={`
+                  group
+                  rounded-[30px]
                   border
-                  border-slate-200
-                  p-6
-                  shadow-sm
-                "
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <h3 className="text-lg font-bold text-slate-900">{faq}</h3>
+                  overflow-hidden
+                  transition-all
+                  duration-300
+                  cursor-pointer
 
-                  <button
-                    className="
-                      h-10
-                      w-10
-                      rounded-xl
-                      bg-slate-100
-                      text-slate-700
-                      font-bold
-                    "
+                  ${
+                    isOpen
+                      ? "bg-[#0F172A] border-[#0F172A] shadow-2xl"
+                      : "bg-white border-slate-200 hover:border-blue-200 hover:shadow-xl"
+                  }
+                `}
+              >
+                {/* QUESTION */}
+                <button
+                  onClick={() =>
+                    toggleFAQ(index)
+                  }
+                  className="
+                    w-full
+                    flex
+                    items-center
+                    justify-between
+                    gap-5
+                    p-7
+                    text-left
+                  "
+                >
+                  <div className="flex items-start gap-5">
+                    {/* NUMBER */}
+                    <div
+                      className={`
+                        min-w-[48px]
+                        h-12
+                        rounded-2xl
+                        flex
+                        items-center
+                        justify-center
+                        font-bold
+                        text-sm
+                        transition-all
+
+                        ${
+                          isOpen
+                            ? "bg-white/10 text-white"
+                            : "bg-slate-100 text-slate-700"
+                        }
+                      `}
+                    >
+                      0{index + 1}
+                    </div>
+
+                    {/* TEXT */}
+                    <div>
+                      <h3
+                        className={`
+                          text-lg
+                          md:text-xl
+                          font-bold
+                          transition-all
+
+                          ${
+                            isOpen
+                              ? "text-white"
+                              : "text-slate-900"
+                          }
+                        `}
+                      >
+                        {faq.question}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* ICON */}
+                  <div
+                    className={`
+                      min-w-[50px]
+                      h-[50px]
+                      rounded-2xl
+                      flex
+                      items-center
+                      justify-center
+                      transition-all
+
+                      ${
+                        isOpen
+                          ? "bg-white text-slate-900 rotate-180"
+                          : "bg-slate-100 text-slate-700"
+                      }
+                    `}
                   >
-                    +
-                  </button>
+                    {isOpen ? (
+                      <Minus className="w-5 h-5" />
+                    ) : (
+                      <Plus className="w-5 h-5" />
+                    )}
+                  </div>
+                </button>
+
+                {/* ANSWER */}
+                <div
+                  className={`
+                    grid
+                    transition-all
+                    duration-500
+                    ease-in-out
+
+                    ${
+                      isOpen
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0"
+                    }
+                  `}
+                >
+                  <div className="overflow-hidden">
+                    <div
+                      className="
+                        px-7
+                        pb-7
+                        pl-[92px]
+                      "
+                    >
+                      <p
+                        className={`
+                          leading-relaxed
+                          text-[15px]
+
+                          ${
+                            isOpen
+                              ? "text-slate-300"
+                              : "text-slate-500"
+                          }
+                        `}
+                      >
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* CTA */}
       <section className="px-6 pb-24 pt-24">
@@ -815,97 +1093,6 @@ export default function GleefixHomepage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-[#0F172A] text-white px-6 py-16">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12">
-          <div>
-            <div className="flex items-center gap-4">
-              <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center overflow-hidden">
-                <Image
-                  src="/gleeffix_logo.jpeg"
-                  alt="Gleefix"
-                  width={50}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
-
-              <div>
-                <h2 className="text-xl font-bold">Gleefix</h2>
-
-                <p className="text-xs text-slate-400 mt-1">
-                  Consulting Talent. Building Futures.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-slate-400 leading-relaxed mt-6 max-w-sm">
-              AI-powered recruitment and assessment platform for modern
-              enterprises.
-            </p>
-          </div>
-
-          {[
-            {
-              title: "Company",
-              items: ["About", "Careers", "Blogs", "Contact"],
-            },
-            {
-              title: "Platform",
-              items: [
-                "Assessments",
-                "Analytics",
-                "AI Proctoring",
-                "Integrations",
-              ],
-            },
-            {
-              title: "Resources",
-              items: [
-                "Documentation",
-                "Help Center",
-                "Privacy Policy",
-                "Terms",
-              ],
-            },
-          ].map((section, index) => (
-            <div key={index}>
-              <h3 className="font-bold text-lg mb-5">{section.title}</h3>
-
-              <div className="space-y-4">
-                {section.items.map((item, idx) => (
-                  <button
-                    key={idx}
-                    className="block text-slate-400 hover:text-white transition-all duration-200"
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="max-w-7xl mx-auto border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-slate-500">
-            © 2026 Gleefix. All rights reserved.
-          </p>
-
-          <div className="flex items-center gap-6 text-sm text-slate-500">
-            <button className="hover:text-white transition-all duration-200">
-              Privacy
-            </button>
-
-            <button className="hover:text-white transition-all duration-200">
-              Terms
-            </button>
-
-            <button className="hover:text-white transition-all duration-200">
-              Security
-            </button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
