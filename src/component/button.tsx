@@ -40,29 +40,10 @@ export default function ActionButtons({
   const router = useRouter();
 
   return (
-    <div
-      className="
-        relative
-        overflow-hidden
-        rounded-2xl
-        px-5
-      "
-    >
+    <div className=" relative overflow-hidden rounded-2xl px-5">
 
       {/* TOP BAR */}
-      <div
-        className="
-          relative
-          z-10
-          flex
-          flex-col
-          lg:flex-row
-          items-start
-          lg:items-center
-          justify-between
-          gap-4
-        "
-      >
+      <div className=" relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
 
         {/* SEARCH BAR */}
         <div className="relative w-full lg:w-[320px]">
