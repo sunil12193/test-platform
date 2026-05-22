@@ -157,7 +157,7 @@ export default function HiringAnalyticsPage() {
 
           {/* RIGHT */}
           <div className="relative">
-            <div className="rounded-[40px] bg-gradient-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden text-white">
+            <div className="rounded-[40px] bg-linear-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden text-white">
               <div className="grid grid-cols-2 gap-5">
                 {stats.map((item, index) => (
                   <div
@@ -215,7 +215,7 @@ export default function HiringAnalyticsPage() {
               <div className="absolute top-0 right-0 h-64 w-64 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
               <div className="relative z-10">
-                <div className="h-18 w-18 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
 
                 <h3 className="text-3xl font-black text-slate-900">
                   {item.title}
@@ -296,7 +296,7 @@ export default function HiringAnalyticsPage() {
                   className="rounded-2xl bg-white border border-slate-200 px-5 py-5 shadow-sm"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="h-4 w-4 rounded-full bg-gradient-to-r from-[#0F2B46] to-[#1E4D7B]" />
+                    <div className="h-4 w-4 rounded-full bg-linear-to-r from-[#0F2B46] to-[#1E4D7B]" />
 
                     <h3 className="font-bold text-slate-800">{chart}</h3>
                   </div>
@@ -306,8 +306,8 @@ export default function HiringAnalyticsPage() {
           </div>
 
           {/* RIGHT */}
-          <div className="rounded-[40px] bg-gradient-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden">
-            <div className="h-[550px] rounded-[32px] bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white text-2xl font-bold">
+          <div className="rounded-[40px] bg-linear-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden">
+            <div className="h-137.5 rounded-4xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white text-2xl font-bold">
               Analytics Dashboard Preview
             </div>
           </div>
@@ -316,7 +316,7 @@ export default function HiringAnalyticsPage() {
 
       {/* CTA */}
       <section className="px-6 pb-24">
-        <div className="max-w-7xl mx-auto rounded-[40px] bg-gradient-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-4xl mx-auto">

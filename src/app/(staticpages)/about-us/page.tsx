@@ -147,7 +147,7 @@ export default function GleefixAboutPage() {
 
           {/* RIGHT */}
           <div className="relative">
-            <div className="rounded-[40px] bg-gradient-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden text-white">
+            <div className="rounded-[40px] bg-linear-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden text-white">
               <div className="grid grid-cols-2 gap-5">
                 {stats.map((item, index) => (
                   <div
@@ -186,7 +186,7 @@ export default function GleefixAboutPage() {
           {/* LEFT */}
           <div className="relative">
             <div className="rounded-[40px] bg-white border border-slate-200 shadow-2xl p-8 overflow-hidden">
-              <div className="h-[500px] rounded-[32px] bg-gradient-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-2xl font-bold">
+              <div className="h-125 rounded-4xl bg-linear-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-2xl font-bold">
                 Company Story Visual
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function GleefixAboutPage() {
                   className="rounded-2xl bg-white border border-slate-200 px-5 py-5 shadow-sm"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="h-4 w-4 rounded-full bg-gradient-to-r from-[#0F2B46] to-[#1E4D7B]" />
+                    <div className="h-4 w-4 rounded-full bg-linear-to-r from-[#0F2B46] to-[#1E4D7B]" />
 
                     <h3 className="font-bold text-slate-800">{item}</h3>
                   </div>
@@ -258,12 +258,12 @@ export default function GleefixAboutPage() {
             {values.map((value, index) => (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-[32px] bg-[#F8FAFC] border border-slate-200 p-8 hover:shadow-2xl transition-all duration-300"
+                className="group relative overflow-hidden rounded-4xl bg-[#F8FAFC] border border-slate-200 p-8 hover:shadow-2xl transition-all duration-300"
               >
                 <div className="absolute top-0 right-0 h-48 w-48 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
                 <div className="relative z-10">
-                  <div className="h-18 w-18 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                  <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
 
                   <h3 className="text-3xl font-black text-slate-900">
                     {value.title}
@@ -302,7 +302,7 @@ export default function GleefixAboutPage() {
               key={index}
               className="rounded-[36px] bg-white border border-slate-200 p-8 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="h-[300px] rounded-[28px] bg-gradient-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-xl font-bold">
+              <div className="h-75 rounded-[28px] bg-linear-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-xl font-bold">
                 Leadership Image
               </div>
 
@@ -322,7 +322,7 @@ export default function GleefixAboutPage() {
 
       {/* CTA */}
       <section className="px-6 pb-24">
-        <div className="max-w-7xl mx-auto rounded-[40px] bg-gradient-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-4xl mx-auto">

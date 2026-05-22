@@ -152,7 +152,7 @@ export default function GleefixTermsPage() {
           {/* MAIN CONTENT */}
           <div className="space-y-7">
             {/* INTRO CARD */}
-            <div className="rounded-[36px] bg-gradient-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-10 text-white shadow-2xl relative overflow-hidden">
+            <div className="rounded-[36px] bg-linear-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-10 text-white shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
               <div className="relative z-10">
@@ -184,7 +184,7 @@ export default function GleefixTermsPage() {
               >
                 <div className="flex items-start justify-between gap-5 mb-6">
                   <div>
-                    <div className="inline-flex h-14 w-14 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B] items-center justify-center text-white text-xl font-black shadow-lg mb-6">
+                    <div className="inline-flex h-14 w-14 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] items-center justify-center text-white text-xl font-black shadow-lg mb-6">
                       {index + 1}
                     </div>
 
@@ -224,7 +224,7 @@ export default function GleefixTermsPage() {
                       key={index}
                       className="rounded-3xl bg-[#F8FAFC] border border-slate-200 p-6"
                     >
-                      <div className="h-16 w-16 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B] shadow-lg mb-6" />
+                      <div className="h-16 w-16 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-lg mb-6" />
 
                       <h3 className="text-xl font-black text-slate-900 leading-tight">
                         {item}
@@ -236,7 +236,7 @@ export default function GleefixTermsPage() {
             </div>
 
             {/* SUPPORT */}
-            <div className="rounded-[36px] bg-gradient-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-10 text-white shadow-2xl relative overflow-hidden">
+            <div className="rounded-[36px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-10 text-white shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
               <div className="relative z-10 max-w-4xl">

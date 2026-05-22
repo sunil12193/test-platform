@@ -159,14 +159,14 @@ export default function GleefixServicesPage() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-[32px] bg-white border border-slate-200 p-8 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+              className="group relative overflow-hidden rounded-4xl bg-white border border-slate-200 p-8 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
               {/* GLOW */}
               <div className="absolute top-0 right-0 h-48 w-48 bg-blue-100/30 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
               <div className="relative z-10">
                 {/* ICON */}
-                <div className="h-18 w-18 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
 
                 <h2 className="text-3xl font-black text-slate-900 leading-tight">
                   {service.title}
@@ -183,7 +183,7 @@ export default function GleefixServicesPage() {
                       key={idx}
                       className="flex items-center gap-3 rounded-2xl bg-slate-50 border border-slate-100 px-4 py-3"
                     >
-                      <div className="h-3 w-3 rounded-full bg-gradient-to-r from-[#0F2B46] to-[#1E4D7B]" />
+                      <div className="h-3 w-3 rounded-full bg-linear-to-r from-[#0F2B46] to-[#1E4D7B]" />
 
                       <span className="text-sm font-semibold text-slate-700">
                         {feature}
@@ -231,7 +231,7 @@ export default function GleefixServicesPage() {
                 "Custom Workflow Automation",
               ].map((item, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B]" />
+                  <div className="h-12 w-12 rounded-2xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B]" />
 
                   <h3 className="text-lg font-bold text-slate-800">{item}</h3>
                 </div>
@@ -241,7 +241,7 @@ export default function GleefixServicesPage() {
 
           {/* RIGHT */}
           <div className="relative">
-            <div className="rounded-[36px] bg-gradient-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 text-white shadow-2xl">
+            <div className="rounded-[36px] bg-linear-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 text-white shadow-2xl">
               <div className="grid grid-cols-2 gap-5">
                 {[
                   {
@@ -289,7 +289,7 @@ export default function GleefixServicesPage() {
 
       {/* CTA */}
       <section className="px-6 py-24">
-        <div className="max-w-7xl mx-auto rounded-[40px] bg-gradient-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-white text-center relative overflow-hidden">
+        <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-white text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-4xl mx-auto">

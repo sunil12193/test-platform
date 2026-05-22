@@ -254,7 +254,7 @@ export default function GleefixHomepage() {
             <div
               className="
                 relative
-                rounded-[32px]
+                rounded-4xl
                 bg-white
                 border
                 border-slate-200
@@ -279,7 +279,7 @@ export default function GleefixHomepage() {
                     h-14
                     w-14
                     rounded-2xl
-                    bg-gradient-to-br
+                    bg-linear-to-br
                     from-[#0F2B46]
                     to-[#1E4D7B]
                     flex
@@ -299,7 +299,7 @@ export default function GleefixHomepage() {
                 className="
                   h-64
                   rounded-3xl
-                  bg-gradient-to-br
+                  bg-linear-to-br
                   from-blue-50
                   to-slate-100
                   border
@@ -332,7 +332,7 @@ export default function GleefixHomepage() {
                 <div
                   className="
                     rounded-2xl
-                    bg-gradient-to-br
+                    bg-linear-to-br
                     from-orange-400
                     to-amber-500
                     text-white
@@ -367,7 +367,7 @@ export default function GleefixHomepage() {
               <h3 className="text-4xl font-black text-emerald-600 mt-3">94%</h3>
 
               <div className="mt-4 w-56 h-3 rounded-full bg-slate-200 overflow-hidden">
-                <div className="w-[94%] h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-600" />
+                <div className="w-[94%] h-full rounded-full bg-linear-to-r from-emerald-500 to-green-600" />
               </div>
             </div>
           </div>
@@ -428,7 +428,7 @@ export default function GleefixHomepage() {
                   h-16
                   w-16
                   rounded-2xl
-                  bg-gradient-to-br
+                  bg-linear-to-br
                   from-[#0F2B46]
                   to-[#1E4D7B]
                   mb-6
@@ -535,7 +535,7 @@ export default function GleefixHomepage() {
                     h-14
                     w-14
                     rounded-2xl
-                    bg-gradient-to-br
+                    bg-linear-to-br
                     from-[#0F2B46]
                     to-[#1E4D7B]
                   "
@@ -606,7 +606,7 @@ export default function GleefixHomepage() {
                     h-14
                     w-14
                     rounded-2xl
-                    bg-gradient-to-br
+                    bg-linear-to-br
                     from-[#0F2B46]
                     to-[#1E4D7B]
                     mb-6
@@ -751,7 +751,7 @@ export default function GleefixHomepage() {
             max-w-7xl
             mx-auto
             rounded-[36px]
-            bg-gradient-to-r
+            bg-linear-to-r
             from-[#0F2B46]
             via-[#163A5C]
             to-[#1E4D7B]

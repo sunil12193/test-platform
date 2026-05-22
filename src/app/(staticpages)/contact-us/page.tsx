@@ -100,7 +100,7 @@ export default function GleefixContactPage() {
           {/* LEFT */}
           <div className="space-y-6">
             {/* CONTACT INFO */}
-            <div className="rounded-[36px] bg-gradient-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-10 text-white shadow-2xl overflow-hidden relative">
+            <div className="rounded-[36px] bg-linear-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-10 text-white shadow-2xl overflow-hidden relative">
               <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
               <div className="relative z-10">
@@ -177,7 +177,7 @@ export default function GleefixContactPage() {
                         </p>
                       </div>
 
-                      <div className="h-14 w-14 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B]" />
+                      <div className="h-14 w-14 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B]" />
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-4 mt-6">
@@ -327,7 +327,7 @@ export default function GleefixContactPage() {
             </button>
           </div>
 
-          <div className="h-[500px] bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center text-slate-400 text-2xl font-bold">
+          <div className="h-125 bg-linear-to-br from-blue-50 to-slate-100 flex items-center justify-center text-slate-400 text-2xl font-bold">
             Interactive Map Placeholder
           </div>
         </div>
@@ -335,7 +335,7 @@ export default function GleefixContactPage() {
 
       {/* CTA */}
       <section className="px-6 pb-24">
-        <div className="max-w-7xl mx-auto rounded-[40px] bg-gradient-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-4xl mx-auto">

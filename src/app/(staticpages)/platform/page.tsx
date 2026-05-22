@@ -130,11 +130,11 @@ export default function GleefixPlatformPage() {
                   </p>
                 </div>
 
-                <div className="h-16 w-16 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B]" />
+                <div className="h-16 w-16 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B]" />
               </div>
 
               {/* MAIN SCREEN */}
-              <div className="h-72 rounded-[28px] bg-gradient-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 font-semibold text-lg">
+              <div className="h-72 rounded-[28px] bg-linear-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 font-semibold text-lg">
                 Dashboard Preview
               </div>
 
@@ -203,13 +203,13 @@ export default function GleefixPlatformPage() {
           {modules.map((module, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-[32px] bg-white border border-slate-200 p-8 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+              className="group relative overflow-hidden rounded-4xl bg-white border border-slate-200 p-8 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
               {/* BG */}
               <div className="absolute top-0 right-0 h-52 w-52 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
               <div className="relative z-10">
-                <div className="h-18 w-18 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
 
                 <h3 className="text-3xl font-black text-slate-900 leading-tight">
                   {module.title}
@@ -249,10 +249,10 @@ export default function GleefixPlatformPage() {
           </div>
 
           {/* DASHBOARD */}
-          <div className="rounded-[40px] bg-gradient-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden">
+          <div className="rounded-[40px] bg-linear-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden">
             <div className="grid lg:grid-cols-3 gap-6">
               {/* LEFT */}
-              <div className="lg:col-span-2 rounded-[32px] bg-white p-6 border border-white/10">
+              <div className="lg:col-span-2 rounded-4xl bg-white p-6 border border-white/10">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h3 className="text-2xl font-black text-slate-900">
@@ -269,7 +269,7 @@ export default function GleefixPlatformPage() {
                   </button>
                 </div>
 
-                <div className="h-80 rounded-[28px] bg-gradient-to-br from-slate-50 to-blue-50 border border-slate-200 flex items-center justify-center text-slate-400 font-semibold text-lg">
+                <div className="h-80 rounded-[28px] bg-linear-to-br from-slate-50 to-blue-50 border border-slate-200 flex items-center justify-center text-slate-400 font-semibold text-lg">
                   Advanced Analytics Visualization
                 </div>
               </div>
@@ -329,14 +329,14 @@ export default function GleefixPlatformPage() {
           ].map((step, index) => (
             <div
               key={index}
-              className="relative rounded-[32px] bg-white border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+              className="relative rounded-4xl bg-white border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
             >
               <div className="absolute top-5 right-5 text-7xl font-black text-slate-100">
                 0{index + 1}
               </div>
 
               <div className="relative z-10">
-                <div className="h-18 w-18 rounded-3xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B] mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] mb-7" />
 
                 <h3 className="text-2xl font-black text-slate-900 leading-tight">
                   {step}
@@ -354,7 +354,7 @@ export default function GleefixPlatformPage() {
 
       {/* CTA */}
       <section className="px-6 pb-24">
-        <div className="max-w-7xl mx-auto rounded-[40px] bg-gradient-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-4xl mx-auto">
