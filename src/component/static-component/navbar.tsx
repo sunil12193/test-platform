@@ -16,7 +16,7 @@ export default function Navbar() {
           border-slate-200/80
         "
       >
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto h-20 flex items-center justify-between">
           {/* LOGO */}
           <div className="flex items-center gap-4">
             <Link href="/">
