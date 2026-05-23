@@ -48,35 +48,35 @@ export default function Navbar() {
             </Link>
 
             <Link
-                href="/about-us"
-                className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
+              href="/about-us"
+              className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
             >
               About Us
             </Link>
 
             <Link
-                href="/service"
-                className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
+              href="/service"
+              className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
             >
               Services
             </Link>
             <Link
-                href="/privacy-policy"
-                className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
+              href="/privacy-policy"
+              className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
             >
               Privacy Policy
             </Link>
 
             <Link
-                href="/platform"
-                className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
+              href="/platform"
+              className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
             >
               Platform
             </Link>
 
             <Link
-                href="/contact-us"
-                className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
+              href="/contact-us"
+              className="hover:text-[#0F2B46] transition-all cursor-pointer duration-200"
             >
               Contact
             </Link>
@@ -84,6 +84,11 @@ export default function Navbar() {
 
           {/* ACTIONS */}
           <div className="flex items-center gap-3">
+
+            <Link
+              href="/sign-in"
+            >
+              
             <button
               className="
                 hidden
@@ -107,9 +112,13 @@ export default function Navbar() {
             >
               Login
             </button>
+            </Link>
 
-            <button
-              className="
+            <Link
+              href="/sign-up"
+            >
+              <button
+                className="
                 h-11
                 px-6
                 rounded-xl
@@ -123,9 +132,10 @@ export default function Navbar() {
                 duration-200
                 cursor-pointer
               "
-            >
-              Get Started
-            </button>
+              >
+                Get Started
+              </button>
+            </Link>
           </div>
         </div>
       </header>

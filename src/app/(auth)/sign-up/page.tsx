@@ -21,33 +21,25 @@ export default function SignupPage() {
     password: "",
   });
 
-  const [loading, setLoading] =
-    useState<boolean>(false);
-
-  const [error, setError] =
-    useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   // VALIDATION ERRORS
-  const [validationErrors, setValidationErrors] =
-    useState({
-      email: "",
-      phone: "",
-      password: "",
-    });
+  const [validationErrors, setValidationErrors] = useState({
+    userName: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
 
   // HANDLE INPUT CHANGE
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
 
-    setValidationErrors({
-      ...validationErrors,
-      [e.target.name]: "",
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // CLEAR VALIDATION ERROR ON CHANGE
+    setValidationErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   // VALIDATION
@@ -55,59 +47,78 @@ export default function SignupPage() {
     let isValid = true;
 
     const errors = {
+      userName: "",
       email: "",
       phone: "",
       password: "",
     };
 
-    // EMAIL VALIDATION
-    const emailRegex =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // USERNAME VALIDATION
+    const trimmedName = formData.userName.trim();
+    if (!trimmedName) {
+      errors.userName = "Full name is required";
+      isValid = false;
+    } else if (trimmedName.length < 2) {
+      errors.userName = "Name must be at least 2 characters";
+      isValid = false;
+    } else if (trimmedName.length > 50) {
+      errors.userName = "Name must be under 50 characters";
+      isValid = false;
+    } else if (!/^[a-zA-Z\s'-]+$/.test(trimmedName)) {
+      errors.userName = "Name can only contain letters, spaces, hyphens, or apostrophes";
+      isValid = false;
+    }
 
-    if (!emailRegex.test(formData.email)) {
-      errors.email =
-        "Please enter valid email";
+    // EMAIL VALIDATION
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      errors.email = "Email is required";
+      isValid = false;
+    } else if (!emailRegex.test(formData.email)) {
+      errors.email = "Please enter a valid email address";
       isValid = false;
     }
 
     // PHONE VALIDATION
-    const phoneRegex = /^[0-9]{10}$/;
-
-    if (!phoneRegex.test(formData.phone)) {
-      errors.phone =
-        "Phone number must be 10 digits";
+    const phoneRegex = /^[6-9][0-9]{9}$/; // Indian mobile numbers
+    if (!formData.phone.trim()) {
+      errors.phone = "Phone number is required";
+      isValid = false;
+    } else if (!phoneRegex.test(formData.phone)) {
+      errors.phone = "Enter a valid 10-digit mobile number";
       isValid = false;
     }
 
     // PASSWORD VALIDATION
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-
-    if (
-      !passwordRegex.test(
-        formData.password
-      )
-    ) {
-      errors.password =
-        "Password must contain uppercase, lowercase, number & special character";
+    if (!formData.password) {
+      errors.password = "Password is required";
+      isValid = false;
+    } else if (formData.password.length < 8) {
+      errors.password = "Password must be at least 8 characters";
+      isValid = false;
+    } else if (!/(?=.*[a-z])/.test(formData.password)) {
+      errors.password = "Password must include at least one lowercase letter";
+      isValid = false;
+    } else if (!/(?=.*[A-Z])/.test(formData.password)) {
+      errors.password = "Password must include at least one uppercase letter";
+      isValid = false;
+    } else if (!/(?=.*\d)/.test(formData.password)) {
+      errors.password = "Password must include at least one number";
+      isValid = false;
+    } else if (!/(?=.*[@$!%*?&])/.test(formData.password)) {
+      errors.password = "Password must include at least one special character (@$!%*?&)";
       isValid = false;
     }
 
     setValidationErrors(errors);
-
     return isValid;
   };
 
   // HANDLE SIGNUP
-  const handleSignup = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // VALIDATE
-    if (!validateFields()) {
-      return;
-    }
+    if (!validateFields()) return;
 
     setLoading(true);
     setError("");
@@ -117,45 +128,24 @@ export default function SignupPage() {
         "https://platform-backend-v8zh.onrender.com/api/auth/signup",
         {
           method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         }
       );
 
-      const data: SignupResponse =
-        await response.json();
+      const data: SignupResponse = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Signup failed"
-        );
+        throw new Error(data.message || "Signup failed");
       }
 
-      // OPTIONAL
-      localStorage.setItem(
-        "signupEmail",
-        formData.email
-      );
+      localStorage.setItem("signupEmail", formData.email);
 
-      // REDIRECT
       router.push(
-        `/account-created?link=${encodeURIComponent(
-          data.link
-        )}&email=${encodeURIComponent(
-          formData.email
-        )}`
+        `/account-created`
       );
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Something went wrong");
-      }
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -170,20 +160,13 @@ export default function SignupPage() {
           alt="signup"
           className="w-full h-full object-cover"
         />
-
         <div className="absolute top-5 left-5 z-10 w-50 h-50">
           <Logo />
         </div>
-
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
           <div className="text-white text-center px-10">
-            <h1 className="text-5xl font-bold mb-4">
-              Create Account
-            </h1>
-
-            <p className="text-lg text-gray-200">
-              Join us and start your journey today.
-            </p>
+            <h1 className="text-5xl font-bold mb-4">Create Account</h1>
+            <p className="text-lg text-gray-200">Join us and start your journey today.</p>
           </div>
         </div>
       </div>
@@ -191,44 +174,33 @@ export default function SignupPage() {
       {/* RIGHT FORM */}
       <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-100 p-6">
         <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8">
-          <h2 className="text-4xl font-bold text-center mb-2">
-            Sign Up
-          </h2>
+          <h2 className="text-4xl font-bold text-center mb-2">Sign Up</h2>
+          <p className="text-gray-500 text-center mb-8">Create your new account</p>
 
-          <p className="text-gray-500 text-center mb-8">
-            Create your new account
-          </p>
-
-          {/* ERROR */}
+          {/* SERVER ERROR */}
           {error && (
             <div className="mb-4 bg-red-100 text-red-600 px-4 py-3 rounded-xl text-sm">
               {error}
             </div>
           )}
 
-          <form
-            onSubmit={handleSignup}
-            className="space-y-5"
-          >
+          <form onSubmit={handleSignup} className="space-y-5" noValidate>
             {/* USER NAME */}
-            <input
-              type="text"
-              name="userName"
-              placeholder="Full Name"
-              value={formData.userName}
-              onChange={handleChange}
-              required
-              className="
-                w-full
-                border
-                rounded-xl
-                px-4
-                py-3
-                outline-none
-                focus:ring-2
-                focus:ring-black
-              "
-            />
+            <div>
+              <input
+                type="text"
+                name="userName"
+                placeholder="Full Name"
+                value={formData.userName}
+                onChange={handleChange}
+                className={`w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black ${
+                  validationErrors.userName ? "border-red-400" : ""
+                }`}
+              />
+              {validationErrors.userName && (
+                <p className="text-red-500 text-sm mt-1">{validationErrors.userName}</p>
+              )}
+            </div>
 
             {/* EMAIL */}
             <div>
@@ -238,23 +210,12 @@ export default function SignupPage() {
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
-                required
-                className="
-                  w-full
-                  border
-                  rounded-xl
-                  px-4
-                  py-3
-                  outline-none
-                  focus:ring-2
-                  focus:ring-black
-                "
+                className={`w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black ${
+                  validationErrors.email ? "border-red-400" : ""
+                }`}
               />
-
               {validationErrors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {validationErrors.email}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{validationErrors.email}</p>
               )}
             </div>
 
@@ -266,23 +227,13 @@ export default function SignupPage() {
                 placeholder="Phone Number"
                 value={formData.phone}
                 onChange={handleChange}
-                required
-                className="
-                  w-full
-                  border
-                  rounded-xl
-                  px-4
-                  py-3
-                  outline-none
-                  focus:ring-2
-                  focus:ring-black
-                "
+                maxLength={10}
+                className={`w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black ${
+                  validationErrors.phone ? "border-red-400" : ""
+                }`}
               />
-
               {validationErrors.phone && (
-                <p className="text-red-500 text-sm mt-1">
-                  {validationErrors.phone}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{validationErrors.phone}</p>
               )}
             </div>
 
@@ -294,55 +245,28 @@ export default function SignupPage() {
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
-                required
-                className="
-                  w-full
-                  border
-                  rounded-xl
-                  px-4
-                  py-3
-                  outline-none
-                  focus:ring-2
-                  focus:ring-black
-                "
+                className={`w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black ${
+                  validationErrors.password ? "border-red-400" : ""
+                }`}
               />
-
               {validationErrors.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  {
-                    validationErrors.password
-                  }
-                </p>
+                <p className="text-red-500 text-sm mt-1">{validationErrors.password}</p>
               )}
             </div>
 
-            {/* BUTTON */}
+            {/* SUBMIT */}
             <button
               type="submit"
               disabled={loading}
-              className="
-                w-full
-                bg-black
-                text-white
-                py-3
-                rounded-xl
-                hover:bg-gray-800
-                transition
-                disabled:opacity-50
-              "
+              className="w-full bg-black cursor-pointer text-white py-3 rounded-xl hover:bg-gray-800 transition disabled:opacity-50"
             >
-              {loading
-                ? "Creating Account..."
-                : "Create Account"}
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
 
           <p className="text-center text-sm mt-6">
             Already have an account?{" "}
-            <Link
-              href="/sign-in"
-              className="font-semibold hover:underline"
-            >
+            <Link href="/sign-in" className="font-semibold hover:underline">
               Sign In
             </Link>
           </p>

@@ -7,7 +7,7 @@ import { CheckCircle2, Mail } from "lucide-react";
 export default function AccountCreatedPage() {
   const searchParams = useSearchParams();
 
-  const verificationLink = searchParams.get("link");
+  // const verificationLink = searchParams.get("link");
 
   const email = searchParams.get("email");
 
@@ -58,30 +58,10 @@ export default function AccountCreatedPage() {
           We have sent a verification link to:
         </p>
 
-        {/* EMAIL */}
-        <div
-          className="
-            mt-5
-            inline-flex
-            items-center
-            gap-3
-            bg-slate-100
-            px-6
-            py-4
-            rounded-2xl
-            text-slate-700
-            font-semibold
-          "
-        >
-          <Mail size={20} />
-          {email}
-        </div>
-
         {/* VERIFY BUTTON */}
-        {verificationLink && (
+        { (
           <Link
-            href={`/verify-email?token=${verificationLink.split("/").pop()
-              }`}
+            href={"/email-verified"}
             className="
             mt-10
             inline-flex
