@@ -1,4 +1,4 @@
-import { api } from "./api";
+import api from "./axios";
 
 export interface SignupPayload {
   userName: string;
@@ -7,24 +7,16 @@ export interface SignupPayload {
   password: string;
 }
 
-export interface SignupResponse {
-  success: boolean;
-  message: string;
-  link?: string;
-}
-
 export const authService = {
   signup: async (payload: SignupPayload) => {
-    return api<SignupResponse>("/auth/signup", {
-      method: "POST",
-      body: payload,
-    });
+    const response = await api.post("/auth/signup", payload);
+
+    return response.data;
   },
 
   signin: async (payload: { email: string; password: string }) => {
-    return api("/auth/signin", {
-      method: "POST",
-      body: payload,
-    });
+    const response = await api.post("/auth/signin", payload);
+
+    return response.data;
   },
 };
