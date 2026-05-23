@@ -9,3 +9,8 @@ export const useSignup = () => {
     mutationFn: authService.signup,
   });
 };
+export const useSignin = () => {
+  return useMutation({
+    mutationFn: authService.signin,
+  });
+};

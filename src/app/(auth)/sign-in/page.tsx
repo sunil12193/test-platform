@@ -9,8 +9,12 @@ import { useRouter } from "next/navigation";
 
 import { FiMail, FiLock, FiArrowRight } from "react-icons/fi";
 
+import { useSignin } from "@/hooks/useSignup";
+
 export default function SigninPage() {
   const router = useRouter();
+
+  const signinMutation = useSignin();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -21,7 +25,10 @@ export default function SigninPage() {
 
   const [error, setError] = useState("");
 
+  // ========================================
   // HANDLE INPUT
+  // ========================================
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -29,8 +36,11 @@ export default function SigninPage() {
     });
   };
 
-  // LOGIN
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  // ========================================
+  // SIGN IN
+  // ========================================
+
+  const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setLoading(true);
@@ -38,13 +48,36 @@ export default function SigninPage() {
     setError("");
 
     try {
-      // LOGIN API HERE
+      const response = await signinMutation.mutateAsync(formData);
 
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1200);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      const token = response?.data?.accessToken;
+
+      const user = response?.data?.user;
+
+      // SAVE ACCESS TOKEN
+      if (token) {
+        localStorage.setItem("accessToken", token);
+      }
+
+      // SAVE USER
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
+      // SAVE EMAIL
+      localStorage.setItem("signinEmail", formData.email);
+
+      // REDIRECT
+      router.push("/dashboard");
+    } catch (err: any) {
+      console.log("LOGIN ERROR:", err);
+
+      const message =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Invalid email or password";
+
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -55,9 +88,9 @@ export default function SigninPage() {
       {/* LEFT */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#102C4A] to-[#1E4D7B]">
         {/* GLOW */}
-        <div className="absolute top-[-120px] left-[-120px] w-[300px] h-[300px] rounded-full bg-blue-400/20 blur-3xl" />
+        <div className="absolute -top-30 -left-30 w-75 h-75 rounded-full bg-blue-400/20 blur-3xl" />
 
-        <div className="absolute bottom-[-120px] right-[-120px] w-[300px] h-[300px] rounded-full bg-cyan-400/20 blur-3xl" />
+        <div className="absolute -bottom-30 -right-30 w-75 h-75 rounded-full bg-cyan-400/20 blur-3xl" />
 
         {/* CONTENT */}
         <div className="relative z-10 flex flex-col justify-between h-full w-full p-14">
@@ -127,55 +160,41 @@ export default function SigninPage() {
       </div>
 
       {/* RIGHT */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12">
-        <div className="w-full max-w-lg">
-          {/* MOBILE LOGO */}
-          <div className="lg:hidden flex items-center justify-center gap-3 mb-10">
-            <Image
-              src="/logo.svg"
-              alt="Gleefix"
-              width={55}
-              height={55}
-              priority
-            />
-
-            <div>
-              <h2 className="text-2xl font-black text-[#102C4A]">Gleefix</h2>
-
-              <p className="text-xs text-slate-500">AI Hiring Platform</p>
-            </div>
-          </div>
-
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-12">
+        <div className="w-full max-w-xl">
           {/* FORM CARD */}
-          <div className="bg-white border border-slate-200/80 rounded-[32px] shadow-[0_20px_80px_rgba(15,23,42,0.08)] p-8 lg:p-10">
+          <div className="bg-white border border-slate-200/80 rounded-[28px] shadow-[0_20px_80px_rgba(15,23,42,0.08)] p-6 sm:p-7 lg:p-10">
             {/* HEADER */}
-            <div className="text-center mb-10">
-              <div className="mx-auto w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-xl mb-5">
+            <div className="text-center mb-8">
+              {/* SINGLE LOGO */}
+              <div className="mx-auto w-20 h-20 rounded-3xl bg-white flex items-center justify-center shadow-xl mb-5">
                 <Image
                   src="/logo.svg"
                   alt="Gleefix"
-                  width={42}
-                  height={42}
+                  width={36}
+                  height={36}
                   priority
                 />
               </div>
 
-              <h2 className="text-4xl font-black text-slate-900">Sign In</h2>
+              <h2 className="text-3xl lg:text-4xl font-black text-slate-900">
+                Sign In
+              </h2>
 
-              <p className="text-slate-500 mt-3">
+              <p className="text-slate-500 mt-3 text-sm lg:text-base">
                 Access your Gleefix dashboard
               </p>
             </div>
 
             {/* ERROR */}
             {error && (
-              <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-600">
+              <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
                 {error}
               </div>
             )}
 
             {/* FORM */}
-            <form onSubmit={handleLogin} className="space-y-5">
+            <form onSubmit={handleSignin} className="space-y-4">
               {/* EMAIL */}
               <div>
                 <div className="relative">
@@ -188,7 +207,7 @@ export default function SigninPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50/50 pl-12 pr-4 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-blue-100"
+                    className="w-full h-13 lg:h-14 rounded-2xl border border-slate-200 bg-slate-50/50 pl-12 pr-4 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-blue-100"
                   />
                 </div>
               </div>
@@ -205,7 +224,7 @@ export default function SigninPage() {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50/50 pl-12 pr-4 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-blue-100"
+                    className="w-full h-13 lg:h-14 rounded-2xl border border-slate-200 bg-slate-50/50 pl-12 pr-4 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-blue-100"
                   />
                 </div>
               </div>
@@ -224,7 +243,7 @@ export default function SigninPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-14 rounded-2xl bg-gradient-to-r from-[#0F2B46] to-[#1E4D7B] text-white font-semibold text-lg flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20 disabled:opacity-60"
+                className="w-full h-13 lg:h-14 rounded-2xl bg-gradient-to-r from-[#0F2B46] to-[#1E4D7B] text-white font-semibold text-base lg:text-lg flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20 disabled:opacity-60"
               >
                 {loading ? (
                   "Signing In..."
@@ -238,8 +257,8 @@ export default function SigninPage() {
             </form>
 
             {/* FOOTER */}
-            <div className="mt-8 text-center">
-              <p className="text-slate-500">
+            <div className="mt-7 text-center">
+              <p className="text-slate-500 text-sm lg:text-base">
                 Don&apos;t have an account?{" "}
                 <Link
                   href="/sign-up"
