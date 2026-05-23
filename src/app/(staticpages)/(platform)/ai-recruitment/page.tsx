@@ -56,52 +56,6 @@ export default function AIRecruitmentPlatformPage() {
 
   return (
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
-      {/* NAVBAR */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* LOGO */}
-          <div className="flex items-center gap-4">
-            <div className="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-md flex items-center justify-center overflow-hidden">
-              <Image
-                src="/gleeffix_logo.jpeg"
-                alt="Gleefix"
-                width={50}
-                height={50}
-                className="object-contain"
-              />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-black text-[#0F2B46]">Gleefix</h2>
-
-              <p className="text-xs text-slate-500 mt-1">
-                Consulting Talent. Building Futures.
-              </p>
-            </div>
-          </div>
-
-          {/* NAV */}
-          <div className="hidden lg:flex items-center gap-10 text-sm font-semibold text-slate-600">
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Home
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Platform
-            </button>
-
-            <button className="text-[#0F2B46]">AI Recruitment</button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Contact
-            </button>
-          </div>
-
-          <button className="h-11 px-6 rounded-xl bg-[#0F2B46] hover:bg-[#163a5c] text-white font-semibold shadow-sm hover:shadow-lg transition-all duration-200">
-            Book Demo
-          </button>
-        </div>
-      </header>
 
       {/* HERO */}
       <section className="relative py-28 px-6 overflow-hidden">

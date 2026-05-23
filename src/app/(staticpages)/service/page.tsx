@@ -1,11 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function GleefixServicesPage() {
   const services = [
     {
       title: "AI Recruitment Solutions",
-      description:
-        "Automate candidate screening, shortlisting, and hiring decisions with AI-powered intelligence.",
+      link: "/ai-recruitment",
+      description: "Automate candidate screening, shortlisting, and hiring decisions with AI-powered intelligence.",
       features: [
         "AI Resume Screening",
         "Smart Candidate Ranking",
@@ -15,8 +16,8 @@ export default function GleefixServicesPage() {
     },
     {
       title: "Assessment Platform",
-      description:
-        "Create enterprise-grade coding, aptitude, psychometric, and technical assessments.",
+      link: "/assessment",
+      description: "Create enterprise-grade coding, aptitude, psychometric, and technical assessments.",
       features: [
         "Coding Assessments",
         "MCQ & Aptitude Tests",
@@ -26,6 +27,7 @@ export default function GleefixServicesPage() {
     },
     {
       title: "AI Proctoring",
+      link: "/ai-proctoring",
       description:
         "Prevent cheating and maintain assessment integrity with advanced AI proctoring systems.",
       features: [
@@ -36,20 +38,9 @@ export default function GleefixServicesPage() {
       ],
     },
     {
-      title: "Hiring Campaign Management",
-      description:
-        "Manage large-scale hiring drives, recruitment campaigns, and candidate communication.",
-      features: [
-        "Bulk Invitations",
-        "Campaign Tracking",
-        "Candidate Pipelines",
-        "Realtime Progress",
-      ],
-    },
-    {
       title: "Hiring Analytics",
-      description:
-        "Get deep insights into candidate performance and recruitment effectiveness.",
+      link: "/hiring-analytics",
+      description: "Get deep insights into candidate performance and recruitment effectiveness.",
       features: [
         "Realtime Dashboards",
         "Performance Reports",
@@ -57,68 +48,10 @@ export default function GleefixServicesPage() {
         "Exportable Reports",
       ],
     },
-    {
-      title: "Custom Enterprise Solutions",
-      description:
-        "Tailor-made hiring ecosystems designed specifically for enterprise workflows.",
-      features: [
-        "Custom Branding",
-        "API Integrations",
-        "Multi-Tenant Support",
-        "Advanced Security",
-      ],
-    },
   ];
 
   return (
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
-      {/* NAVBAR */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* LOGO */}
-          <div className="flex items-center gap-4">
-            <div className="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-md flex items-center justify-center overflow-hidden">
-              <Image
-                src="/gleeffix_logo.jpeg"
-                alt="Gleefix"
-                width={50}
-                height={50}
-                className="object-contain"
-              />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-black text-[#0F2B46]">Gleefix</h2>
-
-              <p className="text-xs text-slate-500 mt-1">
-                Consulting Talent. Building Futures.
-              </p>
-            </div>
-          </div>
-
-          {/* NAV */}
-          <div className="hidden lg:flex items-center gap-10 text-sm font-semibold text-slate-600">
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Home
-            </button>
-
-            <button className="text-[#0F2B46]">Services</button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Platform
-            </button>
-
-            <button className="hover:text-[#0F2B46] transition-all duration-200">
-              Contact
-            </button>
-          </div>
-
-          {/* ACTION */}
-          <button className="h-11 px-6 rounded-xl bg-[#0F2B46] hover:bg-[#163a5c] text-white font-semibold shadow-sm hover:shadow-lg transition-all duration-200">
-            Book Demo
-          </button>
-        </div>
-      </header>
 
       {/* HERO */}
       <section className="relative py-28 px-6 overflow-hidden">
@@ -142,13 +75,22 @@ export default function GleefixServicesPage() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
-            <button className="h-14 px-8 rounded-2xl bg-[#0F2B46] text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-200">
-              Explore Platform
-            </button>
+            <Link
+              href="/platform"
+            >
+              <button className="h-14 px-8  rounded-2xl bg-[#0F2B46] text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-200">
+                Explore Platform
+              </button>
+            </Link>
 
+            {/* <Link
+              href="/platform"
+            > */}
             <button className="h-14 px-8 rounded-2xl bg-white border border-slate-200 text-slate-700 font-bold hover:shadow-lg transition-all duration-200">
               Schedule Consultation
             </button>
+
+            {/* </Link> */}
           </div>
         </div>
       </section>
@@ -193,9 +135,13 @@ export default function GleefixServicesPage() {
                 </div>
 
                 {/* ACTION */}
-                <button className="mt-10 h-12 px-6 rounded-2xl bg-[#0F2B46] text-white font-semibold hover:bg-[#163a5c] transition-all duration-200">
-                  Learn More
-                </button>
+                <Link
+                  href={service.link}
+                >
+                  <button className="mt-10 h-12 px-6 rounded-2xl bg-[#0F2B46] text-white font-semibold hover:bg-[#163a5c] transition-all duration-200">
+                    Learn More
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
@@ -315,93 +261,6 @@ export default function GleefixServicesPage() {
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="bg-[#0F172A] text-white px-6 py-16">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12">
-          <div>
-            <div className="flex items-center gap-4">
-              <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center overflow-hidden">
-                <Image
-                  src="/gleeffix_logo.jpeg"
-                  alt="Gleefix"
-                  width={50}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
-
-              <div>
-                <h2 className="text-xl font-bold">Gleefix</h2>
-
-                <p className="text-xs text-slate-400 mt-1">
-                  Consulting Talent. Building Futures.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-slate-400 leading-relaxed mt-6 max-w-sm">
-              AI-powered recruitment platform for enterprise hiring and
-              assessments.
-            </p>
-          </div>
-
-          {[
-            {
-              title: "Services",
-              items: [
-                "AI Recruitment",
-                "Assessments",
-                "Analytics",
-                "Proctoring",
-              ],
-            },
-            {
-              title: "Company",
-              items: ["About", "Careers", "Blogs", "Contact"],
-            },
-            {
-              title: "Resources",
-              items: ["Help Center", "Privacy", "Terms", "Documentation"],
-            },
-          ].map((section, index) => (
-            <div key={index}>
-              <h3 className="font-bold text-lg mb-5">{section.title}</h3>
-
-              <div className="space-y-4">
-                {section.items.map((item, idx) => (
-                  <button
-                    key={idx}
-                    className="block text-slate-400 hover:text-white transition-all duration-200"
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="max-w-7xl mx-auto border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-slate-500">
-            © 2026 Gleefix. All rights reserved.
-          </p>
-
-          <div className="flex items-center gap-6 text-sm text-slate-500">
-            <button className="hover:text-white transition-all duration-200">
-              Privacy
-            </button>
-
-            <button className="hover:text-white transition-all duration-200">
-              Terms
-            </button>
-
-            <button className="hover:text-white transition-all duration-200">
-              Security
-            </button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
