@@ -59,19 +59,19 @@ export default function GleefixAboutPage() {
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
 
       {/* HERO */}
-      <section className="relative py-28 px-6 overflow-hidden">
+      <section className="relative lg:py-28 py-12 px-6 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-96 bg-blue-200/30 rounded-full blur-3xl" />
 
         <div className="absolute bottom-0 right-0 h-96 w-96 bg-orange-200/30 rounded-full blur-3xl" />
 
-        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 text-center lg:text-left ">
           {/* LEFT */}
-          <div>
+          <div className=" lg:text-left">
             <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
               About Gleefix
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900">
+            <h1 className="text-3xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900">
               Redefining
               <br />
               Enterprise Hiring
@@ -85,7 +85,7 @@ export default function GleefixAboutPage() {
               through intelligent automation and modern hiring infrastructure.
             </p>
 
-            <div className="flex flex-wrap gap-4 mt-10">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-10">
               <Link
                 href="/platform"
               >
@@ -94,10 +94,10 @@ export default function GleefixAboutPage() {
                 </button>
 
               </Link>
-              {/* 
+              
               <button className="h-14 px-8 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black hover:shadow-lg transition-all duration-200">
                 Our Vision
-              </button> */}
+              </button>
             </div>
           </div>
 
@@ -110,7 +110,7 @@ export default function GleefixAboutPage() {
                     key={index}
                     className="rounded-[28px] bg-white/10 backdrop-blur-md border border-white/10 p-7"
                   >
-                    <h3 className="text-5xl font-black">{item.value}</h3>
+                    <h3 className="lg:text-5xl text-3xl font-black">{item.value}</h3>
 
                     <p className="text-blue-100 mt-4 leading-relaxed text-sm">
                       {item.label}
@@ -137,7 +137,7 @@ export default function GleefixAboutPage() {
       </section>
 
       {/* STORY */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div className="relative">
@@ -154,7 +154,7 @@ export default function GleefixAboutPage() {
               Our Journey
             </div>
 
-            <h2 className="text-5xl font-black text-slate-900 leading-tight">
+            <h2 className="lg:text-5xl text-3xl font-black text-slate-900 leading-tight">
               Building The Future Of Recruitment
             </h2>
 
@@ -193,14 +193,14 @@ export default function GleefixAboutPage() {
       </section>
 
       {/* VALUES */}
-      <section className="bg-white border-y border-slate-200 py-24 px-6">
+      <section className="bg-white border-y border-slate-200 py-12 lg:py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto mb-16">
             <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-6">
               Our Core Values
             </div>
 
-            <h2 className="text-5xl font-black text-slate-900 leading-tight">
+            <h2 className="lg:text-5xl text-3xl font-black text-slate-900 leading-tight">
               Principles That Drive Us
             </h2>
 
@@ -236,13 +236,13 @@ export default function GleefixAboutPage() {
       </section>
 
       {/* LEADERSHIP */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
             Leadership Team
           </div>
 
-          <h2 className="text-5xl font-black text-slate-900 leading-tight">
+          <h2 className="lg:text-5xl text-3xl font-black text-slate-900 leading-tight">
             Meet The Visionaries
           </h2>
 
@@ -277,12 +277,12 @@ export default function GleefixAboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-6 pb-24">
-        <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
+      <section className="px-6 lg:pb-24 pb-12">
+        <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 lg:py-24 py-12 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-4xl mx-auto">
-            <h2 className="text-5xl lg:text-6xl font-black leading-tight">
+            <h2 className="lg:text-5xl text-3xl lg:text-6xl font-black leading-tight">
               Join Us In Transforming Hiring
             </h2>
 

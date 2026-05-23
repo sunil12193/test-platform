@@ -1,4 +1,6 @@
 import Image from "next/image";
+import WorkflowCard from "@/component/static-component/workflow-cards";
+import CTASection from "@/component/static-component/CTAsection";
 
 export default function AIRecruitmentPlatformPage() {
   const modules = [
@@ -58,7 +60,7 @@ export default function AIRecruitmentPlatformPage() {
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
 
       {/* HERO */}
-      <section className="relative py-28 px-6 overflow-hidden">
+      <section className="relative py-12 lg:py-28 px-6 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-96 bg-blue-200/30 rounded-full blur-3xl" />
 
         <div className="absolute bottom-0 right-0 h-96 w-96 bg-orange-200/30 rounded-full blur-3xl" />
@@ -70,7 +72,7 @@ export default function AIRecruitmentPlatformPage() {
               AI Recruitment Platform
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900">
+            <h1 className="text-3xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900">
               Hire Smarter
               <br />
               With
@@ -84,12 +86,12 @@ export default function AIRecruitmentPlatformPage() {
               realtime hiring analytics.
             </p>
 
-            <div className="flex flex-wrap gap-4 mt-10">
-              <button className="h-14 px-8 rounded-2xl bg-[#0F2B46] text-white font-black shadow-xl hover:scale-[1.02] transition-all duration-200">
+            <div className="grid grid-cols-2 text-sm lg:text-base gap-4 mt-10">
+              <button className="h-14 px-2 lg:px-8 rounded-2xl bg-[#0F2B46] text-white font-black shadow-xl hover:scale-[1.02] transition-all duration-200">
                 Start Hiring
               </button>
 
-              <button className="h-14 px-8 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black hover:shadow-lg transition-all duration-200">
+              <button className="h-14 px-2 lg:px-8 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black hover:shadow-lg transition-all duration-200">
                 Explore Features
               </button>
             </div>
@@ -121,7 +123,7 @@ export default function AIRecruitmentPlatformPage() {
                     key={index}
                     className="rounded-[28px] bg-white/10 backdrop-blur-md border border-white/10 p-7"
                   >
-                    <h3 className="text-5xl font-black">{item.value}</h3>
+                    <h3 className="text-3xl lg:text-5xl font-black">{item.value}</h3>
 
                     <p className="text-blue-100 mt-4 leading-relaxed text-sm">
                       {item.label}
@@ -148,13 +150,13 @@ export default function AIRecruitmentPlatformPage() {
       </section>
 
       {/* MODULES */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
             AI Recruitment Modules
           </div>
 
-          <h2 className="text-5xl font-black text-slate-900 leading-tight">
+          <h2 className="text-3xl lg:text-5xl font-black text-slate-900 leading-tight">
             Enterprise Recruitment Infrastructure
           </h2>
 
@@ -174,7 +176,7 @@ export default function AIRecruitmentPlatformPage() {
               <div className="relative z-10">
                 <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
 
-                <h3 className="text-3xl font-black text-slate-900">
+                <h3 className="text-2xl lg:text-3xl font-black text-slate-900">
                   {item.title}
                 </h3>
 
@@ -188,7 +190,7 @@ export default function AIRecruitmentPlatformPage() {
       </section>
 
       {/* FEATURES */}
-      <section className="bg-white border-y border-slate-200 py-24 px-6">
+      <section className="bg-white border-y border-slate-200 py-12 lg:py-24 px-6">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
@@ -196,7 +198,7 @@ export default function AIRecruitmentPlatformPage() {
               Recruitment Features
             </div>
 
-            <h2 className="text-5xl font-black text-slate-900 leading-tight">
+            <h2 className="text-3xl lg:text-5xl font-black text-slate-900 leading-tight">
               AI Powered Recruitment Ecosystem
             </h2>
 
@@ -223,7 +225,7 @@ export default function AIRecruitmentPlatformPage() {
 
           {/* RIGHT */}
           <div className="rounded-[40px] bg-linear-to-br from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] p-8 shadow-2xl overflow-hidden">
-            <div className="h-137.5 rounded-4xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white text-2xl font-bold">
+            <div className="lg:h-137.5 h-64 text-center rounded-4xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white text-2xl font-bold">
               AI Recruitment Dashboard
             </div>
           </div>
@@ -231,66 +233,36 @@ export default function AIRecruitmentPlatformPage() {
       </section>
 
       {/* WORKFLOW */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
             Hiring Workflow
           </div>
 
-          <h2 className="text-5xl font-black text-slate-900 leading-tight">
+          <h2 className="text-3xl lg:text-5xl font-black text-slate-900 leading-tight">
             Intelligent Recruitment Process
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7">
           {workflows.map((item, index) => (
-            <div
+            <WorkflowCard
               key={index}
-              className="rounded-[36px] bg-white border border-slate-200 p-8 shadow-sm hover:shadow-2xl transition-all duration-300"
-            >
-              <div className="text-6xl font-black text-[#0F2B46]/10">
-                {item.step}
-              </div>
-
-              <h3 className="text-3xl font-black text-slate-900 mt-5">
-                {item.title}
-              </h3>
-
-              <p className="text-slate-600 leading-relaxed mt-5 text-lg">
-                {item.desc}
-              </p>
-            </div>
+              step={item.step}
+              title={item.title}
+              desc={item.desc}
+            />
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="px-6 pb-24">
-        <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
-
-          <div className="relative z-10 max-w-4xl mx-auto">
-            <h2 className="text-5xl lg:text-6xl font-black leading-tight">
-              Build AI Powered Hiring Systems
-            </h2>
-
-            <p className="text-lg text-blue-100 leading-relaxed mt-8 max-w-3xl mx-auto">
-              Transform enterprise recruitment with intelligent automation,
-              AI-driven screening, and realtime hiring analytics.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-5 mt-12">
-              <button className="h-14 px-8 rounded-2xl bg-white text-[#0F2B46] font-black hover:scale-[1.02] transition-all duration-200">
-                Request Demo
-              </button>
-
-              <button className="h-14 px-8 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md text-white font-black hover:bg-white/20 transition-all duration-200">
-                Talk To Sales
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection
+        title="Secure Your Online Assessments"
+        description="Prevent cheating, maintain integrity, and build trusted assessment experiences with AI-powered proctoring."
+        primaryBtnText="Request Demo"
+        secondaryBtnText="Talk To Sales"
+      />
     </div>
   );
 }

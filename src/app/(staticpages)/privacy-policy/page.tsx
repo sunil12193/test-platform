@@ -39,7 +39,7 @@ export default function GleefixPrivacyPolicyPage() {
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
 
       {/* HERO */}
-      <section className="relative py-28 px-6 overflow-hidden">
+      <section className="relative py-12 lg:py-28 px-6 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-96 bg-blue-200/30 rounded-full blur-3xl" />
 
         <div className="absolute bottom-0 right-0 h-96 w-96 bg-orange-200/30 rounded-full blur-3xl" />
@@ -49,7 +49,7 @@ export default function GleefixPrivacyPolicyPage() {
             Legal & Compliance
           </div>
 
-          <h1 className="text-5xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900">
+          <h1 className="text-3xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900">
             Privacy Policy
           </h1>
 
@@ -78,7 +78,7 @@ export default function GleefixPrivacyPolicyPage() {
       </section>
 
       {/* CONTENT */}
-      <section className="max-w-7xl mx-auto px-6 pb-24">
+      <section className="max-w-7xl mx-auto px-6 pb-12 lg:pb-24">
         <div className="grid lg:grid-cols-[320px_1fr] gap-8 items-start">
           {/* SIDEBAR */}
           <div className="sticky top-28 rounded-[36px] bg-white border border-slate-200 shadow-sm p-7 hidden lg:block">
@@ -115,7 +115,7 @@ export default function GleefixPrivacyPolicyPage() {
                   Enterprise Data Protection
                 </div>
 
-                <h2 className="text-4xl lg:text-5xl font-black leading-tight">
+                <h2 className="text-3xl lg:text-5xl font-black leading-tight">
                   Your Data.
                   <br />
                   Protected By Design.
@@ -141,7 +141,7 @@ export default function GleefixPrivacyPolicyPage() {
                       {index + 1}
                     </div>
 
-                    <h2 className="text-4xl font-black text-slate-900 leading-tight">
+                    <h2 className="lg:text-4xl text-2xl font-black text-slate-900 leading-tight">
                       {section.title}
                     </h2>
                   </div>
@@ -162,7 +162,7 @@ export default function GleefixPrivacyPolicyPage() {
                   Security Standards
                 </div>
 
-                <h2 className="text-4xl font-black text-slate-900 leading-tight">
+                <h2 className="lg:text-4xl text-2xl font-black text-slate-900 leading-tight">
                   Enterprise Security Infrastructure
                 </h2>
 
@@ -197,7 +197,7 @@ export default function GleefixPrivacyPolicyPage() {
                   Privacy Support
                 </div>
 
-                <h2 className="text-5xl font-black leading-tight">
+                <h2 className="text-3xl lg:text-5xl font-black leading-tight">
                   Questions About Privacy?
                 </h2>
 

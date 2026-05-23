@@ -145,7 +145,7 @@ export default function GleefixHomepage() {
   return (
     <div className="min-h-screen bg-[#F6F8FC] overflow-hidden">
       {/* HERO SECTION */}
-      <section className="relative py-24 px-6">
+      <section className="relative lg:py-24 py-12 px-6">
         {/* BG GLOW */}
         <div className="absolute top-10 left-0 h-96 w-96 bg-blue-200/40 rounded-full blur-3xl" />
 
@@ -176,7 +176,7 @@ export default function GleefixHomepage() {
 
             <h1
               className="
-                text-5xl
+                text-3xl
                 lg:text-6xl
                 font-black
                 leading-tight
@@ -203,11 +203,11 @@ export default function GleefixHomepage() {
               candidate evaluation.
             </p>
 
-            <div className="flex flex-wrap gap-4 mt-10">
+            <div className="grid grid-cols-2 text-sm lg:text-base gap-4 mt-10">
               <button
                 className="
                   h-14
-                  px-8
+                  lg:px-8
                   rounded-2xl
                   bg-[#0F2B46]
                   hover:bg-[#163a5c]
@@ -226,7 +226,7 @@ export default function GleefixHomepage() {
               <button
                 className="
                   h-14
-                  px-8
+                  lg:px-8
                   rounded-2xl
                   border
                   border-slate-200
@@ -339,7 +339,7 @@ export default function GleefixHomepage() {
                 >
                   <p className="text-blue-100 text-sm">Active Assessments</p>
 
-                  <h3 className="text-4xl font-bold mt-4">128</h3>
+                  <h3 className="lg:text-4xl text-2xl font-bold mt-4">128</h3>
                 </div>
 
                 <div
@@ -354,7 +354,7 @@ export default function GleefixHomepage() {
                 >
                   <p className="text-orange-100 text-sm">Fraud Alerts</p>
 
-                  <h3 className="text-4xl font-bold mt-4">14</h3>
+                  <h3 className="lg:text-4xl text-2xl font-bold mt-4">14</h3>
                 </div>
               </div>
             </div>
@@ -377,7 +377,7 @@ export default function GleefixHomepage() {
             >
               <p className="text-sm text-slate-500">Candidate Completion</p>
 
-              <h3 className="text-4xl font-black text-emerald-600 mt-3">94%</h3>
+              <h3 className="lg:text-4xl text-2xl font-black text-emerald-600 mt-3">94%</h3>
 
               <div className="mt-4 w-56 h-3 rounded-full bg-slate-200 overflow-hidden">
                 <div className="w-[94%] h-full rounded-full bg-linear-to-r from-emerald-500 to-green-600" />
@@ -388,7 +388,7 @@ export default function GleefixHomepage() {
       </section>
 
       {/* SERVICES */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-3xl mx-auto">
           <div
             className="
@@ -408,7 +408,7 @@ export default function GleefixHomepage() {
             Platform Features
           </div>
 
-          <h2 className="text-4xl font-black text-slate-900 leading-tight">
+          <h2 className="lg:text-4xl text-3xl font-black text-slate-900 leading-tight">
             Everything You Need For Modern Hiring
           </h2>
 
@@ -485,7 +485,7 @@ export default function GleefixHomepage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-6 lg:py-24 py-12">
         <div className="text-center max-w-3xl mx-auto">
           <div
             className="
@@ -505,7 +505,7 @@ export default function GleefixHomepage() {
             Trusted By Enterprises
           </div>
 
-          <h2 className="text-4xl font-black text-slate-900">
+          <h2 className="lg:text-4xl text-3xl font-black text-slate-900">
             What Our Clients Say
           </h2>
 
@@ -593,10 +593,10 @@ export default function GleefixHomepage() {
       </section>
 
       {/* PROCESS */}
-      <section className="bg-white border-y border-slate-200 py-24 px-6">
+      <section className="bg-white border-y border-slate-200 py-12 lg:py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-4xl font-black text-slate-900">
+            <h2 className="lg:text-4xl text-3xl font-black text-slate-900">
               How Gleefix Works
             </h2>
 
@@ -714,7 +714,7 @@ export default function GleefixHomepage() {
       </section>
 
       {/* INTEGRATIONS */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-3xl mx-auto">
           <div
             className="
@@ -734,7 +734,7 @@ export default function GleefixHomepage() {
             Integrations
           </div>
 
-          <h2 className="text-4xl font-black text-slate-900">
+          <h2 className="lg:text-4xl text-3xl font-black text-slate-900">
             Connect With Your Favorite Tools
           </h2>
 
@@ -787,7 +787,8 @@ export default function GleefixHomepage() {
         bg-gradient-to-b
         from-slate-50
         to-white
-        py-28
+        py-12
+        lg:py-28
         px-6
       "
     >
@@ -834,7 +835,8 @@ export default function GleefixHomepage() {
 
           <h2
             className="
-              text-4xl
+              lg:text-4xl 
+              text-3xl
               md:text-5xl
               font-black
               text-slate-900
@@ -1034,7 +1036,8 @@ export default function GleefixHomepage() {
             via-[#163A5C]
             to-[#1E4D7B]
             px-10
-            py-20
+            py-12
+            lg:py-20
             text-center
             text-white
             relative
@@ -1044,7 +1047,7 @@ export default function GleefixHomepage() {
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-3xl mx-auto">
-            <h2 className="text-5xl font-black leading-tight">
+            <h2 className="text-2xl lg:text-5xl font-black leading-tight">
               Ready To Transform Your Hiring Process?
             </h2>
 

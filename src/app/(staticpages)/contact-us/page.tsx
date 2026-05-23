@@ -25,7 +25,7 @@ export default function GleefixContactPage() {
   return (
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
       {/* HERO */}
-      <section className="relative py-28 px-6 overflow-hidden">
+      <section className="relative py-12 lg:py-28 px-6 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-96 bg-blue-200/30 rounded-full blur-3xl" />
 
         <div className="absolute bottom-0 right-0 h-96 w-96 bg-orange-200/30 rounded-full blur-3xl" />
@@ -35,7 +35,7 @@ export default function GleefixContactPage() {
             Let’s Connect
           </div>
 
-          <h1 className="text-5xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900 max-w-5xl mx-auto">
+          <h1 className="text-3xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900 max-w-5xl mx-auto">
             Contact Our Team
           </h1>
 
@@ -61,7 +61,7 @@ export default function GleefixContactPage() {
                   Enterprise Support
                 </div>
 
-                <h2 className="text-4xl font-black leading-tight">
+                <h2 className="text-2xl lg:text-4xl font-black leading-tight">
                   We’d Love To Hear From You
                 </h2>
 
@@ -92,7 +92,7 @@ export default function GleefixContactPage() {
                     >
                       <p className="text-sm text-blue-100">{item.title}</p>
 
-                      <h3 className="text-xl font-bold mt-3">{item.value}</h3>
+                      <h3 className="text-lg lg:text-xl font-bold mt-3">{item.value}</h3>
                     </div>
                   ))}
                 </div>
@@ -103,7 +103,7 @@ export default function GleefixContactPage() {
             <div className="rounded-[36px] bg-white border border-slate-200 shadow-sm p-8">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h2 className="text-3xl font-black text-slate-900">
+                  <h2 className="text-2xl lg:text-3xl font-black text-slate-900">
                     Global Offices
                   </h2>
 
@@ -163,7 +163,7 @@ export default function GleefixContactPage() {
                 Send Message
               </div>
 
-              <h2 className="text-4xl font-black text-slate-900 leading-tight">
+              <h2 className="text-2xl lg:text-4xl font-black text-slate-900 leading-tight">
                 Start Your Conversation
               </h2>
 
@@ -262,11 +262,11 @@ export default function GleefixContactPage() {
       </section>
 
       {/* MAP SECTION */}
-      <section className="px-6 pb-24">
+      <section className="px-6 pb-12 lg:pb-24">
         <div className="max-w-7xl mx-auto rounded-[40px] overflow-hidden border border-slate-200 shadow-2xl bg-white">
-          <div className="px-10 py-8 border-b border-slate-200 flex items-center justify-between">
+          <div className="px-10 py-8 border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 items-center justify-between">
             <div>
-              <h2 className="text-3xl font-black text-slate-900">
+              <h2 className="text-2xl lg:text-3xl font-black text-slate-900">
                 Our Global Presence
               </h2>
 
@@ -275,7 +275,7 @@ export default function GleefixContactPage() {
               </p>
             </div>
 
-            <button className="h-12 px-6 rounded-2xl bg-[#0F2B46] text-white font-bold">
+            <button className="h-12 px-6 mt-6 rounded-2xl bg-[#0F2B46] text-white font-bold">
               View Locations
             </button>
           </div>
@@ -287,12 +287,12 @@ export default function GleefixContactPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-6 pb-24">
+      <section className="px-6 pb-12 lg:pb-24">
         <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-4xl mx-auto">
-            <h2 className="text-5xl lg:text-6xl font-black leading-tight">
+            <h2 className="text-3xl lg:text-6xl font-black leading-tight">
               Let’s Build Smarter Hiring Together
             </h2>
 

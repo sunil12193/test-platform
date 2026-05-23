@@ -183,28 +183,30 @@ export default function Footer() {
             evaluation.
           </p>
         </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:col-span-4">
 
-        {/* DYNAMIC LINKS */}
-        {footerSections.map(
-          (section, index) => (
-            <div key={index}>
-              <h3
-                className="
+          {/* DYNAMIC LINKS */}
+          {footerSections.map(
+            (section, index) => (
+              <div key={index}>
+                <h3
+                  className="
                   font-bold
                   text-lg
                   mb-5
+                  mt-2
                 "
-              >
-                {section.title}
-              </h3>
+                >
+                  {section.title}
+                </h3>
 
-              <div className="space-y-4">
-                {section.items.map(
-                  (item, idx) => (
-                    <Link
-                      key={idx}
-                      href={item.href}
-                      className="
+                <div className="space-y-4">
+                  {section.items.map(
+                    (item, idx) => (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        className="
                         block
                         text-slate-400
                         hover:text-white
@@ -212,114 +214,116 @@ export default function Footer() {
                         transition-all
                         duration-200
                       "
-                    >
-                      {item.label}
-                    </Link>
-                  )
-                )}
+                      >
+                        {item.label}
+                      </Link>
+                    )
+                  )}
+                </div>
               </div>
-            </div>
-          )
-        )}
+            )
+          )}
 
-        {/* CONTACT */}
-        <div>
-          <h3
-            className="
+          {/* CONTACT */}
+          <div>
+            <h3
+              className="
               font-bold
               text-lg
               mb-5
             "
-          >
-            Contact Us
-          </h3>
+            >
+              Contact Us
+            </h3>
 
-          <div className="space-y-5">
-            {/* COMPANY NAME */}
-            <div>
-              <p className="text-white font-semibold">
-                {companyInfo.companyName}
-              </p>
-            </div>
+            <div className="space-y-5">
+              {/* COMPANY NAME */}
+              <div>
+                <p className="text-white font-semibold">
+                  {companyInfo.companyName}
+                </p>
+              </div>
 
-            {/* ADDRESS */}
-            <div className="flex items-start gap-3">
-              <FiMapPin
-                className="
+              {/* ADDRESS */}
+              <div className="flex items-start gap-3">
+                <FiMapPin
+                  className="
                   text-orange-400
                   mt-1
                   text-lg
                 "
-              />
+                />
 
-              <p
-                className="
+                <p
+                  className="
                   text-slate-400
                   text-sm
                   leading-6
                 "
+                >
+                  {companyInfo.address}
+                </p>
+              </div>
+
+              {/* EMAIL */}
+              <a
+                href={`mailto:${companyInfo.email}`}
+                className="
+                flex
+                items-center
+                gap-3
+                hover:text-white
+                transition-all
+              "
               >
-                {companyInfo.address}
-              </p>
+                <FiMail
+                  className="
+                  text-orange-400
+                  text-lg
+                "
+                />
+
+                <p
+                  className="
+                  text-slate-400
+                  text-sm
+                "
+                >
+                  {companyInfo.email}
+                </p>
+              </a>
+
+              {/* PHONE */}
+              <a
+                href={`tel:${companyInfo.phone}`}
+                className="
+                flex
+                items-center
+                gap-3
+                hover:text-white
+                transition-all
+              "
+              >
+                <FiPhone
+                  className="
+                  text-orange-400
+                  text-lg
+                "
+                />
+
+                <p
+                  className="
+                  text-slate-400
+                  text-sm
+                "
+                >
+                  {companyInfo.phone}
+                </p>
+              </a>
             </div>
-
-            {/* EMAIL */}
-            <a
-              href={`mailto:${companyInfo.email}`}
-              className="
-                flex
-                items-center
-                gap-3
-                hover:text-white
-                transition-all
-              "
-            >
-              <FiMail
-                className="
-                  text-orange-400
-                  text-lg
-                "
-              />
-
-              <p
-                className="
-                  text-slate-400
-                  text-sm
-                "
-              >
-                {companyInfo.email}
-              </p>
-            </a>
-
-            {/* PHONE */}
-            <a
-              href={`tel:${companyInfo.phone}`}
-              className="
-                flex
-                items-center
-                gap-3
-                hover:text-white
-                transition-all
-              "
-            >
-              <FiPhone
-                className="
-                  text-orange-400
-                  text-lg
-                "
-              />
-
-              <p
-                className="
-                  text-slate-400
-                  text-sm
-                "
-              >
-                {companyInfo.phone}
-              </p>
-            </a>
           </div>
         </div>
+
       </div>
 
       {/* BOTTOM */}
