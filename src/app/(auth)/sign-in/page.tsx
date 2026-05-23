@@ -9,8 +9,14 @@ import { useRouter } from "next/navigation";
 
 import { FiMail, FiLock, FiArrowRight } from "react-icons/fi";
 
+import Cookies from "js-cookie";
+
+import { useSignin } from "@/hooks/useSignin";
+
 export default function SigninPage() {
   const router = useRouter();
+
+  const signinMutation = useSignin();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -29,8 +35,8 @@ export default function SigninPage() {
     });
   };
 
-  // LOGIN
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  // SIGN IN
+  const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setLoading(true);
@@ -38,13 +44,54 @@ export default function SigninPage() {
     setError("");
 
     try {
-      // LOGIN API HERE
+      const response = await signinMutation.mutateAsync(formData);
 
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1200);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      console.log("Signin successful:", response);
+
+      // API RESPONSE DATA
+      const token = response?.data?.token;
+
+      const refreshToken = response?.data?.refreshToken;
+
+      const user = response?.data?.user;
+
+      // SAVE ACCESS TOKEN
+      if (token) {
+        Cookies.set("accessToken", token, {
+          expires: 1, // 1 DAY
+          secure: true,
+          sameSite: "strict",
+        });
+      }
+
+      // SAVE REFRESH TOKEN
+      if (refreshToken) {
+        Cookies.set("refreshToken", refreshToken, {
+          expires: 7, // 7 DAYS
+          secure: true,
+          sameSite: "strict",
+        });
+      }
+
+      // SAVE USER DATA
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
+      // SAVE EMAIL
+      localStorage.setItem("signinEmail", formData.email);
+
+      // REDIRECT
+      router.push("/dashboard");
+    } catch (err: any) {
+      console.log("LOGIN ERROR:", err);
+
+      const message =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Invalid email or password";
+
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -76,7 +123,9 @@ export default function SigninPage() {
             <div>
               <h2 className="text-3xl font-black text-white">Gleefix</h2>
 
-              <p className="text-sm text-blue-100 mt-1">AI Hiring Platform</p>
+              <p className="text-sm text-blue-100 mt-1">
+                AI Hiring Platform
+              </p>
             </div>
           </div>
 
@@ -140,9 +189,13 @@ export default function SigninPage() {
             />
 
             <div>
-              <h2 className="text-2xl font-black text-[#102C4A]">Gleefix</h2>
+              <h2 className="text-2xl font-black text-[#102C4A]">
+                Gleefix
+              </h2>
 
-              <p className="text-xs text-slate-500">AI Hiring Platform</p>
+              <p className="text-xs text-slate-500">
+                AI Hiring Platform
+              </p>
             </div>
           </div>
 
@@ -160,7 +213,9 @@ export default function SigninPage() {
                 />
               </div>
 
-              <h2 className="text-4xl font-black text-slate-900">Sign In</h2>
+              <h2 className="text-4xl font-black text-slate-900">
+                Sign In
+              </h2>
 
               <p className="text-slate-500 mt-3">
                 Access your Gleefix dashboard
@@ -175,7 +230,7 @@ export default function SigninPage() {
             )}
 
             {/* FORM */}
-            <form onSubmit={handleLogin} className="space-y-5">
+            <form onSubmit={handleSignin} className="space-y-5">
               {/* EMAIL */}
               <div>
                 <div className="relative">

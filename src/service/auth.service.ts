@@ -6,16 +6,22 @@ export interface SignupPayload {
   phone: string;
   password: string;
 }
+export interface SigninPayload {
+  email: string;
+  password: string;
+}
+
+export const BASE_URL = "https://platform-backend-v8zh.onrender.com/api";
 
 export const authService = {
   signup: async (payload: SignupPayload) => {
-    const response = await api.post("/auth/signup", payload);
+    const response = await api.post(`${BASE_URL}/auth/signup`, payload);
 
     return response.data;
   },
 
-  signin: async (payload: { email: string; password: string }) => {
-    const response = await api.post("/auth/signin", payload);
+  signin: async (payload: SigninPayload) => {
+    const response = await api.post(`${BASE_URL}/auth/login`, payload);
 
     return response.data;
   },

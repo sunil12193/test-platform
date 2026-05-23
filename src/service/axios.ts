@@ -49,21 +49,28 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-// REFRESH TOKEN INTERCEPTOR
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // DO NOT REFRESH TOKEN ON LOGIN API
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/auth/login")
+    ) {
       originalRequest._retry = true;
 
       try {
         const refreshToken = localStorage.getItem("refreshToken");
 
-        const response = await axios.post(`${BASE_URL}/auth/refresh-token`, {
-          refreshToken,
-        });
+        const response = await axios.post(
+          `${BASE_URL}/auth/refresh-token`,
+          {
+            refreshToken,
+          }
+        );
 
         const newAccessToken = response.data.accessToken;
 
@@ -82,9 +89,8 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
-
 // GLOBAL ERROR HANDLING
 api.interceptors.response.use(
   (response) => response,
