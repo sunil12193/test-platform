@@ -14,3 +14,9 @@ export const useSignin = () => {
     mutationFn: authService.signin,
   });
 };
+
+export const useAssessment = () => {
+  return useMutation({
+    mutationFn: authService.assessment,
+  });
+};

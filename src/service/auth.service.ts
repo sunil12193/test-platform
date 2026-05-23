@@ -1,5 +1,5 @@
 import api from "./axios";
-
+import { Assessment } from "../type/assessment";
 export interface SignupPayload {
   userName: string;
   email: string;
@@ -25,4 +25,13 @@ export const authService = {
 
     return response.data;
   },
+  assessment: async () => {
+  console.log("API Calling Started");
+
+  const response = await api.get("/assessment");
+
+  console.log("API Response:", response);
+
+  return response.data;
+},
 };

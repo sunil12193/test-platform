@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { navItems } from "../../util/navItem";
 import NavbarDashboard from "../../component/navbarDashbord";
 import Sidebar from "../../component/sideBar";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/service/queryClient";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -14,6 +16,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const title = currentItem?.label || "Dashboard";
 
   return (
+    <QueryClientProvider client={queryClient}>
+
     <div className="h-screen flex flex-col bg-slate-100">
       {/* Navbar */}
       <NavbarDashboard title={title} />
@@ -27,5 +31,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
+    </QueryClientProvider>
   );
 }

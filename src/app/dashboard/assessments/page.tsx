@@ -1,32 +1,64 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FiClock, FiFileText, FiHelpCircle, FiUsers } from "react-icons/fi";
 
-import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import {
+  FiClock,
+  FiFileText,
+  FiHelpCircle,
+  FiUsers,
+} from "react-icons/fi";
+
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
-import { assessmentData } from "@/dummyData/assessment";
-import { Assessment } from "@/type/assessment";
 import Pagination from "@/component/pagination";
 
+import { Assessment } from "@/type/assessment";
+import { useAssessment } from "@/hooks/useSignup";
+
 export default function AssessmentsPage() {
-  const [data, setData] = useState<Assessment[]>(assessmentData);
-  const [search, setSearch] = useState<string>("");
+  // API CALL
+  const {
+    data: assessmentResponse,
+    isPending,
+    error,
+  } = useAssessment();
+
+  // BACKEND DATA
+  const data: Assessment[] =
+    assessmentResponse?.data || assessmentResponse || [];
+
+  // CONSOLE DATA
+  useEffect(() => {
+    console.log("Assessment API Response:", assessmentResponse);
+    console.log("Assessment Data:", data);
+  }, [assessmentResponse, data]);
+
+  // SEARCH
+  const [search, setSearch] =
+    useState<string>("");
+
+  // PAGINATION
   const [currentPage, setCurrentPage] =
     useState<number>(1);
 
   const [pageSize, setPageSize] =
     useState<number>(10);
 
-
-
+  // FILTER DATA
   const filteredData = data.filter((item) =>
-    (item.title + " " + item.assessmentId + " " + item.description)
+    (
+      item.title +
+      " " +
+      item.assessmentId +
+      " " +
+      item.description
+    )
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
+  // PAGINATION LOGIC
   const startIndex =
     (currentPage - 1) * pageSize;
 
@@ -40,22 +72,25 @@ export default function AssessmentsPage() {
     filteredData.length / pageSize
   );
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getRequest(`${API_BASE_URL}/assessment`);
+  // LOADING
+  if (isPending) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+        Loading assessments...
+      </div>
+    );
+  }
 
-  //       console.log("Fetched Data:", response);
+  // ERROR
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500 text-lg font-semibold">
+        Failed to fetch assessments
+      </div>
+    );
+  }
 
-  //       setData(response || []);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
+  // TABLE COLUMNS
   const columns = [
     // ASSESSMENT
     {
@@ -90,7 +125,9 @@ export default function AssessmentsPage() {
                 {item.title}
               </h2>
 
-              <p className="text-xs text-slate-500 mt-1">{item.assessmentId}</p>
+              <p className="text-xs text-slate-500 mt-1">
+                {item.assessmentId}
+              </p>
 
               <p className="text-sm text-slate-500 mt-3 leading-relaxed">
                 {item.description}
@@ -153,7 +190,9 @@ export default function AssessmentsPage() {
                 {item.totalQuestions}
               </h3>
 
-              <p className="text-xs text-slate-500">Questions</p>
+              <p className="text-xs text-slate-500">
+                Questions
+              </p>
             </div>
           </div>
         </div>
@@ -167,13 +206,19 @@ export default function AssessmentsPage() {
       render: (item: Assessment) => (
         <div className="min-w-42.5 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-500">Total</span>
+            <span className="text-sm text-slate-500">
+              Total
+            </span>
 
-            <span className="font-bold text-slate-800">{item.totalMarks}</span>
+            <span className="font-bold text-slate-800">
+              {item.totalMarks}
+            </span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-500">Passing</span>
+            <span className="text-sm text-slate-500">
+              Passing
+            </span>
 
             <span className="font-bold text-emerald-600">
               {item.passingMarks}
@@ -210,7 +255,9 @@ export default function AssessmentsPage() {
                 {item.duration}m
               </h3>
 
-              <p className="text-xs text-slate-500">Duration</p>
+              <p className="text-xs text-slate-500">
+                Duration
+              </p>
             </div>
           </div>
         </div>
@@ -232,9 +279,10 @@ export default function AssessmentsPage() {
               font-semibold
               border
 
-              ${item.difficultyLevel === "Hard"
-                ? "bg-red-50 border-red-100 text-red-700"
-                : item.difficultyLevel === "Medium"
+              ${
+                item.difficultyLevel === "Hard"
+                  ? "bg-red-50 border-red-100 text-red-700"
+                  : item.difficultyLevel === "Medium"
                   ? "bg-yellow-50 border-yellow-100 text-yellow-700"
                   : "bg-emerald-50 border-emerald-100 text-emerald-700"
               }
@@ -270,7 +318,9 @@ export default function AssessmentsPage() {
 
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-slate-500">Invited:</span>
+                <span className="text-sm text-slate-500">
+                  Invited:
+                </span>
 
                 <span className="font-semibold text-slate-800">
                   {item.totalCandidates}
@@ -278,7 +328,9 @@ export default function AssessmentsPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-sm text-slate-500">Completed:</span>
+                <span className="text-sm text-slate-500">
+                  Completed:
+                </span>
 
                 <span className="font-semibold text-emerald-600">
                   {item.completedAttempts}
@@ -303,17 +355,18 @@ export default function AssessmentsPage() {
   ];
 
   return (
-    <div className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
       <div className="space-y-6">
+        {/* ACTION BUTTONS */}
         <ActionButtons
           addUrl="/dashboard/assessments/add"
           importUrl="/dashboard/assessments/import"
           exportUrl="/dashboard/assessments/export"
-
           searchValue={search}
           onSearchChange={setSearch}
         />
 
+        {/* TABLE */}
         <DataTable
           title="Assessments"
           columns={columns}
@@ -323,6 +376,7 @@ export default function AssessmentsPage() {
           }}
         />
 
+        {/* PAGINATION */}
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
