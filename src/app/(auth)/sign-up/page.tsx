@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Logo from "../../../component/logo";
+import { authService } from "@/service/auth.service";
 
 interface SignupResponse {
   success: boolean;
@@ -65,7 +66,8 @@ export default function SignupPage() {
       errors.userName = "Name must be under 50 characters";
       isValid = false;
     } else if (!/^[a-zA-Z\s'-]+$/.test(trimmedName)) {
-      errors.userName = "Name can only contain letters, spaces, hyphens, or apostrophes";
+      errors.userName =
+        "Name can only contain letters, spaces, hyphens, or apostrophes";
       isValid = false;
     }
 
@@ -106,7 +108,8 @@ export default function SignupPage() {
       errors.password = "Password must include at least one number";
       isValid = false;
     } else if (!/(?=.*[@$!%*?&])/.test(formData.password)) {
-      errors.password = "Password must include at least one special character (@$!%*?&)";
+      errors.password =
+        "Password must include at least one special character (@$!%*?&)";
       isValid = false;
     }
 
@@ -124,26 +127,11 @@ export default function SignupPage() {
     setError("");
 
     try {
-      const response = await fetch(
-        "https://platform-backend-v8zh.onrender.com/api/auth/signup",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      const data: SignupResponse = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Signup failed");
-      }
+      const data = await authService.signup(formData);
 
       localStorage.setItem("signupEmail", formData.email);
 
-      router.push(
-        `/account-created`
-      );
+      router.push(`/account-created`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -166,7 +154,9 @@ export default function SignupPage() {
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
           <div className="text-white text-center px-10">
             <h1 className="text-5xl font-bold mb-4">Create Account</h1>
-            <p className="text-lg text-gray-200">Join us and start your journey today.</p>
+            <p className="text-lg text-gray-200">
+              Join us and start your journey today.
+            </p>
           </div>
         </div>
       </div>
@@ -175,7 +165,9 @@ export default function SignupPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-100 p-6">
         <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8">
           <h2 className="text-4xl font-bold text-center mb-2">Sign Up</h2>
-          <p className="text-gray-500 text-center mb-8">Create your new account</p>
+          <p className="text-gray-500 text-center mb-8">
+            Create your new account
+          </p>
 
           {/* SERVER ERROR */}
           {error && (
@@ -198,7 +190,9 @@ export default function SignupPage() {
                 }`}
               />
               {validationErrors.userName && (
-                <p className="text-red-500 text-sm mt-1">{validationErrors.userName}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {validationErrors.userName}
+                </p>
               )}
             </div>
 
@@ -215,7 +209,9 @@ export default function SignupPage() {
                 }`}
               />
               {validationErrors.email && (
-                <p className="text-red-500 text-sm mt-1">{validationErrors.email}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {validationErrors.email}
+                </p>
               )}
             </div>
 
@@ -233,7 +229,9 @@ export default function SignupPage() {
                 }`}
               />
               {validationErrors.phone && (
-                <p className="text-red-500 text-sm mt-1">{validationErrors.phone}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {validationErrors.phone}
+                </p>
               )}
             </div>
 
@@ -250,7 +248,9 @@ export default function SignupPage() {
                 }`}
               />
               {validationErrors.password && (
-                <p className="text-red-500 text-sm mt-1">{validationErrors.password}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {validationErrors.password}
+                </p>
               )}
             </div>
 
