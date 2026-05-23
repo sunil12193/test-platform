@@ -2,12 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import {
   CheckCircle2,
   XCircle,
   Loader2,
+  ArrowRight,
+  ShieldCheck,
 } from "lucide-react";
 
 interface VerifyResponse {
@@ -18,9 +23,9 @@ interface VerifyResponse {
 export default function VerifyEmailPage() {
   const router = useRouter();
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  const token = searchParams.get("token");
+  // const token = searchParams.get("token");
 
   const [loading, setLoading] =
     useState(true);
@@ -74,154 +79,226 @@ export default function VerifyEmailPage() {
   // }, [token]);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6">
+    <div
+      className="
+        min-h-screen
+        bg-[#F8FAFC]
+        flex
+        items-center
+        justify-center
+        px-4
+        py-10
+        overflow-hidden
+      "
+    >
+      {/* BACKGROUND */}
       <div
         className="
+          absolute
+          inset-0
+          bg-[radial-gradient(circle_at_top_left,#0F172A15,transparent_30%),radial-gradient(circle_at_bottom_right,#2563EB10,transparent_30%)]
+        "
+      />
+
+      <div
+        className="
+          relative
           w-full
-          max-w-xl
-          bg-white
-          rounded-[32px]
-          shadow-xl
+          max-w-lg
+          overflow-hidden
+          rounded-[36px]
           border
-          border-slate-200
-          p-10
-          text-center
+          border-white/40
+          bg-white/90
+          backdrop-blur-2xl
+          shadow-[0_20px_80px_rgba(15,23,42,0.12)]
         "
       >
-        {/* LOADING */}
-        {/* {loading && (
-          <>
-            <div
-              className="
-                w-24
-                h-24
-                rounded-full
-                bg-slate-100
-                flex
-                items-center
-                justify-center
-                mx-auto
-                mb-8
-              "
-            >
-              <Loader2
-                className="animate-spin text-slate-700"
-                size={50}
-              />
-            </div>
+        {/* TOP GRADIENT */}
+        <div
+          className={`
+            absolute
+            top-0
+            left-0
+            h-44
+            w-full
+            blur-3xl
+            opacity-20
+            ${
+              success
+                ? "bg-green-400"
+                : "bg-red-400"
+            }
+          `}
+        />
 
-            <h1 className="text-3xl font-black text-slate-900">
-              Verifying Your Email
-            </h1>
+        <div className="relative z-10 px-8 py-12 text-center">
+          {/* LOADING */}
+          {/* {loading ? (
+            <>
+              <div
+                className="
+                  mx-auto
+                  flex
+                  h-24
+                  w-24
+                  items-center
+                  justify-center
+                  rounded-[30px]
+                  bg-slate-100
+                  border
+                  border-slate-200
+                "
+              >
+                <Loader2
+                  size={44}
+                  className="
+                    animate-spin
+                    text-slate-700
+                  "
+                />
+              </div>
 
-            <p className="text-slate-500 mt-4">
-              Please wait while we verify your
-              account...
-            </p>
-          </>
-        )} */}
+              <h1
+                className="
+                  mt-8
+                  text-[24px]
+                  font-black
+                  text-slate-900
+                "
+              >
+                Verifying Email
+              </h1>
 
-        {/* SUCCESS */}
-        {(
-          <>
-            <div
-              className="
-                w-24
-                h-24
-                rounded-full
-                bg-green-100
-                flex
-                items-center
-                justify-center
-                mx-auto
-                mb-8
-              "
-            >
-              <CheckCircle2
-                className="text-green-600"
-                size={50}
-              />
-            </div>
+              <p
+                className="
+                  mt-4
+                  text-[14px]
+                  leading-7
+                  text-slate-500
+                "
+              >
+                Please wait while we securely
+                verify your email address.
+              </p>
+            </>
+          ) :  */}
+          {/* success   */}
+          {/* ( */}
+            <>
+              {/* SUCCESS */}
+              <div
+                className="
+                  relative
+                  mx-auto
+                  flex
+                  h-28
+                  w-28
+                  items-center
+                  justify-center
+                  rounded-[32px]
+                  bg-green-50
+                  border
+                  border-green-100
+                  shadow-inner
+                "
+              >
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    rounded-[32px]
+                    bg-green-400/10
+                    blur-2xl
+                  "
+                />
 
-            <h1 className="text-4xl font-black text-slate-900">
-              Email Verified Successfully
-            </h1>
+                <CheckCircle2
+                  size={54}
+                  className="
+                    relative
+                    z-10
+                    text-green-600
+                  "
+                />
+              </div>
 
-            <p className="text-slate-500 text-lg mt-5 leading-8">
-              {message}
-            </p>
+              <div className="mt-8">
+                <div
+                  className="
+                    inline-flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    border
+                    border-green-100
+                    bg-green-50
+                    px-4
+                    py-2
+                    text-[12px]
+                    font-semibold
+                    text-green-700
+                  "
+                >
+                  <ShieldCheck size={14} />
+                  VERIFIED SUCCESSFULLY
+                </div>
 
-            <button
-              onClick={() =>
-                router.push("/sign-in")
-              }
-              className="
-                mt-10
-                px-8
-                py-4
-                rounded-2xl
-                bg-black
-                text-white
-                font-semibold
-                hover:bg-slate-800
-                transition
-              "
-            >
-              Go To Sign In
-            </button>
-          </>
-        )}
+                <h1
+                  className="
+                    mt-6
+                    text-[28px]
+                    font-black
+                    tracking-tight
+                    text-slate-900
+                  "
+                >
+                  Email Verified
+                </h1>
 
-        {/* FAILED */}
-        {!loading && !success && (
-          <>
-            <div
-              className="
-                w-24
-                h-24
-                rounded-full
-                bg-red-100
-                flex
-                items-center
-                justify-center
-                mx-auto
-                mb-8
-              "
-            >
-              <XCircle
-                className="text-red-600"
-                size={50}
-              />
-            </div>
+                <p
+                  className="
+                    mt-4
+                    text-[14px]
+                    leading-7
+                    text-slate-500
+                  "
+                >
+                  {message}
+                </p>
+              </div>
 
-            <h1 className="text-4xl font-black text-slate-900">
-              Verification Failed
-            </h1>
-
-            <p className="text-slate-500 text-lg mt-5 leading-8">
-              {message}
-            </p>
-
-            <button
-              onClick={() =>
-                router.push("/account-created")
-              }
-              className="
-                mt-10
-                px-8
-                py-4
-                rounded-2xl
-                bg-red-600
-                text-white
-                font-semibold
-                hover:bg-red-700
-                transition
-              "
-            >
-              Back To Verification Page
-            </button>
-          </>
-        )}
+              <button
+                onClick={() =>
+                  router.push("/sign-in")
+                }
+                className="
+                  mt-10
+                  inline-flex
+                  items-center
+                  justify-center
+                  gap-2
+                  rounded-2xl
+                  bg-[#0F172A]
+                  px-7
+                  py-4
+                  text-[13px]
+                  font-semibold
+                  text-white
+                  transition-all
+                  duration-300
+                  hover:scale-[1.02]
+                  hover:bg-[#1E293B]
+                  shadow-lg
+                "
+              >
+                Continue To Sign In
+                <ArrowRight size={16} />
+              </button>
+            </>
+          {/* )  */}
+          {/* )} */}
+        </div>
       </div>
     </div>
   );
