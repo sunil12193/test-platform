@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 import Image from "next/image";
 
 import { FiUser, FiMail, FiPhone, FiLock, FiArrowRight } from "react-icons/fi";
@@ -28,7 +30,10 @@ export default function SignupPage() {
     password: "",
   });
 
+  // ========================================
   // HANDLE INPUT
+  // ========================================
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -43,7 +48,10 @@ export default function SignupPage() {
     }));
   };
 
+  // ========================================
   // VALIDATION
+  // ========================================
+
   const validateFields = () => {
     let isValid = true;
 
@@ -58,6 +66,7 @@ export default function SignupPage() {
 
     if (!trimmedName) {
       errors.userName = "Full name is required";
+
       isValid = false;
     }
 
@@ -65,9 +74,11 @@ export default function SignupPage() {
 
     if (!formData.email.trim()) {
       errors.email = "Email is required";
+
       isValid = false;
     } else if (!emailRegex.test(formData.email)) {
       errors.email = "Please enter a valid email";
+
       isValid = false;
     }
 
@@ -75,17 +86,21 @@ export default function SignupPage() {
 
     if (!formData.phone.trim()) {
       errors.phone = "Phone number is required";
+
       isValid = false;
     } else if (!phoneRegex.test(formData.phone)) {
       errors.phone = "Enter valid 10-digit number";
+
       isValid = false;
     }
 
     if (!formData.password) {
       errors.password = "Password is required";
+
       isValid = false;
     } else if (formData.password.length < 8) {
       errors.password = "Password must be at least 8 characters";
+
       isValid = false;
     }
 
@@ -94,7 +109,10 @@ export default function SignupPage() {
     return isValid;
   };
 
+  // ========================================
   // HANDLE SIGNUP
+  // ========================================
+
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -105,7 +123,9 @@ export default function SignupPage() {
 
       localStorage.setItem("signupEmail", formData.email);
 
-      router.push("/account-created");
+      router.push(
+        `/account-created?email=${encodeURIComponent(formData.email)}`,
+      );
     } catch (error) {
       console.log(error);
     }
@@ -114,7 +134,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-[#F5F7FB] flex overflow-hidden">
       {/* LEFT SECTION */}
-      <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-linear-to-br from-[#0F172A] via-[#102C4A] to-[#1E4D7B]">
+      <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#102C4A] to-[#1E4D7B]">
         {/* GRADIENT BLOBS */}
         <div className="absolute -top-30 -left-30 h-75 w-75 rounded-full bg-blue-500/20 blur-3xl" />
 
@@ -191,7 +211,9 @@ export default function SignupPage() {
 
             <div className="flex items-center gap-5">
               <Link href="#">Privacy</Link>
+
               <Link href="#">Terms</Link>
+
               <Link href="#">Support</Link>
             </div>
           </div>
@@ -199,35 +221,18 @@ export default function SignupPage() {
       </div>
 
       {/* RIGHT SECTION */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12">
-        <div className="w-full max-w-lg">
-          {/* MOBILE LOGO */}
-          <div className="lg:hidden flex items-center justify-center gap-3 mb-10">
-            <Image
-              src="/logo.svg"
-              alt="Gleefix"
-              width={55}
-              height={55}
-              priority
-            />
-
-            <div>
-              <h2 className="text-2xl font-bold text-[#102C4A]">Gleefix</h2>
-
-              <p className="text-xs text-slate-500">AI Hiring Platform</p>
-            </div>
-          </div>
-
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-12">
+        <div className="w-full max-w-xl">
           {/* FORM CARD */}
-          <div className="bg-white border border-slate-200/80 rounded-4xl shadow-[0_20px_80px_rgba(15,23,42,0.08)] p-8 lg:p-10">
+          <div className="bg-white border border-slate-200/80 rounded-[28px] shadow-[0_20px_80px_rgba(15,23,42,0.08)] p-6 lg:p-10">
             {/* TOP */}
-            <div className="text-center mb-10">
-              <div className="mx-auto w-18 h-18 rounded-3xl bg- white flex items-center justify-center shadow-xl mb-5">
+            <div className="text-center mb-8">
+              <div className="mx-auto w-20 h-20 rounded-3xl bg-white flex items-center justify-center shadow-xl mb-5">
                 <Image
                   src="/logo.svg"
                   alt="Gleefix"
-                  width={42}
-                  height={42}
+                  width={36}
+                  height={36}
                   priority
                 />
               </div>
@@ -352,7 +357,7 @@ export default function SignupPage() {
               <button
                 type="submit"
                 disabled={signupMutation.isPending}
-                className="w-full h-14 rounded-2xl bg-linear-to-r from-[#0F2B46] to-[#1E4D7B] text-white font-semibold text-lg flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20 disabled:opacity-60"
+                className="w-full h-14 rounded-2xl bg-gradient-to-r from-[#0F2B46] to-[#1E4D7B] text-white font-semibold text-lg flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20 disabled:opacity-60"
               >
                 {signupMutation.isPending ? (
                   "Creating Account..."
