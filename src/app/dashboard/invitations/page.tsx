@@ -29,23 +29,23 @@ export default function InvitationsPage() {
       .includes(search.toLowerCase())
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/invitation`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/invitation`);
 
-        console.log("Fetched Data: Invitations", response);
+  //       console.log("Fetched Data: Invitations", response);
 
-        if (response) {
-          setData(response);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       if (response) {
+  //         setData(response);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // INVITATION
@@ -53,7 +53,7 @@ export default function InvitationsPage() {
       header: "Invitation",
 
       render: (item: Invitation) => (
-        <div className="min-w-[340px] text-left">
+        <div className="min-w-85 text-left">
           <div className="flex items-start gap-4">
             {/* ICON */}
             <div
@@ -138,7 +138,7 @@ export default function InvitationsPage() {
       header: "Email",
 
       render: (item: Invitation) => (
-        <div className="min-w-[260px]">
+        <div className="min-w-65">
           <div className="flex items-center gap-3">
             <div
               className="
@@ -257,7 +257,7 @@ export default function InvitationsPage() {
       header: "Expires At",
 
       render: (item: Invitation) => (
-        <div className="min-w-[240px]">
+        <div className="min-w-60">
           <div className="flex items-start gap-3">
             <div
               className="
@@ -291,7 +291,7 @@ export default function InvitationsPage() {
       header: "Reminder",
 
       render: (item: Invitation) => (
-        <div className="min-w-[200px]">
+        <div className="min-w-50">
           <div className="flex items-center gap-3">
             <div
               className={`
@@ -345,7 +345,7 @@ export default function InvitationsPage() {
       header: "Security",
 
       render: (item: Invitation) => (
-        <div className="min-w-[180px]">
+        <div className="min-w-45">
           <div className="flex items-center gap-3">
             <div
               className="

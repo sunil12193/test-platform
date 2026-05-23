@@ -20,23 +20,23 @@ export default function QuestionBankPage() {
   );
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/question-bank`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/question-bank`);
 
-        console.log("Fetched Data: Question Bank ", response);
+  //       console.log("Fetched Data: Question Bank ", response);
 
-        if (response) {
-          setData(response);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       if (response) {
+  //         setData(response);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // QUESTION

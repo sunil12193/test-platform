@@ -28,23 +28,23 @@ export default function HiringCampaignsPage() {
       .includes(search.toLowerCase())
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/hiring-campaigns`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/hiring-campaigns`);
 
-        console.log("Fetched Data: Hiring Campaigns", response);
+  //       console.log("Fetched Data: Hiring Campaigns", response);
 
-        if (response) {
-          setData(response);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       if (response) {
+  //         setData(response);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // CAMPAIGN

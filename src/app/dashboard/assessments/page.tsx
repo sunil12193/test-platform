@@ -40,21 +40,21 @@ export default function AssessmentsPage() {
     filteredData.length / pageSize
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/assessment`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/assessment`);
 
-        console.log("Fetched Data:", response);
+  //       console.log("Fetched Data:", response);
 
-        setData(response || []);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       setData(response || []);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // ASSESSMENT
@@ -106,7 +106,7 @@ export default function AssessmentsPage() {
       header: "Type",
 
       render: (item: Assessment) => (
-        <div className="flex justify-center min-w-[140px]">
+        <div className="flex justify-center min-w-35">
           <span
             className="
               px-4
@@ -131,7 +131,7 @@ export default function AssessmentsPage() {
       header: "Questions",
 
       render: (item: Assessment) => (
-        <div className="min-w-[150px]">
+        <div className="min-w-37.5">
           <div className="flex items-center justify-center gap-3">
             <div
               className="
@@ -165,7 +165,7 @@ export default function AssessmentsPage() {
       header: "Marks",
 
       render: (item: Assessment) => (
-        <div className="min-w-[170px] space-y-3">
+        <div className="min-w-42.5 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm text-slate-500">Total</span>
 
@@ -188,7 +188,7 @@ export default function AssessmentsPage() {
       header: "Duration",
 
       render: (item: Assessment) => (
-        <div className="min-w-[150px]">
+        <div className="min-w-37.5">
           <div className="flex items-center justify-center gap-3">
             <div
               className="
@@ -222,7 +222,7 @@ export default function AssessmentsPage() {
       header: "Difficulty",
 
       render: (item: Assessment) => (
-        <div className="flex justify-center min-w-[140px]">
+        <div className="flex justify-center min-w-35">
           <span
             className={`
               px-4
@@ -251,7 +251,7 @@ export default function AssessmentsPage() {
       header: "Candidates",
 
       render: (item: Assessment) => (
-        <div className="min-w-[180px]">
+        <div className="min-w-45">
           <div className="flex items-center gap-3">
             <div
               className="
@@ -295,7 +295,7 @@ export default function AssessmentsPage() {
       header: "Created",
 
       render: (item: Assessment) => (
-        <div className="text-sm text-slate-500 font-medium min-w-[120px]">
+        <div className="text-sm text-slate-500 font-medium min-w-30">
           {item.createdAt}
         </div>
       ),

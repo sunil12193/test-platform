@@ -26,23 +26,23 @@ export default function JobPositionsPage() {
       .includes(search.toLowerCase())
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/job-position`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/job-position`);
 
-        console.log("Fetched Data: Job Positions", response);
+  //       console.log("Fetched Data: Job Positions", response);
 
-        if (response) {
-          setData(response);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       if (response) {
+  //         setData(response);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // POSITION
@@ -150,7 +150,7 @@ export default function JobPositionsPage() {
       header: "Employment",
 
       render: (item: JobPosition) => (
-        <div className="min-w-[180px]">
+        <div className="min-w-45">
           <div
             className="
               inline-flex
@@ -186,7 +186,7 @@ export default function JobPositionsPage() {
       header: "Salary",
 
       render: (item: JobPosition) => (
-        <div className="min-w-[180px]">
+        <div className="min-w-45">
           <div className="flex items-center gap-3">
             <div
               className="
@@ -220,7 +220,7 @@ export default function JobPositionsPage() {
       header: "Required Skills",
 
       render: (item: JobPosition) => (
-        <div className="flex flex-wrap gap-2 min-w-[260px]">
+        <div className="flex flex-wrap gap-2 min-w-65">
           {item.requiredSkills.map((skill: string, index: number) => (
             <span
               key={index}
@@ -250,7 +250,7 @@ export default function JobPositionsPage() {
       render: (item: JobPosition) => (
         <div
           className="
-            min-w-[240px]
+            min-w-60
             px-4
             py-3
             rounded-2xl
@@ -332,7 +332,7 @@ export default function JobPositionsPage() {
       header: "Created",
 
       render: (item: JobPosition) => (
-        <div className="min-w-[140px]">
+        <div className="min-w-35">
           <p className="text-sm font-semibold text-slate-700">
             {item.createdAt}
           </p>
