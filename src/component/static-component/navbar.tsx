@@ -19,21 +19,20 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           {/* LOGO */}
           <div className="flex items-center gap-4">
-            <Link
-              href="/"
-            >
+            <Link href="/">
               <Image
-                src="/logo-without-bg.png"
+                src="/logo.svg"
                 alt="Gleefix"
-                width={100}
-                height={100}
+                width={60}
+                height={60}
                 className="object-contain"
               />
             </Link>
 
             <div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Consulting Talent. Building Futures.
+              <p className="text-2xl text-[#0F2B46] font-bold">Gleefix</p>
+              <p className="text-sm text-slate-500 mt-0.5">
+                Connecting Talent, Building Futures.
               </p>
             </div>
           </div>
@@ -84,13 +83,9 @@ export default function Navbar() {
 
           {/* ACTIONS */}
           <div className="flex items-center gap-3">
-
-            <Link
-              href="/sign-in"
-            >
-              
-            <button
-              className="
+            <Link href="/sign-in">
+              <button
+                className="
                 hidden
                 md:flex
                 text-center
@@ -109,14 +104,12 @@ export default function Navbar() {
                 transition-all
                 duration-200
               "
-            >
-              Login
-            </button>
+              >
+                Login
+              </button>
             </Link>
 
-            <Link
-              href="/sign-up"
-            >
+            <Link href="/sign-up">
               <button
                 className="
                 h-11
@@ -141,4 +134,4 @@ export default function Navbar() {
       </header>
     </nav>
   );
-}      
+}

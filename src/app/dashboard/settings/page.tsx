@@ -53,21 +53,21 @@ const settingsData = [
 export default function SettingsPage() {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/setting`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/setting`);
 
-        console.log("Fetched Data setting :", response);
+  //       console.log("Fetched Data setting :", response);
 
-        setData(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       setData(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // COMPANY

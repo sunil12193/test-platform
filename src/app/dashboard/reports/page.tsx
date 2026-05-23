@@ -21,23 +21,23 @@ import { reportsAnalyticsData } from "@/dummyData/report";
 export default function ReportsAnalyticsPage() {
   const [data, setData] = useState<ReportsAnalytics[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/report`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/report`);
 
-        console.log("Fetched Data: Reports", response);
+  //       console.log("Fetched Data: Reports", response);
 
-        if (response) {
-          setData(response);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       if (response) {
+  //         setData(response);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // REPORT

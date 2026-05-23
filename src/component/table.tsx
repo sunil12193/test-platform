@@ -159,7 +159,7 @@ export default function DataTable<T extends Record<string, any>>({
 
           {/* TABLE BODY */}
           <tbody>
-            {tableData.map((item, rowIndex) => (
+            {tableData?.map((item, rowIndex) => (
               <tr
                 key={rowIndex}
                 className="

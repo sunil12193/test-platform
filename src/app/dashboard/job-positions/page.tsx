@@ -19,23 +19,23 @@ import { jobPositionsData } from "@/dummyData/jobPosition";
 export default function JobPositionsPage() {
   const [data, setData] = useState<JobPosition[]>(jobPositionsData);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/job-position`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/job-position`);
 
-        console.log("Fetched Data: Job Positions", response);
+  //       console.log("Fetched Data: Job Positions", response);
 
-        if (response) {
-          setData(response);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       if (response) {
+  //         setData(response);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // POSITION

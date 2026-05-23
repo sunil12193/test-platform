@@ -12,21 +12,21 @@ import { Assessment } from "@/type/assessment";
 export default function AssessmentsPage() {
   const [data, setData] = useState<Assessment[]>(assessmentData);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/assessment`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/assessment`);
 
-        console.log("Fetched Data:", response);
+  //       console.log("Fetched Data:", response);
 
-        setData(response || []);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       setData(response || []);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // ASSESSMENT

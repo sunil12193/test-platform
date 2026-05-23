@@ -22,23 +22,23 @@ import { invitationsData } from "@/dummyData/invitation";
 export default function InvitationsPage() {
   const [data, setData] = useState<Invitation[]>(invitationsData);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/invitation`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/invitation`);
 
-        console.log("Fetched Data: Invitations", response);
+  //       console.log("Fetched Data: Invitations", response);
 
-        if (response) {
-          setData(response);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       if (response) {
+  //         setData(response);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // INVITATION

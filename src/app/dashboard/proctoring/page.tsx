@@ -62,21 +62,21 @@ const proctoringData = [
 export default function ProctoringPage() {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/proctoring`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/proctoring`);
 
-        console.log("Fetched Data: proctoring ", response);
+  //       console.log("Fetched Data: proctoring ", response);
 
-        setData(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       setData(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // PROCTORING

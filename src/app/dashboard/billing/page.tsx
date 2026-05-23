@@ -45,21 +45,21 @@ const billingPlansData = [
 export default function BillingPlansPage() {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRequest(`${API_BASE_URL}/billing`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await getRequest(`${API_BASE_URL}/billing`);
 
-        console.log("Fetched Data: billing", response);
+  //       console.log("Fetched Data: billing", response);
 
-        setData(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       setData(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     // COMPANY
