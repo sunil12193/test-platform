@@ -19,7 +19,14 @@ import { ReportsAnalytics } from "@/type/report";
 import { reportsAnalyticsData } from "@/dummyData/report";
 
 export default function ReportsAnalyticsPage() {
-  const [data, setData] = useState<ReportsAnalytics[]>([]);
+  const [data, setData] = useState<ReportsAnalytics[]>(reportsAnalyticsData);
+  const [search, setSearch] = useState<string>("");
+
+  const filteredData = data.filter((item) =>
+  (item.reportType + " " + item.reportId + " " + item.generatedBy)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -328,10 +335,9 @@ export default function ReportsAnalyticsPage() {
                 items-center
                 justify-center
 
-                ${
-                  item.exportedFormat === "PDF"
-                    ? "bg-red-50 text-red-600"
-                    : "bg-emerald-50 text-emerald-600"
+                ${item.exportedFormat === "PDF"
+                  ? "bg-red-50 text-red-600"
+                  : "bg-emerald-50 text-emerald-600"
                 }
               `}
             >
@@ -349,10 +355,9 @@ export default function ReportsAnalyticsPage() {
                   text-xs
                   font-semibold
 
-                  ${
-                    item.exportedFormat === "PDF"
-                      ? "bg-red-50 text-red-700"
-                      : "bg-emerald-50 text-emerald-700"
+                  ${item.exportedFormat === "PDF"
+                    ? "bg-red-50 text-red-700"
+                    : "bg-emerald-50 text-emerald-700"
                   }
                 `}
               >
@@ -414,8 +419,20 @@ export default function ReportsAnalyticsPage() {
         p-6
       "
     >
+      <ActionButtons
+        addUrl="/dashboard/reports/add"
+        importUrl="/dashboard/reports/import"
+        exportUrl="/dashboard/reports/export"
+
+        showAdd={false}
+        showImport={false}
+        showExport={false}
+
+        searchValue={search}
+        onSearchChange={setSearch}
+      />
       <div className="space-y-6">
-        <DataTable title="Reports & Analytics" columns={columns} data={data} />
+        <DataTable title="Reports & Analytics" columns={columns} data={filteredData} />
       </div>
     </div>
   );

@@ -9,9 +9,34 @@ import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
 import { Candidate } from "@/type/canditate";
 import { candidateData } from "@/dummyData/candidate";
+import Pagination from "@/component/pagination";
 
 export default function CandidatesPage() {
   const [data, setData] = useState<Candidate[]>(candidateData);
+  const [search, setSearch] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const [pageSize, setPageSize] = useState<number>(10);
+
+  const filteredData = data.filter((item) =>
+  (item.firstName + " " + item.lastName + " " + item.candidateId)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
+
+  const startIndex =
+    (currentPage - 1) * pageSize;
+
+  const endIndex =
+    startIndex + pageSize;
+
+  const paginatedData =
+    filteredData.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(
+    filteredData.length / pageSize
+  );
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -196,24 +221,27 @@ export default function CandidatesPage() {
   ];
 
   return (
-    <div
-      className="
-        min-h-screen
-        bg-linear-to-br
-        from-slate-50
-        via-blue-50/30
-        to-slate-100
-        p-6
-      "
-    >
+    <div className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
       <div className="space-y-6">
         <ActionButtons
-          addUrl="candidate/add"
-          importUrl="candidate/import"
-          exportUrl="candidate/export"
+          addUrl="dashboard/candidate/add"
+          importUrl="dashboard/candidate/import"
+          exportUrl="dashboard/candidate/export"
+
+          searchValue={search}
+          onSearchChange={setSearch}
         />
 
-        <DataTable title="Candidates" columns={columns} data={data} />
+        <DataTable title="Candidates" columns={columns} data={paginatedData} />
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={filteredData.length}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+        />
       </div>
     </div>
   );
