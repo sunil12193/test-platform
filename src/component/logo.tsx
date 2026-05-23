@@ -8,10 +8,10 @@ export default function Logo() {
 
     {/* LOGO */}
     <Image
-      src="/gleefix_logo.svg"
+      src="/logo-without-bg.png"
       alt="Gleefix Logo"
-      width={250}
-      height={250}
+      width={100}
+      height={100}
       className="object-contain mb-6 drop-shadow-[0_0_30px_rgba(255,255,255,0.8)]"
     />
 

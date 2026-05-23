@@ -5,7 +5,7 @@ import Image from "next/image";
 import { CiBellOn, CiSettings } from "react-icons/ci";
 
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 import { FiUser, FiSettings, FiHelpCircle, FiHeadphones } from "react-icons/fi";
 
 type NavbarDashboardProps = {
@@ -127,9 +127,9 @@ const NavbarDashboard = ({ title }: NavbarDashboardProps) => {
                       Customer Services
                     </li>
                   </Link>
-                  <Link href="/dashboard/customer-service">
+                  <Link href="/sign-in">
                     <li className="flex items-center gap-3 px-5 py-3 text-sm text-white hover:bg-[#1e3a5f] cursor-pointer transition-all duration-200">
-                      <FiHeadphones size={18} />
+                      <LogOut size={18} />
                       Log Out
                     </li>
                   </Link>

@@ -8,9 +8,37 @@ import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
 import { assessmentData } from "@/dummyData/assessment";
 import { Assessment } from "@/type/assessment";
+import Pagination from "@/component/pagination";
 
 export default function AssessmentsPage() {
   const [data, setData] = useState<Assessment[]>(assessmentData);
+  const [search, setSearch] = useState<string>("");
+  const [currentPage, setCurrentPage] =
+    useState<number>(1);
+
+  const [pageSize, setPageSize] =
+    useState<number>(10);
+
+
+
+  const filteredData = data.filter((item) =>
+    (item.title + " " + item.assessmentId + " " + item.description)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
+  const startIndex =
+    (currentPage - 1) * pageSize;
+
+  const endIndex =
+    startIndex + pageSize;
+
+  const paginatedData =
+    filteredData.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(
+    filteredData.length / pageSize
+  );
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -204,12 +232,11 @@ export default function AssessmentsPage() {
               font-semibold
               border
 
-              ${
-                item.difficultyLevel === "Hard"
-                  ? "bg-red-50 border-red-100 text-red-700"
-                  : item.difficultyLevel === "Medium"
-                    ? "bg-yellow-50 border-yellow-100 text-yellow-700"
-                    : "bg-emerald-50 border-emerald-100 text-emerald-700"
+              ${item.difficultyLevel === "Hard"
+                ? "bg-red-50 border-red-100 text-red-700"
+                : item.difficultyLevel === "Medium"
+                  ? "bg-yellow-50 border-yellow-100 text-yellow-700"
+                  : "bg-emerald-50 border-emerald-100 text-emerald-700"
               }
             `}
           >
@@ -276,30 +303,33 @@ export default function AssessmentsPage() {
   ];
 
   return (
-    <div
-      className="
-        min-h-screen
-        bg-linear-to-br
-        from-slate-50
-        via-blue-50/30
-        to-slate-100
-        p-6
-      "
-    >
+    <div className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
       <div className="space-y-6">
         <ActionButtons
           addUrl="/dashboard/assessments/add"
           importUrl="/dashboard/assessments/import"
           exportUrl="/dashboard/assessments/export"
+
+          searchValue={search}
+          onSearchChange={setSearch}
         />
 
         <DataTable
           title="Assessments"
           columns={columns}
-          data={data}
+          data={paginatedData}
           onEdit={(item: Assessment) => {
             console.log("Edit:", item);
           }}
+        />
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={filteredData.length}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
         />
       </div>
     </div>

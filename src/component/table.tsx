@@ -44,35 +44,10 @@ export default function DataTable<T extends Record<string, any>>({
 
   return (
     <div
-      className="
-        overflow-hidden
-        rounded-2xl
-        border
-        border-slate-200/80
-        bg-white/90
-        backdrop-blur-xl
-        shadow-sm
-      "
-    >
+      className=" overflow-hidden mt-4 rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur-xl shadow-sm">
       {/* HEADER */}
       <div
-        className="
-          flex
-          flex-col
-          lg:flex-row
-          lg:items-center
-          lg:justify-between
-          gap-4
-          px-6
-          py-5
-          border-b
-          border-slate-100
-          bg-linear-to-r
-          from-[#0F2B46]
-          via-[#163A5C]
-          to-[#1E4D7B]
-        "
-      >
+        className=" flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 px-6 py-5 border-b border-slate-100 bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B]">
         {/* LEFT */}
         <div>
           <h2
