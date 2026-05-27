@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { API_BASE_URL } from "@/service/auth.service";
 
 type InputFieldProps = {
   label: string;
@@ -12,6 +14,8 @@ type InputFieldProps = {
 };
 
 export default function AddBillingPage() {
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     companyId: "",
 
@@ -38,25 +42,75 @@ export default function AddBillingPage() {
     });
   };
 
-  // SUBMIT
-  const handleSubmit = (e: any) => {
+  // SUBMIT API
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const finalData = {
-      ...formData,
+    try {
+      setLoading(true);
 
-      totalUsers: Number(formData.totalUsers),
+      const finalData = {
+        ...formData,
 
-      activeAssessments: Number(formData.activeAssessments),
+        totalUsers: Number(formData.totalUsers),
 
-      invoiceHistory: formData.invoiceHistory
-        .split(",")
-        .map((invoice) => invoice.trim()),
-    };
+        activeAssessments: Number(formData.activeAssessments),
 
-    console.log(finalData);
+        invoiceHistory: formData.invoiceHistory
+          .split(",")
+          .map((invoice) => invoice.trim())
+          .filter((invoice) => invoice !== ""),
+      };
 
-    alert("Billing Added Successfully 🚀");
+      console.log("FINAL DATA:", finalData);
+
+      const response = await fetch(
+        `${API_BASE_URL}/billing/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+
+      if (response.ok) {
+        toast.success(data.success || "Billing Added Successfully");
+
+        // RESET FORM
+        setFormData({
+          companyId: "",
+
+          currentPlan: "",
+
+          billingCycle: "Monthly",
+
+          totalUsers: "",
+
+          activeAssessments: "",
+
+          invoiceHistory: "",
+
+          paymentStatus: "Paid",
+
+          renewalDate: "",
+        });
+      } else {
+        toast.error(data.message || "Failed To Add Billing");
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,7 +118,9 @@ export default function AddBillingPage() {
       <div className="max-w-5xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
         {/* HEADER */}
         <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-6">
-          <h1 className="text-3xl font-bold text-white">Add Billing Details</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Add Billing Details
+          </h1>
 
           <p className="text-blue-100 mt-2">
             Fill all company billing information carefully
@@ -179,9 +235,25 @@ export default function AddBillingPage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              disabled={loading}
+              className="
+                px-8
+                py-4
+                rounded-2xl
+                bg-linear-to-r
+                from-blue-600
+                to-indigo-600
+                text-white
+                font-semibold
+                shadow-lg
+                hover:scale-105
+                transition-all
+                duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+              "
             >
-              Submit Billing
+              {loading ? "Submitting..." : "Submit Billing"}
             </button>
           </div>
         </form>
@@ -201,7 +273,9 @@ function InputField({
 }: InputFieldProps) {
   return (
     <div>
-      <label className="text-sm font-semibold text-gray-700">{label}</label>
+      <label className="text-sm font-semibold text-gray-700">
+        {label}
+      </label>
 
       <input
         type={type}
@@ -209,7 +283,18 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+        className="
+          w-full
+          mt-2
+          px-4
+          py-3
+          rounded-2xl
+          border
+          border-gray-300
+          outline-none
+          focus:ring-2
+          focus:ring-blue-500
+        "
       />
     </div>
   );

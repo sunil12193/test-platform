@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
+import { API_BASE_URL } from "@/service/auth.service";
+import toast from "react-hot-toast";
+
+
 
 export default function AddInvitationPage() {
   const [formData, setFormData] = useState({
@@ -24,6 +28,8 @@ export default function AddInvitationPage() {
     reminderSent: false,
   });
 
+  const [loading, setLoading] = useState(false);
+
   // HANDLE CHANGE
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
@@ -34,13 +40,65 @@ export default function AddInvitationPage() {
     });
   };
 
-  // SUBMIT
-  const handleSubmit = (e: any) => {
+  // SUBMIT API
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      setLoading(true);
 
-    alert("Invitation Added Successfully 🚀");
+      const finalData = {
+        ...formData,
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/invitation/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(data.message || "Invitation Added Successfully ");
+
+        // RESET FORM
+        setFormData({
+          invitationId: "",
+
+          candidateId: "",
+
+          assessmentId: "",
+
+          email: "",
+
+          inviteToken: "",
+
+          sentAt: "",
+
+          expiresAt: "",
+
+          status: "Opened",
+
+          reminderSent: false,
+        });
+      } else {
+        toast.error(data.message || "Failed To Add Invitation");
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,7 +125,9 @@ export default function AddInvitationPage() {
             py-6
           "
         >
-          <h1 className="text-3xl font-bold text-white">Add New Invitation</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Add New Invitation
+          </h1>
 
           <p className="text-blue-100 mt-2">
             Fill all invitation details carefully
@@ -191,6 +251,7 @@ export default function AddInvitationPage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
+              disabled={loading}
               className="
                 px-8
                 py-4
@@ -204,9 +265,11 @@ export default function AddInvitationPage() {
                 hover:scale-105
                 transition-all
                 duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
               "
             >
-              Submit Invitation
+              {loading ? "Submitting..." : "Submit Invitation"}
             </button>
           </div>
         </form>

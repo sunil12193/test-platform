@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
-
-import { API_BASE_URL } from "../../../../util/APIGeneric";
+import toast from "react-hot-toast";
+import { API_BASE_URL } from "@/service/auth.service";
 
 export default function AddCandidatePage() {
   const [formData, setFormData] = useState({
@@ -86,7 +86,7 @@ export default function AddCandidatePage() {
       console.log("API RESPONSE :", data);
 
       if (response.ok) {
-        alert("Candidate Added Successfully 🚀");
+        toast.success(data.message || "Candidate Added Successfully");
 
         // RESET FORM
         setFormData({
@@ -117,12 +117,12 @@ export default function AddCandidatePage() {
           updatedAt: "",
         });
       } else {
-        alert(data.message || "Failed to create candidate");
+        toast.error(data.message || "Failed to create candidate");
       }
     } catch (error) {
       console.log("CREATE ERROR :", error);
 
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
+
 
 export default function AddSettingsPage() {
   const [formData, setFormData] = useState({
@@ -41,7 +43,7 @@ export default function AddSettingsPage() {
 
     console.log(formData);
 
-    alert("Settings Saved Successfully 🚀");
+    toast.success("Settings Saved Successfully 🚀");
   };
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
+import toast from "react-hot-toast";
 export default function AddCandidatePage() {
   const [formData, setFormData] = useState({
     candidateId: "",
@@ -51,7 +51,7 @@ export default function AddCandidatePage() {
 
     console.log(finalData);
 
-    alert("Candidate Added Successfully 🚀");
+    toast.success("Candidate Added Successfully");
   };
 
   return (

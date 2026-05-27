@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
-import { API_BASE_URL } from "../../../../util/APIGeneric";
+import toast from "react-hot-toast";
+import { API_BASE_URL } from "@/service/auth.service";
 
 export default function AddAssessmentPage() {
   const [formData, setFormData] = useState({
@@ -112,7 +112,7 @@ export default function AddAssessmentPage() {
       console.log("API RESPONSE :", data);
 
       if (response.ok) {
-        alert("Assessment Added Successfully 🚀");
+        toast.success(data.message || "Assessment Added Successfully");
 
         // RESET FORM
         setFormData({
@@ -150,12 +150,12 @@ export default function AddAssessmentPage() {
           createdAt: "",
         });
       } else {
-        alert(data.message || "Failed to create assessment");
+        toast.error(data.message || "Failed to create assessment");
       }
     } catch (error) {
       console.log("CREATE ERROR :", error);
 
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }

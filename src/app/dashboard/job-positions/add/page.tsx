@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
+import { API_BASE_URL } from "@/service/auth.service";
+import toast from "react-hot-toast";
 
 export default function AddPositionPage() {
   const [formData, setFormData] = useState({
@@ -22,6 +24,8 @@ export default function AddPositionPage() {
     createdAt: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   // HANDLE CHANGE
   const handleChange = (e: any) => {
     setFormData({
@@ -30,21 +34,77 @@ export default function AddPositionPage() {
     });
   };
 
-  // SUBMIT
-  const handleSubmit = (e: any) => {
+  // SUBMIT + API
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const finalData = {
-      ...formData,
+    try {
+      setLoading(true);
 
-      requiredSkills: formData.requiredSkills
-        .split(",")
-        .map((skill) => skill.trim()),
-    };
+      const finalData = {
+        ...formData,
 
-    console.log(finalData);
+        openings: Number(formData.openings),
 
-    alert("Position Added Successfully 🚀");
+        applicants: Number(formData.applicants),
+
+        shortlisted: Number(formData.shortlisted),
+
+        requiredSkills: formData.requiredSkills
+          .split(",")
+          .map((skill) => skill.trim()),
+      };
+
+      console.log("FINAL DATA:", finalData);
+
+      const response = await fetch(
+        `${API_BASE_URL}/jobPosition/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("API RESPONSE:", data);
+
+      if (response.ok) {
+        toast.success(data.message || "Position Added Successfully ");
+
+        // RESET FORM
+        setFormData({
+          positionId: "",
+          title: "",
+          department: "",
+          location: "",
+          employmentType: "Full-time",
+          experienceRequired: "",
+          salaryRange: "",
+          requiredSkills: "",
+          description: "",
+          assignedAssessment: "",
+          openings: "",
+          applicants: "",
+          shortlisted: "",
+          status: "Open",
+          createdAt: "",
+        });
+      } else {
+        toast.error(data.message || "Failed To Add Position");
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,7 +112,9 @@ export default function AddPositionPage() {
       <div className="max-w-7xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
         {/* HEADER */}
         <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-6">
-          <h1 className="text-3xl font-bold text-white">Add New Position</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Add New Position
+          </h1>
 
           <p className="text-blue-100 mt-2">
             Fill all position details carefully
@@ -239,9 +301,25 @@ export default function AddPositionPage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              disabled={loading}
+              className="
+                px-8
+                py-4
+                rounded-2xl
+                bg-linear-to-r
+                from-blue-600
+                to-indigo-600
+                text-white
+                font-semibold
+                shadow-lg
+                hover:scale-105
+                transition-all
+                duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+              "
             >
-              Submit Position
+              {loading ? "Submitting..." : "Submit Position"}
             </button>
           </div>
         </form>

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { API_BASE_URL } from "@/service/auth.service";
+import toast from "react-hot-toast";
 
 export default function AddProctoringPage() {
   const [formData, setFormData] = useState({
@@ -27,6 +29,8 @@ export default function AddProctoringPage() {
     monitoredAt: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   // HANDLE CHANGE
   const handleChange = (e: any) => {
     setFormData({
@@ -35,21 +39,86 @@ export default function AddProctoringPage() {
     });
   };
 
-  // SUBMIT
-  const handleSubmit = (e: any) => {
+  // SUBMIT + API
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const finalData = {
-      ...formData,
+    try {
+      setLoading(true);
 
-      webcamSnapshots: formData.webcamSnapshots
-        .split(",")
-        .map((item: any) => item.trim()),
-    };
+      const finalData = {
+        ...formData,
 
-    console.log(finalData);
+        tabSwitchCount: Number(formData.tabSwitchCount),
 
-    alert("Proctoring Added Successfully 🚀");
+        copyPasteAttempts: Number(formData.copyPasteAttempts),
+
+        fullscreenViolations: Number(formData.fullscreenViolations),
+
+        suspiciousScore: Number(formData.suspiciousScore),
+
+        webcamSnapshots: formData.webcamSnapshots
+          .split(",")
+          .map((item: any) => item.trim())
+          .filter((item: string) => item !== ""),
+      };
+
+      console.log("FINAL DATA:", finalData);
+
+      const response = await fetch(
+        `${API_BASE_URL}/proctoring/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("API RESPONSE:", data);
+
+      if (response.ok) {
+        toast.success(data.message || "Proctoring Added Successfully ");
+
+        // RESET FORM
+        setFormData({
+          proctoringId: "",
+
+          candidateId: "",
+
+          assessmentId: "",
+
+          webcamSnapshots: "",
+
+          tabSwitchCount: "",
+
+          copyPasteAttempts: "",
+
+          fullscreenViolations: "",
+
+          suspiciousScore: "",
+
+          recordingUrl: "",
+
+          finalStatus: "Safe",
+
+          monitoredAt: "",
+        });
+      } else {
+        toast.error(data.message || "Failed To Add Proctoring");
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -164,7 +233,18 @@ export default function AddProctoringPage() {
                 name="finalStatus"
                 value={formData.finalStatus}
                 onChange={handleChange}
-                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+                className="
+                  w-full
+                  mt-2
+                  px-4
+                  py-3
+                  rounded-2xl
+                  border
+                  border-gray-300
+                  outline-none
+                  focus:ring-2
+                  focus:ring-blue-500
+                "
               >
                 <option>Safe</option>
                 <option>Warning</option>
@@ -185,7 +265,18 @@ export default function AddProctoringPage() {
                 onChange={handleChange}
                 placeholder="Paste image URLs separated by commas"
                 rows={5}
-                className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+                className="
+                  w-full
+                  mt-2
+                  px-4
+                  py-3
+                  rounded-2xl
+                  border
+                  border-gray-300
+                  outline-none
+                  focus:ring-2
+                  focus:ring-blue-500
+                "
               />
             </div>
           </div>
@@ -194,9 +285,25 @@ export default function AddProctoringPage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              disabled={loading}
+              className="
+                px-8
+                py-4
+                rounded-2xl
+                bg-linear-to-r
+                from-blue-600
+                to-indigo-600
+                text-white
+                font-semibold
+                shadow-lg
+                hover:scale-105
+                transition-all
+                duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+              "
             >
-              Submit Proctoring
+              {loading ? "Submitting..." : "Submit Proctoring"}
             </button>
           </div>
         </form>
@@ -213,10 +320,12 @@ function InputField({
   onChange,
   placeholder,
   type = "text",
-}) {
+}: any) {
   return (
     <div>
-      <label className="text-sm font-semibold text-gray-700">{label}</label>
+      <label className="text-sm font-semibold text-gray-700">
+        {label}
+      </label>
 
       <input
         type={type}
@@ -224,7 +333,18 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+        className="
+          w-full
+          mt-2
+          px-4
+          py-3
+          rounded-2xl
+          border
+          border-gray-300
+          outline-none
+          focus:ring-2
+          focus:ring-blue-500
+        "
       />
     </div>
   );

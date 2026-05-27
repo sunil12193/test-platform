@@ -13,7 +13,7 @@ export default function RootLayout({
         <QueryProvider>
           {children}
 
-          <Toaster position="top-right" reverseOrder={false} />
+          <Toaster position="bottom-center" reverseOrder={false} />
         </QueryProvider>
       </body>
     </html>

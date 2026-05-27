@@ -5,6 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { FiMail, FiPhone, FiShield, FiArrowRight } from "react-icons/fi";
 
@@ -40,7 +41,7 @@ export default function ForgotPasswordPage() {
     setError("");
 
     // TEST ONLY
-    alert(`Your OTP is ${randomOtp}`);
+    toast.success(`Your OTP is ${randomOtp}`);
   };
 
   // VERIFY OTP

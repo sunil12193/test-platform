@@ -252,9 +252,9 @@ export default function CandidatesPage() {
       <div className="space-y-6">
         {/* ACTION BUTTONS */}
         <ActionButtons
-          addUrl="dashboard/candidate/add"
-          importUrl="dashboard/candidate/import"
-          exportUrl="dashboard/candidate/export"
+          addUrl="/dashboard/candidate/add"
+          importUrl="/dashboard/candidate/import"
+          exportUrl="/dashboard/candidate/export"
           searchValue={search}
           onSearchChange={setSearch}
         />

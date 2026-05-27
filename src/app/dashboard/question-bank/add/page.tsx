@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
-import { API_BASE_URL } from "@/util/APIGeneric";
+import { API_BASE_URL } from "@/service/auth.service";
+import toast from "react-hot-toast";
 
 export default function AddQuestionPage() {
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
-    "questionId": "",
+    questionId: "",
 
     questionType: "MCQ",
 
@@ -38,7 +41,11 @@ export default function AddQuestionPage() {
   });
 
   // HANDLE CHANGE
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -46,92 +53,96 @@ export default function AddQuestionPage() {
   };
 
   // SUBMIT
-// API CALL
-const handleSubmit = async (e: any) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  try {
-    const finalData = {
-      ...formData,
+    try {
+      setLoading(true);
 
-      marks: Number(formData.marks),
+      const finalData = {
+        ...formData,
 
-      totalAttempts: Number(formData.totalAttempts),
+        marks: Number(formData.marks),
 
-      correctAttempts: Number(formData.correctAttempts),
+        totalAttempts: Number(formData.totalAttempts),
 
-      options: formData.options
-        .split(",")
-        .map((item: any) => item.trim()),
+        correctAttempts: Number(formData.correctAttempts),
 
-      tags: formData.tags
-        .split(",")
-        .map((item: any) => item.trim()),
-    };
+        options: formData.options
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
 
-    console.log("FINAL DATA:", finalData);
+        tags: formData.tags
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
+      };
 
-    const response = await fetch(
-      `${API_BASE_URL}/questionBank/create`,
-      {
-        method: "POST",
+      console.log("FINAL DATA:", finalData);
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await fetch(
+        `${API_BASE_URL}/questionBank/create`,
+        {
+          method: "POST",
 
-        body: JSON.stringify(finalData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("API RESPONSE:", data);
+
+      if (response.ok) {
+        toast.success(data.message || "Question Added Successfully");
+        // RESET FORM
+        setFormData({
+          questionId: "",
+
+          questionType: "MCQ",
+
+          category: "",
+          subCategory: "",
+
+          difficultyLevel: "Medium",
+
+          question: "",
+
+          options: "",
+
+          correctAnswer: "",
+
+          explanation: "",
+
+          marks: "",
+
+          tags: "",
+
+          totalAttempts: "",
+          correctAttempts: "",
+
+          status: "Published",
+
+          createdBy: "",
+
+          createdAt: "",
+        });
+      } else {
+        toast.error(data.message || "Failed To Add Question");
       }
-    );
+    } catch (error) {
+      console.log("ERROR:", error);
 
-    const data = await response.json();
-
-    console.log("API RESPONSE:", data);
-
-    if (response.ok) {
-      alert("Question Added Successfully 🚀");
-
-      // RESET FORM
-      setFormData({
-        questionId: "",
-
-        questionType: "MCQ",
-
-        category: "",
-        subCategory: "",
-
-        difficultyLevel: "Medium",
-
-        question: "",
-
-        options: "",
-
-        correctAnswer: "",
-
-        explanation: "",
-
-        marks: "",
-
-        tags: "",
-
-        totalAttempts: "",
-        correctAttempts: "",
-
-        status: "Published",
-
-        createdBy: "",
-
-        createdAt: "",
-      });
-    } else {
-      alert(data.message || "Failed To Add Question");
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.log(error);
-
-    alert("Something went wrong");
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -356,9 +367,25 @@ const handleSubmit = async (e: any) => {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              disabled={loading}
+              className="
+                px-8
+                py-4
+                rounded-2xl
+                bg-linear-to-r
+                from-blue-600
+                to-indigo-600
+                text-white
+                font-semibold
+                shadow-lg
+                hover:scale-105
+                transition-all
+                duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+              "
             >
-              Submit Question
+              {loading ? "Submitting..." : "Submit Question"}
             </button>
           </div>
         </form>
