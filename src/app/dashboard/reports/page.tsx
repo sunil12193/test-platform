@@ -10,8 +10,7 @@ import {
   FiPieChart,
   FiUser,
 } from "react-icons/fi";
-
-import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import { API_BASE_URL } from "@/service/auth.service";
 
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
@@ -57,7 +56,7 @@ export default function ReportsAnalyticsPage() {
         console.log("API Calling Started");
 
         const response = await fetch(
-          `http://localhost:5010/api/report?page=${currentPage}&limit=${pageSize}`
+          `${API_BASE_URL}/report?page=${currentPage}&limit=${pageSize}`
         );
 
         if (!response.ok) {

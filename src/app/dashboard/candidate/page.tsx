@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
+import { API_BASE_URL } from "@/service/auth.service";
 import {
   FiMail,
   FiPhone,
@@ -53,7 +53,7 @@ export default function CandidatesPage() {
         console.log("API Calling Started");
 
         const response = await fetch(
-          `http://localhost:5010/api/candidate?page=${currentPage}&limit=${pageSize}`
+          `${API_BASE_URL}/candidate?page=${currentPage}&limit=${pageSize}`
         );
 
         if (!response.ok) {

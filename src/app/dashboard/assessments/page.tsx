@@ -14,6 +14,7 @@ import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
 
 import { Assessment } from "@/type/assessment";
+import { API_BASE_URL } from "@/service/auth.service";
 
 export default function AssessmentsPage() {
   // DATA
@@ -52,7 +53,7 @@ export default function AssessmentsPage() {
         console.log("API Calling Started");
 
         const response = await fetch(
-          `http://localhost:5010/api/assessment?page=${currentPage}&limit=${pageSize}`
+          `${API_BASE_URL}/assessment?page=${currentPage}&limit=${pageSize}`
         );
 
         if (!response.ok) {

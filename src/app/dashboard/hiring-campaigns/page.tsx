@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { BASE_URL } from "@/service/auth.service";
 import {
   FiActivity,
   FiAlertTriangle,
@@ -16,6 +16,7 @@ import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
 
 import { HiringCampaign } from "@/type/hirinigCampiagn";
+import { API_BASE_URL } from "@/service/auth.service";
 
 export default function HiringCampaignsPage() {
   // SEARCH
@@ -54,7 +55,7 @@ export default function HiringCampaignsPage() {
         console.log("API Calling Started");
 
         const response = await fetch(
-          `http://localhost:5010/api/hiringCampaings?page=${currentPage}&limit=${pageSize}`
+          `${API_BASE_URL}/hiringCampaings?page=${currentPage}&limit=${pageSize}`
         );
 
         if (!response.ok) {

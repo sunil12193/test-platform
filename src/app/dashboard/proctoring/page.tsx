@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { API_BASE_URL } from "@/service/auth.service";
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
@@ -43,7 +43,7 @@ export default function ProctoringPage() {
         console.log("API Calling Started");
 
         const response = await fetch(
-          `http://localhost:5010/api/proctoring?page=${currentPage}&limit=${pageSize}`
+          `${API_BASE_URL}/proctoring?page=${currentPage}&limit=${pageSize}`
         );
 
         if (!response.ok) {

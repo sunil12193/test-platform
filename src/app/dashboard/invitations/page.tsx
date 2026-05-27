@@ -17,6 +17,7 @@ import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
 
 import { Invitation } from "@/type/invitation";
+import { API_BASE_URL } from "@/service/auth.service";
 
 export default function InvitationsPage() {
   // SEARCH
@@ -55,7 +56,7 @@ export default function InvitationsPage() {
         console.log("API Calling Started");
 
         const response = await fetch(
-          `http://localhost:5010/api/invitation?page=${currentPage}&limit=${pageSize}`
+          `${API_BASE_URL}/invitation?page=${currentPage}&limit=${pageSize}`
         );
 
         if (!response.ok) {

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { API_BASE_URL } from "../../../../util/APIGeneric";
+
 export default function AddAssessmentPage() {
   const [formData, setFormData] = useState({
     assessmentId: "",
@@ -38,45 +40,125 @@ export default function AddAssessmentPage() {
     createdAt: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   // HANDLE CHANGE
   const handleChange = (e: any) => {
     const { name, value, type } = e.target;
+
     const checked =
       type === "checkbox" ? (e.target as HTMLInputElement).checked : false;
 
     setFormData({
       ...formData,
+
       [name]: type === "checkbox" ? checked : value,
     });
   };
 
   // SUBMIT
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (
+    e: { preventDefault: () => void }
+  ) => {
     e.preventDefault();
 
-    const finalData = {
-      ...formData,
+    try {
+      setLoading(true);
 
-      duration: Number(formData.duration),
-      totalQuestions: Number(formData.totalQuestions),
-      totalMarks: Number(formData.totalMarks),
-      passingMarks: Number(formData.passingMarks),
+      const finalData = {
+        ...formData,
 
-      totalCandidates: Number(formData.totalCandidates),
-      completedAttempts: Number(formData.completedAttempts),
+        duration: Number(formData.duration),
 
-      averageScore: Number(formData.averageScore),
+        totalQuestions: Number(formData.totalQuestions),
 
-      suspiciousActivities: Number(formData.suspiciousActivities),
+        totalMarks: Number(formData.totalMarks),
 
-      questionBankIds: formData.questionBankIds
-        .split(",")
-        .map((id) => id.trim()),
-    };
+        passingMarks: Number(formData.passingMarks),
 
-    console.log(finalData);
+        totalCandidates: Number(formData.totalCandidates),
 
-    alert("Assessment Added Successfully 🚀");
+        completedAttempts: Number(formData.completedAttempts),
+
+        averageScore: Number(formData.averageScore),
+
+        suspiciousActivities: Number(
+          formData.suspiciousActivities
+        ),
+
+        questionBankIds: formData.questionBankIds
+          .split(",")
+          .map((id) => id.trim())
+          .filter((id) => id !== ""),
+      };
+
+      console.log("FINAL DATA :", finalData);
+
+      const response = await fetch(
+        `${API_BASE_URL}/assessment/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("API RESPONSE :", data);
+
+      if (response.ok) {
+        alert("Assessment Added Successfully 🚀");
+
+        // RESET FORM
+        setFormData({
+          assessmentId: "",
+
+          title: "",
+          description: "",
+
+          assessmentType: "Coding",
+
+          duration: "",
+          totalQuestions: "",
+          totalMarks: "",
+          passingMarks: "",
+
+          difficultyLevel: "Medium",
+
+          questionBankIds: "",
+
+          randomizeQuestions: true,
+          negativeMarking: false,
+
+          startDate: "",
+          endDate: "",
+
+          status: "Active",
+
+          totalCandidates: "",
+          completedAttempts: "",
+
+          averageScore: "",
+          suspiciousActivities: "",
+
+          createdBy: "",
+          createdAt: "",
+        });
+      } else {
+        alert(data.message || "Failed to create assessment");
+      }
+    } catch (error) {
+      console.log("CREATE ERROR :", error);
+
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -84,7 +166,9 @@ export default function AddAssessmentPage() {
       <div className="max-w-7xl mx-auto bg-white rounded-[30px] shadow-xl overflow-hidden border border-gray-200">
         {/* HEADER */}
         <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-6">
-          <h1 className="text-3xl font-bold text-white">Add New Assessment</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Add New Assessment
+          </h1>
 
           <p className="text-blue-100 mt-2">
             Fill all assessment details carefully
@@ -351,9 +435,27 @@ export default function AddAssessmentPage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              disabled={loading}
+              className="
+                px-8
+                py-4
+                rounded-2xl
+                bg-linear-to-r
+                from-blue-600
+                to-indigo-600
+                text-white
+                font-semibold
+                shadow-lg
+                hover:scale-105
+                transition-all
+                duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+              "
             >
-              Submit Assessment
+              {loading
+                ? "Submitting..."
+                : "Submit Assessment"}
             </button>
           </div>
         </form>
@@ -382,7 +484,9 @@ function InputField({
 }: InputFieldProps) {
   return (
     <div>
-      <label className="text-sm font-semibold text-gray-700">{label}</label>
+      <label className="text-sm font-semibold text-gray-700">
+        {label}
+      </label>
 
       <input
         type={type}
@@ -390,7 +494,18 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+        className="
+          w-full
+          mt-2
+          px-4
+          py-3
+          rounded-2xl
+          border
+          border-gray-300
+          outline-none
+          focus:ring-2
+          focus:ring-blue-500
+        "
       />
     </div>
   );

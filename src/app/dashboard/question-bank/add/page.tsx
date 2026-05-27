@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
+import { API_BASE_URL } from "@/util/APIGeneric";
 
 export default function AddQuestionPage() {
   const [formData, setFormData] = useState({
-    questionId: "",
+    "questionId": "",
 
     questionType: "MCQ",
 
@@ -45,21 +46,92 @@ export default function AddQuestionPage() {
   };
 
   // SUBMIT
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+// API CALL
+const handleSubmit = async (e: any) => {
+  e.preventDefault();
 
+  try {
     const finalData = {
       ...formData,
 
-      options: formData.options.split(",").map((item: any) => item.trim()),
+      marks: Number(formData.marks),
 
-      tags: formData.tags.split(",").map((item: any) => item.trim()),
+      totalAttempts: Number(formData.totalAttempts),
+
+      correctAttempts: Number(formData.correctAttempts),
+
+      options: formData.options
+        .split(",")
+        .map((item: any) => item.trim()),
+
+      tags: formData.tags
+        .split(",")
+        .map((item: any) => item.trim()),
     };
 
-    console.log(finalData);
+    console.log("FINAL DATA:", finalData);
 
-    alert("Question Added Successfully 🚀");
-  };
+    const response = await fetch(
+      `${API_BASE_URL}/questionBank/create`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(finalData),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("API RESPONSE:", data);
+
+    if (response.ok) {
+      alert("Question Added Successfully 🚀");
+
+      // RESET FORM
+      setFormData({
+        questionId: "",
+
+        questionType: "MCQ",
+
+        category: "",
+        subCategory: "",
+
+        difficultyLevel: "Medium",
+
+        question: "",
+
+        options: "",
+
+        correctAnswer: "",
+
+        explanation: "",
+
+        marks: "",
+
+        tags: "",
+
+        totalAttempts: "",
+        correctAttempts: "",
+
+        status: "Published",
+
+        createdBy: "",
+
+        createdAt: "",
+      });
+    } else {
+      alert(data.message || "Failed To Add Question");
+    }
+  } catch (error) {
+    console.log(error);
+
+    alert("Something went wrong");
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

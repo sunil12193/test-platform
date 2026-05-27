@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { API_BASE_URL } from "@/service/auth.service";
 import {
   FiBookOpen,
   FiCheckCircle,
@@ -52,7 +52,7 @@ export default function QuestionBankPage() {
         console.log("API Calling Started");
 
         const response = await fetch(
-          `http://localhost:5010/api/questionBank?page=${currentPage}&limit=${pageSize}`
+          `${API_BASE_URL}/questionBank?page=${currentPage}&limit=${pageSize}`
         );
 
         if (!response.ok) {
