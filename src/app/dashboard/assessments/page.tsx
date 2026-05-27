@@ -14,25 +14,17 @@ import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
 
 import { Assessment } from "@/type/assessment";
-import { useAssessment } from "@/hooks/useSignup";
 
 export default function AssessmentsPage() {
-  // API CALL
-  const {
-    data: assessmentResponse,
-    isPending,
-    error,
-  } = useAssessment();
+  // DATA
+  const [data, setData] =
+    useState<Assessment[]>([]);
 
-  // BACKEND DATA
-  const data: Assessment[] =
-    assessmentResponse?.data || assessmentResponse || [];
+  const [loading, setLoading] =
+    useState<boolean>(true);
 
-  // CONSOLE DATA
-  useEffect(() => {
-    console.log("Assessment API Response:", assessmentResponse);
-    console.log("Assessment Data:", data);
-  }, [assessmentResponse, data]);
+  const [error, setError] =
+    useState<string>("");
 
   // SEARCH
   const [search, setSearch] =
@@ -45,35 +37,78 @@ export default function AssessmentsPage() {
   const [pageSize, setPageSize] =
     useState<number>(10);
 
+  const [totalPages, setTotalPages] =
+    useState<number>(1);
+
+  const [totalDocuments, setTotalDocuments] =
+    useState<number>(0);
+
+  // API CALL
+  useEffect(() => {
+    const fetchAssessments = async () => {
+      try {
+        setLoading(true);
+
+        console.log("API Calling Started");
+
+        const response = await fetch(
+          `http://localhost:5010/api/assessment?page=${currentPage}&limit=${pageSize}`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "Failed to fetch assessments"
+          );
+        }
+
+        const result = await response.json();
+
+        console.log("API DATA:", result);
+
+        // SET DATA
+        setData(result.data || []);
+
+        // SET PAGINATION
+        setTotalPages(result.totalPages || 1);
+
+        setTotalDocuments(
+          result.totalDocuments || 0
+        );
+      } catch (err) {
+        console.log("ERROR:", err);
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Something went wrong"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAssessments();
+  }, [currentPage, pageSize]);
+
   // FILTER DATA
   const filteredData = data.filter((item) =>
     (
-      item.title +
+      (item.title || "") +
       " " +
-      item.assessmentId +
+      (item.assessmentId || "") +
       " " +
-      item.description
+      (item.description || "")
     )
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
-  // PAGINATION LOGIC
-  const startIndex =
-    (currentPage - 1) * pageSize;
-
-  const endIndex =
-    startIndex + pageSize;
-
-  const paginatedData =
-    filteredData.slice(startIndex, endIndex);
-
-  const totalPages = Math.ceil(
-    filteredData.length / pageSize
-  );
+  console.log(filteredData.length);
+  console.log(totalPages);
+  console.log(currentPage);
 
   // LOADING
-  if (isPending) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
         Loading assessments...
@@ -370,7 +405,7 @@ export default function AssessmentsPage() {
         <DataTable
           title="Assessments"
           columns={columns}
-          data={paginatedData}
+          data={filteredData}
           onEdit={(item: Assessment) => {
             console.log("Edit:", item);
           }}
@@ -380,7 +415,7 @@ export default function AssessmentsPage() {
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          totalItems={filteredData.length}
+          totalItems={totalDocuments}
           pageSize={pageSize}
           onPageChange={setCurrentPage}
           onPageSizeChange={setPageSize}

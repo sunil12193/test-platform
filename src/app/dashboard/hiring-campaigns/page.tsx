@@ -1,51 +1,119 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import {
   FiActivity,
   FiAlertTriangle,
-  FiBarChart2,
   FiCalendar,
   FiClipboard,
   FiTarget,
   FiUsers,
 } from "react-icons/fi";
 
-import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
-
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
+import Pagination from "@/component/pagination";
+
 import { HiringCampaign } from "@/type/hirinigCampiagn";
-import { hiringCampaignData } from "@/dummyData/hiringCampaign";
 
 export default function HiringCampaignsPage() {
-  const [data, setData] = useState<HiringCampaign[]>(hiringCampaignData);
-  const [search, setSearch] = useState<string>("");
+  // SEARCH
+  const [search, setSearch] =
+    useState<string>("");
 
+  // PAGINATION
+  const [currentPage, setCurrentPage] =
+    useState<number>(1);
+
+  const [pageSize, setPageSize] =
+    useState<number>(10);
+
+  const [totalPages, setTotalPages] =
+    useState<number>(1);
+
+  const [totalDocuments, setTotalDocuments] =
+    useState<number>(0);
+
+  // DATA
+  const [data, setData] =
+    useState<HiringCampaign[]>([]);
+
+  const [loading, setLoading] =
+    useState<boolean>(true);
+
+  const [error, setError] =
+    useState<string>("");
+
+  // API CALL
+  useEffect(() => {
+    const fetchHiringCampaigns = async () => {
+      try {
+        setLoading(true);
+
+        console.log("API Calling Started");
+
+        const response = await fetch(
+          `http://localhost:5010/api/hiringCampaings?page=${currentPage}&limit=${pageSize}`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "Failed to fetch hiring campaigns"
+          );
+        }
+
+        const result = await response.json();
+
+        console.log("API DATA:", result);
+
+        // SET DATA
+        setData(result.data || []);
+
+        // SET PAGINATION
+        setTotalPages(result.totalPages || 1);
+
+        setTotalDocuments(
+          result.totalDocuments || 0
+        );
+      } catch (err) {
+        console.log("ERROR:", err);
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Something went wrong"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHiringCampaigns();
+  }, [currentPage, pageSize]);
+
+  // FILTER DATA
   const filteredData = data.filter((item) =>
-  (item.campaignName + " " + item.campaignId + " " + item.positionId)
+    (
+      (item.campaignName || "") +
+      " " +
+      (item.campaignId || "") +
+      " " +
+      (item.positionId || "")
+    )
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getRequest(`${API_BASE_URL}/hiring-campaigns`);
-
-  //       console.log("Fetched Data: Hiring Campaigns", response);
-
-  //       if (response) {
-  //         setData(response);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
+  // LOADING
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+        Loading hiring campaigns...
+      </div>
+    );
+  }
+  // TABLE COLUMNS
   const columns = [
     // CAMPAIGN
     {
@@ -90,9 +158,10 @@ export default function HiringCampaignsPage() {
                     font-semibold
                     border
 
-                    ${item.status === "Active"
-                      ? "bg-emerald-50 border-emerald-100 text-emerald-700"
-                      : "bg-slate-100 border-slate-200 text-slate-700"
+                    ${
+                      item.status === "Active"
+                        ? "bg-emerald-50 border-emerald-100 text-emerald-700"
+                        : "bg-slate-100 border-slate-200 text-slate-700"
                     }
                   `}
                 >
@@ -100,7 +169,9 @@ export default function HiringCampaignsPage() {
                 </span>
               </div>
 
-              <p className="text-xs text-slate-500 mt-1">{item.campaignId}</p>
+              <p className="text-xs text-slate-500 mt-1">
+                {item.campaignId}
+              </p>
 
               <div className="mt-4">
                 <span
@@ -131,10 +202,14 @@ export default function HiringCampaignsPage() {
 
       render: (item: HiringCampaign) => (
         <div className="flex flex-wrap gap-2 min-w-70">
-          {item.assignedAssessments.map((assessment: string, index: number) => (
-            <span
-              key={index}
-              className="
+          {item.assignedAssessments.map(
+            (
+              assessment: string,
+              index: number
+            ) => (
+              <span
+                key={index}
+                className="
                   px-3
                   py-1
                   rounded-full
@@ -145,10 +220,11 @@ export default function HiringCampaignsPage() {
                   text-xs
                   font-medium
                 "
-            >
-              {assessment}
-            </span>
-          ))}
+              >
+                {assessment}
+              </span>
+            )
+          )}
         </div>
       ),
     },
@@ -176,14 +252,20 @@ export default function HiringCampaignsPage() {
             </div>
 
             <div>
-              <h3 className="font-bold text-slate-800">{item.totalInvited}</h3>
+              <h3 className="font-bold text-slate-800">
+                {item.totalInvited}
+              </h3>
 
-              <p className="text-xs text-slate-500">Total Invited</p>
+              <p className="text-xs text-slate-500">
+                Total Invited
+              </p>
             </div>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-500">Completed</span>
+            <span className="text-sm text-slate-500">
+              Completed
+            </span>
 
             <span
               className="
@@ -210,13 +292,19 @@ export default function HiringCampaignsPage() {
       render: (item: HiringCampaign) => {
         const completionRate =
           item.totalInvited > 0
-            ? Math.round((item.totalCompleted / item.totalInvited) * 100)
+            ? Math.round(
+                (item.totalCompleted /
+                  item.totalInvited) *
+                  100
+              )
             : 0;
 
         return (
           <div className="min-w-65">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm text-slate-500">Completion</span>
+              <span className="text-sm text-slate-500">
+                Completion
+              </span>
 
               <span className="font-bold text-emerald-600">
                 {completionRate}%
@@ -278,9 +366,13 @@ export default function HiringCampaignsPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-slate-800">Avg Performance</h3>
+              <h3 className="font-semibold text-slate-800">
+                Avg Performance
+              </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Candidate Score</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Candidate Score
+              </p>
             </div>
           </div>
         </div>
@@ -350,7 +442,9 @@ export default function HiringCampaignsPage() {
                 {item.startDate}
               </p>
 
-              <p className="text-xs text-slate-500 mt-1">to {item.endDate}</p>
+              <p className="text-xs text-slate-500 mt-1">
+                to {item.endDate}
+              </p>
             </div>
           </div>
         </div>
@@ -380,9 +474,13 @@ export default function HiringCampaignsPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-slate-800">{item.createdBy}</h3>
+              <h3 className="font-semibold text-slate-800">
+                {item.createdBy}
+              </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Campaign Manager</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Campaign Manager
+              </p>
             </div>
           </div>
         </div>
@@ -391,21 +489,33 @@ export default function HiringCampaignsPage() {
   ];
 
   return (
-    <div
-      className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6
-      "
-    >
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
       <div className="space-y-6">
+        {/* ACTION BUTTONS */}
         <ActionButtons
           addUrl="/dashboard/hiring-campaigns/add"
           importUrl="/dashboard/hiring-campaigns/import"
           exportUrl="/dashboard/hiring-campaigns/export"
           searchValue={search}
           onSearchChange={setSearch}
-
         />
 
-        <DataTable title="Hiring Campaigns" columns={columns} data={filteredData} />
+        {/* TABLE */}
+        <DataTable
+          title="Hiring Campaigns"
+          columns={columns}
+          data={filteredData}
+        />
+
+        {/* PAGINATION */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalDocuments}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+        />
       </div>
     </div>
   );

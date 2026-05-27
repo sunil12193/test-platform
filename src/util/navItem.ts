@@ -48,6 +48,12 @@ export const navItems = [
     sub: "Manage hiring positions",
     icon: FiBriefcase,
   },
+  {
+    label: "Proctoring",
+    href: "/dashboard/proctoring",
+    sub: "Manage proctoring sessions",
+    icon: FiShield,
+  },
 
   {
     label: "Hiring Campaigns",

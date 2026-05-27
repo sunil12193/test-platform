@@ -15,36 +15,107 @@ import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
 
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
+import Pagination from "@/component/pagination";
+
 import { ReportsAnalytics } from "@/type/report";
 import { reportsAnalyticsData } from "@/dummyData/report";
 
 export default function ReportsAnalyticsPage() {
-  const [data, setData] = useState<ReportsAnalytics[]>(reportsAnalyticsData);
-  const [search, setSearch] = useState<string>("");
+  // SEARCH
+  const [search, setSearch] =
+    useState<string>("");
 
+  // PAGINATION
+  const [currentPage, setCurrentPage] =
+    useState<number>(1);
+
+  const [pageSize, setPageSize] =
+    useState<number>(10);
+
+  const [totalPages, setTotalPages] =
+    useState<number>(1);
+
+  const [totalDocuments, setTotalDocuments] =
+    useState<number>(0);
+
+  // DATA
+  const [data, setData] =
+    useState<ReportsAnalytics[]>([]);
+
+  const [loading, setLoading] =
+    useState<boolean>(true);
+
+  const [error, setError] =
+    useState<string>("");
+
+  // API CALL
+  useEffect(() => {
+    const fetchQuestionBank = async () => {
+      try {
+        setLoading(true);
+
+        console.log("API Calling Started");
+
+        const response = await fetch(
+          `http://localhost:5010/api/report?page=${currentPage}&limit=${pageSize}`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "Failed to fetch Report Data"
+          );
+        }
+
+        const result = await response.json();
+
+        console.log("API DATA:", result);
+
+        // SET DATA
+        setData(result.data || []);
+
+        // SET PAGINATION
+        setTotalPages(result.totalPages || 1);
+
+        setTotalDocuments(
+          result.totalDocuments || 0
+        );
+      } catch (err) {
+        console.log("ERROR:", err);
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Something went wrong"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuestionBank();
+  }, [currentPage, pageSize]);
+
+  // FILTER DATA
   const filteredData = data.filter((item) =>
-  (item.reportType + " " + item.reportId + " " + item.generatedBy)
+    (
+      (item.reportId || "") +
+      " " +
+      (item.reportType || "") +
+      " " +
+      (item.assessmentId || "")
+    )
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getRequest(`${API_BASE_URL}/report`);
-
-  //       console.log("Fetched Data: Reports", response);
-
-  //       if (response) {
-  //         setData(response);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  // LOADING
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+        Loading Report Data...
+      </div>
+    );
+  }
 
   const columns = [
     // REPORT
@@ -80,7 +151,9 @@ export default function ReportsAnalyticsPage() {
                 {item.reportType}
               </h2>
 
-              <p className="text-xs text-slate-500 mt-1">{item.reportId}</p>
+              <p className="text-xs text-slate-500 mt-1">
+                {item.reportId}
+              </p>
 
               <div className="flex items-center gap-2 mt-4 flex-wrap">
                 <span
@@ -148,7 +221,9 @@ export default function ReportsAnalyticsPage() {
                 {item.generatedBy}
               </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Report Creator</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Report Creator
+              </p>
             </div>
           </div>
         </div>
@@ -182,13 +257,17 @@ export default function ReportsAnalyticsPage() {
                 Performance Metrics
               </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Candidate Scores</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Candidate Scores
+              </p>
             </div>
           </div>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-500">Average</span>
+              <span className="text-sm text-slate-500">
+                Average
+              </span>
 
               <span
                 className="
@@ -206,7 +285,9 @@ export default function ReportsAnalyticsPage() {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-500">Highest</span>
+              <span className="text-sm text-slate-500">
+                Highest
+              </span>
 
               <span
                 className="
@@ -224,7 +305,9 @@ export default function ReportsAnalyticsPage() {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-500">Lowest</span>
+              <span className="text-sm text-slate-500">
+                Lowest
+              </span>
 
               <span
                 className="
@@ -252,7 +335,9 @@ export default function ReportsAnalyticsPage() {
       render: (item: ReportsAnalytics) => (
         <div className="min-w-65">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-slate-500">Completion</span>
+            <span className="text-sm text-slate-500">
+              Completion
+            </span>
 
             <span className="font-bold text-emerald-600">
               {item.completionRate}%
@@ -277,7 +362,9 @@ export default function ReportsAnalyticsPage() {
           <div className="flex items-center gap-2 mt-3">
             <FiPieChart className="text-emerald-500 text-sm" />
 
-            <p className="text-xs text-slate-500">Overall Completion Rate</p>
+            <p className="text-xs text-slate-500">
+              Overall Completion Rate
+            </p>
           </div>
         </div>
       ),
@@ -364,7 +451,9 @@ export default function ReportsAnalyticsPage() {
                 {item.exportedFormat}
               </div>
 
-              <p className="text-xs text-slate-500 mt-2">Download Format</p>
+              <p className="text-xs text-slate-500 mt-2">
+                Download Format
+              </p>
             </div>
           </div>
         </div>
@@ -431,8 +520,26 @@ export default function ReportsAnalyticsPage() {
         searchValue={search}
         onSearchChange={setSearch}
       />
+
       <div className="space-y-6">
-        <DataTable title="Reports & Analytics" columns={columns} data={filteredData} />
+        <DataTable
+          title="Reports & Analytics"
+          columns={columns}
+          data={filteredData}
+          onEdit={(item: ReportsAnalytics) => {
+            console.log("Edit:", item);
+          }}
+        />
+
+        {/* PAGINATION */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalDocuments}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+        />
       </div>
     </div>
   );

@@ -1,43 +1,117 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FiBookOpen, FiCheckCircle, FiCode, FiLayers } from "react-icons/fi";
 
-import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import {
+  FiBookOpen,
+  FiCheckCircle,
+  FiCode,
+  FiLayers,
+} from "react-icons/fi";
+
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
+import Pagination from "@/component/pagination";
+
 import { QuestionBank } from "@/type/questionBank";
-import { questionBankData } from "@/dummyData/questionBank";
 
 export default function QuestionBankPage() {
-  const [data, setData] = useState<QuestionBank[]>(questionBankData);
-  const [search, setSearch] = useState<string>("");
-  
+  // SEARCH
+  const [search, setSearch] =
+    useState<string>("");
+
+  // PAGINATION
+  const [currentPage, setCurrentPage] =
+    useState<number>(1);
+
+  const [pageSize, setPageSize] =
+    useState<number>(10);
+
+  const [totalPages, setTotalPages] =
+    useState<number>(1);
+
+  const [totalDocuments, setTotalDocuments] =
+    useState<number>(0);
+
+  // DATA
+  const [data, setData] =
+    useState<QuestionBank[]>([]);
+
+  const [loading, setLoading] =
+    useState<boolean>(true);
+
+  const [error, setError] =
+    useState<string>("");
+
+  // API CALL
+  useEffect(() => {
+    const fetchQuestionBank = async () => {
+      try {
+        setLoading(true);
+
+        console.log("API Calling Started");
+
+        const response = await fetch(
+          `http://localhost:5010/api/questionBank?page=${currentPage}&limit=${pageSize}`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "Failed to fetch question bank"
+          );
+        }
+
+        const result = await response.json();
+
+        console.log("API DATA:", result);
+
+        // SET DATA
+        setData(result.data || []);
+
+        // SET PAGINATION
+        setTotalPages(result.totalPages || 1);
+
+        setTotalDocuments(
+          result.totalDocuments || 0
+        );
+      } catch (err) {
+        console.log("ERROR:", err);
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Something went wrong"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuestionBank();
+  }, [currentPage, pageSize]);
+
+  // FILTER DATA
   const filteredData = data.filter((item) =>
-  (item.questionType + " " + item.questionId + " " + item.question)
+    (
+      (item.questionType || "") +
+      " " +
+      (item.questionId || "") +
+      " " +
+      (item.question || "")
+    )
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getRequest(`${API_BASE_URL}/question-bank`);
-
-  //       console.log("Fetched Data: Question Bank ", response);
-
-  //       if (response) {
-  //         setData(response);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
+  // LOADING
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+        Loading question bank...
+      </div>
+    );
+  }
+  // TABLE COLUMNS
   const columns = [
     // QUESTION
     {
@@ -62,7 +136,8 @@ export default function QuestionBankPage() {
                 shrink-0
               "
             >
-              {item.questionType === "Coding" ? (
+              {item.questionType ===
+              "Coding" ? (
                 <FiCode size={22} />
               ) : (
                 <FiBookOpen size={22} />
@@ -86,7 +161,8 @@ export default function QuestionBankPage() {
                     border
 
                     ${
-                      item.status === "Published"
+                      item.status ===
+                      "Published"
                         ? "bg-emerald-50 border-emerald-100 text-emerald-700"
                         : "bg-amber-50 border-amber-100 text-amber-700"
                     }
@@ -96,7 +172,9 @@ export default function QuestionBankPage() {
                 </span>
               </div>
 
-              <p className="text-xs text-slate-500 mt-1">{item.questionId}</p>
+              <p className="text-xs text-slate-500 mt-1">
+                {item.questionId}
+              </p>
 
               <p className="text-sm text-slate-600 mt-3 leading-relaxed">
                 {item.question}
@@ -134,7 +212,9 @@ export default function QuestionBankPage() {
                 {item.category}
               </h3>
 
-              <p className="text-xs text-slate-500">{item.subCategory}</p>
+              <p className="text-xs text-slate-500">
+                {item.subCategory}
+              </p>
             </div>
           </div>
         </div>
@@ -147,24 +227,26 @@ export default function QuestionBankPage() {
 
       render: (item: QuestionBank) => (
         <div className="min-w-60 flex flex-wrap gap-2 justify-center">
-          {item.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="
-                px-3
-                py-1
-                rounded-full
-                bg-violet-50
-                border
-                border-violet-100
-                text-violet-700
-                text-xs
-                font-medium
-              "
-            >
-              {tag}
-            </span>
-          ))}
+          {item.tags.map(
+            (tag, index) => (
+              <span
+                key={index}
+                className="
+                  px-3
+                  py-1
+                  rounded-full
+                  bg-violet-50
+                  border
+                  border-violet-100
+                  text-violet-700
+                  text-xs
+                  font-medium
+                "
+              >
+                {tag}
+              </span>
+            )
+          )}
         </div>
       ),
     },
@@ -183,9 +265,13 @@ export default function QuestionBankPage() {
               justify-center
             "
           >
-            <h2 className="text-2xl font-bold text-[#0F2B46]">{item.marks}</h2>
+            <h2 className="text-2xl font-bold text-[#0F2B46]">
+              {item.marks}
+            </h2>
 
-            <p className="text-xs text-slate-500 mt-1">Marks</p>
+            <p className="text-xs text-slate-500 mt-1">
+              Marks
+            </p>
           </div>
         </div>
       ),
@@ -207,9 +293,11 @@ export default function QuestionBankPage() {
               border
 
               ${
-                item.difficultyLevel === "Hard"
+                item.difficultyLevel ===
+                "Hard"
                   ? "bg-red-50 border-red-100 text-red-700"
-                  : item.difficultyLevel === "Medium"
+                  : item.difficultyLevel ===
+                      "Medium"
                     ? "bg-yellow-50 border-yellow-100 text-yellow-700"
                     : "bg-emerald-50 border-emerald-100 text-emerald-700"
               }
@@ -228,15 +316,23 @@ export default function QuestionBankPage() {
       render: (item: QuestionBank) => {
         const percentage =
           item.totalAttempts > 0
-            ? Math.round((item.correctAttempts / item.totalAttempts) * 100)
+            ? Math.round(
+                (item.correctAttempts /
+                  item.totalAttempts) *
+                  100
+              )
             : 0;
 
         return (
           <div className="min-w-55">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm text-slate-500">Accuracy</span>
+              <span className="text-sm text-slate-500">
+                Accuracy
+              </span>
 
-              <span className="font-bold text-emerald-600">{percentage}%</span>
+              <span className="font-bold text-emerald-600">
+                {percentage}%
+              </span>
             </div>
 
             <div className="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
@@ -258,7 +354,11 @@ export default function QuestionBankPage() {
               <FiCheckCircle className="text-emerald-500 text-sm" />
 
               <p className="text-xs text-slate-500">
-                {item.correctAttempts} correct out of {item.totalAttempts}
+                {item.correctAttempts}
+                {" "}
+                correct out of
+                {" "}
+                {item.totalAttempts}
               </p>
             </div>
           </div>
@@ -276,7 +376,11 @@ export default function QuestionBankPage() {
             {item.createdAt}
           </p>
 
-          <p className="text-xs text-slate-500 mt-1">by {item.createdBy}</p>
+          <p className="text-xs text-slate-500 mt-1">
+            by
+            {" "}
+            {item.createdBy}
+          </p>
         </div>
       ),
     },
@@ -294,15 +398,16 @@ export default function QuestionBankPage() {
       "
     >
       <div className="space-y-6">
+        {/* ACTION BUTTONS */}
         <ActionButtons
           addUrl="/dashboard/question-bank/add"
           importUrl="/dashboard/question-bank/import"
           exportUrl="/dashboard/question-bank/export"
-
           searchValue={search}
           onSearchChange={setSearch}
-         />
+        />
 
+        {/* TABLE */}
         <DataTable
           title="Question Bank"
           columns={columns}
@@ -310,6 +415,16 @@ export default function QuestionBankPage() {
           onEdit={(item: QuestionBank) => {
             console.log("Edit:", item);
           }}
+        />
+
+        {/* PAGINATION */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalDocuments}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
         />
       </div>
     </div>

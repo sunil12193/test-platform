@@ -10,19 +10,31 @@ import Pagination from "@/component/pagination";
 
 export default function BillingPlansPage() {
   // const [data, setData] = useState([]);
-  const [data, setData] = useState<Billing[]>(billingPlansData);
+
   const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] =
     useState<number>(1);
-
+    const [data, setData] = useState<Billing[]>([]);
+    
+    const [loading, setLoading] =
+      useState<boolean>(true);
+    
+    const [error, setError] =
+      useState<string>("");
   const [pageSize, setPageSize] =
     useState<number>(10);
 
   const filteredData = data.filter((item) =>
-    item.companyId
+  (    (item.companyId || "") +
+       " " +
+       (item.currentPlan || "") +
+       " " +
+       (item.billingCycle || "") 
+       
       .toLowerCase()
       .includes(search.toLowerCase())
-  );
+  )
+);
 
   const startIndex =
     (currentPage - 1) * pageSize;
@@ -37,21 +49,43 @@ export default function BillingPlansPage() {
     filteredData.length / pageSize
   );
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getRequest(`${API_BASE_URL}/billing`);
 
-  //       console.log("Fetched Data: billing", response);
 
-  //       setData(response);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+useEffect(() => {
+  const fetchAssessments = async () => {
+    try {
+      console.log("API Calling Started");
 
-  //   fetchData();
-  // }, []);
+      const response = await fetch(
+        "http://localhost:5010/api/billing"
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Failed to fetch billing information"
+        );
+      }
+
+      const result = await response.json();
+
+      console.log("API DATA:", result);
+
+      setData(result.data || result);
+    } catch (err) {
+      console.log("ERROR:", err);
+
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchAssessments();
+}, []);
 
   const columns = [
     // COMPANY

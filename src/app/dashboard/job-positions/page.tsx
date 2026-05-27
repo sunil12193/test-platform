@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import {
   FiBriefcase,
   FiMapPin,
@@ -9,41 +10,110 @@ import {
   FiLayers,
 } from "react-icons/fi";
 
-import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
-
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
+import Pagination from "@/component/pagination";
+
 import { JobPosition } from "@/type/jobPosition";
-import { jobPositionsData } from "@/dummyData/jobPosition";
 
 export default function JobPositionsPage() {
-  const [data, setData] = useState<JobPosition[]>(jobPositionsData);
-  const [search, setSearch] = useState<string>("");
+  // SEARCH
+  const [search, setSearch] =
+    useState<string>("");
 
+  // PAGINATION
+  const [currentPage, setCurrentPage] =
+    useState<number>(1);
+
+  const [pageSize, setPageSize] =
+    useState<number>(10);
+
+  const [totalPages, setTotalPages] =
+    useState<number>(1);
+
+  const [totalDocuments, setTotalDocuments] =
+    useState<number>(0);
+
+  // DATA
+  const [data, setData] =
+    useState<JobPosition[]>([]);
+
+  const [loading, setLoading] =
+    useState<boolean>(true);
+
+  const [error, setError] =
+    useState<string>("");
+
+  // API CALL
+  useEffect(() => {
+    const fetchJobPositions = async () => {
+      try {
+        setLoading(true);
+
+        console.log("API Calling Started");
+
+        const response = await fetch(
+          `http://localhost:5010/api/jobPosition?page=${currentPage}&limit=${pageSize}`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "Failed to fetch job positions"
+          );
+        }
+
+        const result = await response.json();
+
+        console.log("API DATA:", result);
+
+        // SET DATA
+        setData(result.data || []);
+
+        // SET PAGINATION
+        setTotalPages(result.totalPages || 1);
+
+        setTotalDocuments(
+          result.totalDocuments || 0
+        );
+      } catch (err) {
+        console.log("ERROR:", err);
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Something went wrong"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobPositions();
+  }, [currentPage, pageSize]);
+
+  // FILTER DATA
   const filteredData = data.filter((item) =>
-  (item.title + " " + item.positionId + " " + item.department)
+    (
+      (item.title || "") +
+      " " +
+      (item.positionId || "") +
+      " " +
+      (item.department || "")
+    )
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getRequest(`${API_BASE_URL}/job-position`);
+  // LOADING
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+        Loading job positions...
+      </div>
+    );
+  }
 
-  //       console.log("Fetched Data: Job Positions", response);
-
-  //       if (response) {
-  //         setData(response);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
+  // TABLE COLUMNS
   const columns = [
     // POSITION
     {
@@ -89,7 +159,8 @@ export default function JobPositionsPage() {
                     border
 
                     ${
-                      item.status === "Open"
+                      item.status ===
+                      "Open"
                         ? "bg-emerald-50 border-emerald-100 text-emerald-700"
                         : "bg-red-50 border-red-100 text-red-700"
                     }
@@ -99,7 +170,9 @@ export default function JobPositionsPage() {
                 </span>
               </div>
 
-              <p className="text-xs text-slate-500 mt-1">{item.positionId}</p>
+              <p className="text-xs text-slate-500 mt-1">
+                {item.positionId}
+              </p>
 
               <p className="text-sm text-slate-600 mt-3 leading-relaxed">
                 {item.description}
@@ -176,7 +249,9 @@ export default function JobPositionsPage() {
             {item.experienceRequired}
           </p>
 
-          <p className="text-xs text-slate-500 mt-1">Experience Required</p>
+          <p className="text-xs text-slate-500 mt-1">
+            Experience Required
+          </p>
         </div>
       ),
     },
@@ -208,7 +283,9 @@ export default function JobPositionsPage() {
                 {item.salaryRange}
               </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Compensation</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Compensation
+              </p>
             </div>
           </div>
         </div>
@@ -221,10 +298,14 @@ export default function JobPositionsPage() {
 
       render: (item: JobPosition) => (
         <div className="flex flex-wrap gap-2 min-w-65">
-          {item.requiredSkills.map((skill: string, index: number) => (
-            <span
-              key={index}
-              className="
+          {item.requiredSkills.map(
+            (
+              skill: string,
+              index: number
+            ) => (
+              <span
+                key={index}
+                className="
                   px-3
                   py-1
                   rounded-full
@@ -235,10 +316,11 @@ export default function JobPositionsPage() {
                   text-xs
                   font-medium
                 "
-            >
-              {skill}
-            </span>
-          ))}
+              >
+                {skill}
+              </span>
+            )
+          )}
         </div>
       ),
     },
@@ -290,15 +372,21 @@ export default function JobPositionsPage() {
             </div>
 
             <div>
-              <h3 className="font-bold text-slate-800">{item.applicants}</h3>
+              <h3 className="font-bold text-slate-800">
+                {item.applicants}
+              </h3>
 
-              <p className="text-xs text-slate-500">Total Applicants</p>
+              <p className="text-xs text-slate-500">
+                Total Applicants
+              </p>
             </div>
           </div>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-500">Openings</span>
+              <span className="text-sm text-slate-500">
+                Openings
+              </span>
 
               <span
                 className="
@@ -316,7 +404,9 @@ export default function JobPositionsPage() {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-500">Shortlisted</span>
+              <span className="text-sm text-slate-500">
+                Shortlisted
+              </span>
 
               <span className="font-semibold text-blue-700">
                 {item.shortlisted}
@@ -337,7 +427,9 @@ export default function JobPositionsPage() {
             {item.createdAt}
           </p>
 
-          <p className="text-xs text-slate-500 mt-1">Published Date</p>
+          <p className="text-xs text-slate-500 mt-1">
+            Published Date
+          </p>
         </div>
       ),
     },
@@ -355,15 +447,16 @@ export default function JobPositionsPage() {
       "
     >
       <div className="space-y-6">
+        {/* ACTION BUTTONS */}
         <ActionButtons
           addUrl="/dashboard/job-positions/add"
           importUrl="/dashboard/job-positions/import"
           exportUrl="/dashboard/job-positions/export"
-
           searchValue={search}
           onSearchChange={setSearch}
         />
 
+        {/* TABLE */}
         <DataTable
           title="Job Positions"
           columns={columns}
@@ -371,6 +464,16 @@ export default function JobPositionsPage() {
           onEdit={(item: JobPosition) => {
             console.log("Edit Data:", item);
           }}
+        />
+
+        {/* PAGINATION */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalDocuments}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
         />
       </div>
     </div>

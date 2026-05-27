@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import {
   FiCalendar,
   FiCheckCircle,
@@ -9,44 +10,112 @@ import {
   FiMail,
   FiSend,
   FiShield,
-  FiUser,
 } from "react-icons/fi";
-
-import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
 
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
+import Pagination from "@/component/pagination";
+
 import { Invitation } from "@/type/invitation";
-import { invitationsData } from "@/dummyData/invitation";
 
 export default function InvitationsPage() {
-  const [data, setData] = useState<Invitation[]>(invitationsData);
-  const [search, setSearch] = useState<string>("");
+  // SEARCH
+  const [search, setSearch] =
+    useState<string>("");
 
+  // PAGINATION
+  const [currentPage, setCurrentPage] =
+    useState<number>(1);
+
+  const [pageSize, setPageSize] =
+    useState<number>(10);
+
+  const [totalPages, setTotalPages] =
+    useState<number>(1);
+
+  const [totalDocuments, setTotalDocuments] =
+    useState<number>(0);
+
+  // DATA
+  const [data, setData] =
+    useState<Invitation[]>([]);
+
+  const [loading, setLoading] =
+    useState<boolean>(true);
+
+  const [error, setError] =
+    useState<string>("");
+
+  // API CALL
+  useEffect(() => {
+    const fetchInvitations = async () => {
+      try {
+        setLoading(true);
+
+        console.log("API Calling Started");
+
+        const response = await fetch(
+          `http://localhost:5010/api/invitation?page=${currentPage}&limit=${pageSize}`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "Failed to fetch invitations"
+          );
+        }
+
+        const result = await response.json();
+
+        console.log("API DATA:", result);
+
+        // SET DATA
+        setData(result.data || []);
+
+        // SET PAGINATION
+        setTotalPages(result.totalPages || 1);
+
+        setTotalDocuments(
+          result.totalDocuments || 0
+        );
+      } catch (err) {
+        console.log("ERROR:", err);
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Something went wrong"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInvitations();
+  }, [currentPage, pageSize]);
+
+  // FILTER DATA
   const filteredData = data.filter((item) =>
-  (item.invitationId || item.email || item.assessmentId)
+    (
+      (item.invitationId || "") +
+      " " +
+      (item.candidateId || "") +
+      " " +
+      (item.assessmentId || "")
+    ) 
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getRequest(`${API_BASE_URL}/invitation`);
+  // LOADING
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+        Loading invitations...
+      </div>
+    );
+  }
 
-  //       console.log("Fetched Data: Invitations", response);
-
-  //       if (response) {
-  //         setData(response);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
+  // TABLE COLUMNS
   const columns = [
     // INVITATION
     {
@@ -92,11 +161,14 @@ export default function InvitationsPage() {
                     border
 
                     ${
-                      item.status === "Completed"
+                      item.status ===
+                      "Completed"
                         ? "bg-emerald-50 border-emerald-100 text-emerald-700"
-                        : item.status === "Opened"
+                        : item.status ===
+                            "Opened"
                           ? "bg-blue-50 border-blue-100 text-blue-700"
-                          : item.status === "Expired"
+                          : item.status ===
+                              "Expired"
                             ? "bg-red-50 border-red-100 text-red-700"
                             : "bg-yellow-50 border-yellow-100 text-yellow-700"
                     }
@@ -107,7 +179,9 @@ export default function InvitationsPage() {
               </div>
 
               <p className="text-xs text-slate-500 mt-1">
-                Candidate : {item.candidateId}
+                Candidate :
+                {" "}
+                {item.candidateId}
               </p>
 
               <div className="mt-4">
@@ -156,9 +230,13 @@ export default function InvitationsPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-slate-800">{item.email}</h3>
+              <h3 className="font-semibold text-slate-800">
+                {item.email}
+              </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Candidate Email</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Candidate Email
+              </p>
             </div>
           </div>
         </div>
@@ -211,7 +289,9 @@ export default function InvitationsPage() {
                 {item.inviteToken}
               </p>
 
-              <p className="text-xs text-slate-500 mt-1">Secure Invite Token</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Secure Invite Token
+              </p>
             </div>
           </div>
         </div>
@@ -245,7 +325,9 @@ export default function InvitationsPage() {
                 {item.sentAt}
               </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Invitation Sent</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Invitation Sent
+              </p>
             </div>
           </div>
         </div>
@@ -279,7 +361,9 @@ export default function InvitationsPage() {
                 {item.expiresAt}
               </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Expiration Deadline</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Expiration Deadline
+              </p>
             </div>
           </div>
         </div>
@@ -330,10 +414,14 @@ export default function InvitationsPage() {
                   }
                 `}
               >
-                {item.reminderSent ? "Reminder Sent" : "No Reminder"}
+                {item.reminderSent
+                  ? "Reminder Sent"
+                  : "No Reminder"}
               </div>
 
-              <p className="text-xs text-slate-500 mt-2">Reminder Status</p>
+              <p className="text-xs text-slate-500 mt-2">
+                Reminder Status
+              </p>
             </div>
           </div>
         </div>
@@ -363,9 +451,13 @@ export default function InvitationsPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-slate-800">Protected</h3>
+              <h3 className="font-semibold text-slate-800">
+                Protected
+              </h3>
 
-              <p className="text-xs text-slate-500 mt-1">Secure Invitation</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Secure Invitation
+              </p>
             </div>
           </div>
         </div>
@@ -374,18 +466,33 @@ export default function InvitationsPage() {
   ];
 
   return (
-    <div className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
       <div className="space-y-6">
+        {/* ACTION BUTTONS */}
         <ActionButtons
           addUrl="/dashboard/invitations/add"
           importUrl="/dashboard/invitations/import"
           exportUrl="/dashboard/invitations/export"
-
           searchValue={search}
           onSearchChange={setSearch}
         />
 
-        <DataTable title="Invitations" columns={columns} data={filteredData} />
+        {/* TABLE */}
+        <DataTable
+          title="Invitations"
+          columns={columns}
+          data={filteredData}
+        />
+
+        {/* PAGINATION */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalDocuments}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+        />
       </div>
     </div>
   );

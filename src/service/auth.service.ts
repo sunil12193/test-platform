@@ -12,6 +12,7 @@ export interface SigninPayload {
 }
 
 export const BASE_URL = "https://platform-backend-v8zh.onrender.com/api";
+export const BASE_URL2 = "http://localhost:5010/api";  
 
 export const authService = {
   signup: async (payload: SignupPayload) => {
@@ -28,7 +29,7 @@ export const authService = {
   assessment: async () => {
   console.log("API Calling Started");
 
-  const response = await api.get("/assessment");
+  const response = await api.get(`${BASE_URL2}/assessment`);
 
   console.log("API Response:", response);
 

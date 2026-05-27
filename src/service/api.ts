@@ -1,3 +1,5 @@
+import { BASE_URL2 } from "./auth.service";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -22,7 +24,7 @@ export async function api<T = any>(
   const { method = "GET", body, headers = {}, token } = options;
 
   try {
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
+    const response = await fetch(`${BASE_URL2}${endpoint}`, {
       method,
       headers: {
         "Content-Type": "application/json",
