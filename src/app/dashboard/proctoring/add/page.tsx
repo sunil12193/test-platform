@@ -63,8 +63,6 @@ export default function AddProctoringPage() {
           .filter((item: string) => item !== ""),
       };
 
-      console.log("FINAL DATA:", finalData);
-
       const response = await fetch(
         `${API_BASE_URL}/proctoring/create`,
         {
@@ -79,8 +77,6 @@ export default function AddProctoringPage() {
       );
 
       const data = await response.json();
-
-      console.log("API RESPONSE:", data);
 
       if (response.ok) {
         toast.success(data.message || "Proctoring Added Successfully ");
@@ -113,8 +109,6 @@ export default function AddProctoringPage() {
         toast.error(data.message || "Failed To Add Proctoring");
       }
     } catch (error) {
-      console.log(error);
-
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

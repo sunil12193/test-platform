@@ -127,7 +127,6 @@ export default function SignupPage() {
         `/account-created?email=${encodeURIComponent(formData.email)}`,
       );
     } catch (error) {
-      console.log(error);
     }
   };
 

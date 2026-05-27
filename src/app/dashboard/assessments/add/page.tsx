@@ -92,7 +92,6 @@ export default function AddAssessmentPage() {
           .filter((id) => id !== ""),
       };
 
-      console.log("FINAL DATA :", finalData);
 
       const response = await fetch(
         `${API_BASE_URL}/assessment/create`,
@@ -108,8 +107,6 @@ export default function AddAssessmentPage() {
       );
 
       const data = await response.json();
-
-      console.log("API RESPONSE :", data);
 
       if (response.ok) {
         toast.success(data.message || "Assessment Added Successfully");
@@ -153,8 +150,6 @@ export default function AddAssessmentPage() {
         toast.error(data.message || "Failed to create assessment");
       }
     } catch (error) {
-      console.log("CREATE ERROR :", error);
-
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

@@ -51,8 +51,6 @@ export default function JobPositionsPage() {
       try {
         setLoading(true);
 
-        console.log("API Calling Started");
-
         const response = await fetch(
           `${API_BASE_URL}/jobPosition?page=${currentPage}&limit=${pageSize}`
         );
@@ -65,8 +63,6 @@ export default function JobPositionsPage() {
 
         const result = await response.json();
 
-        console.log("API DATA:", result);
-
         // SET DATA
         setData(result.data || []);
 
@@ -77,8 +73,6 @@ export default function JobPositionsPage() {
           result.totalDocuments || 0
         );
       } catch (err) {
-        console.log("ERROR:", err);
-
         setError(
           err instanceof Error
             ? err.message
@@ -462,9 +456,6 @@ export default function JobPositionsPage() {
           title="Job Positions"
           columns={columns}
           data={filteredData}
-          onEdit={(item: JobPosition) => {
-            console.log("Edit Data:", item);
-          }}
         />
 
         {/* PAGINATION */}

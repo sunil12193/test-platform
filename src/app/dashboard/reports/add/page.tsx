@@ -69,8 +69,6 @@ export default function AddReportPage() {
         suspiciousActivities: Number(formData.suspiciousActivities),
       };
 
-      console.log("FINAL DATA:", finalData);
-
       const response = await fetch(
         `${API_BASE_URL}/report/create`,
         {
@@ -85,8 +83,6 @@ export default function AddReportPage() {
       );
 
       const data = await response.json();
-
-      console.log("API RESPONSE:", data);
 
       if (response.ok) {
         toast.success("Report Added Successfully");
@@ -119,8 +115,6 @@ export default function AddReportPage() {
         toast.error(data.message || "Failed To Add Report");
       }
     } catch (error) {
-      console.log(error);
-
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

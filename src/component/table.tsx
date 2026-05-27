@@ -12,14 +12,17 @@ type DataTableProps<T> = {
   columns?: Column<T>[];
   data?: T[];
   title?: string;
-  onEdit?: (item: T) => void;
+  showEdit?: boolean;
+  showDelete?: boolean;
 };
 
 export default function DataTable<T extends Record<string, any>>({
   columns = [],
   data = [],
   title = "Data Table",
-  onEdit,
+
+  showEdit= true,
+  showDelete= true,
 }: DataTableProps<T>) {
   const [tableData, setTableData] = useState<T[]>(data);
 
@@ -187,7 +190,6 @@ export default function DataTable<T extends Record<string, any>>({
                   >
                     {/* EDIT */}
                     <button
-                      onClick={() => onEdit?.(item)}
                       className="
                         h-10
                         w-10

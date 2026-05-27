@@ -41,9 +41,7 @@ export default function AddSettingsPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
-
-    toast.success("Settings Saved Successfully 🚀");
+    toast.success("Settings Saved Successfully");
   };
 
   return (

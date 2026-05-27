@@ -52,8 +52,6 @@ export default function HiringCampaignsPage() {
       try {
         setLoading(true);
 
-        console.log("API Calling Started");
-
         const response = await fetch(
           `${API_BASE_URL}/hiringCampaings?page=${currentPage}&limit=${pageSize}`
         );
@@ -66,8 +64,6 @@ export default function HiringCampaignsPage() {
 
         const result = await response.json();
 
-        console.log("API DATA:", result);
-
         // SET DATA
         setData(result.data || []);
 
@@ -78,8 +74,6 @@ export default function HiringCampaignsPage() {
           result.totalDocuments || 0
         );
       } catch (err) {
-        console.log("ERROR:", err);
-
         setError(
           err instanceof Error
             ? err.message

@@ -93,8 +93,6 @@ export default function AddInvitationPage() {
         toast.error(data.message || "Failed To Add Invitation");
       }
     } catch (error) {
-      console.log(error);
-
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

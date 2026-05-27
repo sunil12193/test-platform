@@ -50,8 +50,6 @@ export default function CandidatesPage() {
       try {
         setLoading(true);
 
-        console.log("API Calling Started");
-
         const response = await fetch(
           `${API_BASE_URL}/candidate?page=${currentPage}&limit=${pageSize}`
         );
@@ -64,8 +62,6 @@ export default function CandidatesPage() {
 
         const result = await response.json();
 
-        console.log("API DATA:", result);
-
         // SET DATA
         setData(result.data || []);
 
@@ -76,8 +72,6 @@ export default function CandidatesPage() {
           result.totalDocuments || 0
         );
       } catch (err) {
-        console.log("ERROR:", err);
-
         setError(
           err instanceof Error
             ? err.message

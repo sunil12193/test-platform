@@ -70,8 +70,6 @@ export default function SigninPage() {
       // REDIRECT
       router.push("/dashboard");
     } catch (err: any) {
-      console.log("LOGIN ERROR:", err);
-
       const message =
         err?.response?.data?.message ||
         err?.message ||

@@ -49,8 +49,6 @@ export default function AddCandidatePage() {
       skills: formData.skills.split(",").map((skill) => skill.trim()),
     };
 
-    console.log(finalData);
-
     toast.success("Candidate Added Successfully");
   };
 

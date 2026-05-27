@@ -62,8 +62,6 @@ export default function AddBillingPage() {
           .filter((invoice) => invoice !== ""),
       };
 
-      console.log("FINAL DATA:", finalData);
-
       const response = await fetch(
         `${API_BASE_URL}/billing/create`,
         {
@@ -105,8 +103,6 @@ export default function AddBillingPage() {
         toast.error(data.message || "Failed To Add Billing");
       }
     } catch (error) {
-      console.log(error);
-
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

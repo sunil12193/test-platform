@@ -79,8 +79,6 @@ export default function AddQuestionPage() {
           .filter(Boolean),
       };
 
-      console.log("FINAL DATA:", finalData);
-
       const response = await fetch(
         `${API_BASE_URL}/questionBank/create`,
         {
@@ -95,8 +93,6 @@ export default function AddQuestionPage() {
       );
 
       const data = await response.json();
-
-      console.log("API RESPONSE:", data);
 
       if (response.ok) {
         toast.success(data.message || "Question Added Successfully");
@@ -136,8 +132,6 @@ export default function AddQuestionPage() {
         toast.error(data.message || "Failed To Add Question");
       }
     } catch (error) {
-      console.log("ERROR:", error);
-
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

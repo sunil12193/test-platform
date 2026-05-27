@@ -50,8 +50,6 @@ export default function AssessmentsPage() {
       try {
         setLoading(true);
 
-        console.log("API Calling Started");
-
         const response = await fetch(
           `${API_BASE_URL}/assessment?page=${currentPage}&limit=${pageSize}`
         );
@@ -64,8 +62,6 @@ export default function AssessmentsPage() {
 
         const result = await response.json();
 
-        console.log("API DATA:", result);
-
         // SET DATA
         setData(result.data || []);
 
@@ -76,7 +72,6 @@ export default function AssessmentsPage() {
           result.totalDocuments || 0
         );
       } catch (err) {
-        console.log("ERROR:", err);
 
         setError(
           err instanceof Error
@@ -103,10 +98,6 @@ export default function AssessmentsPage() {
       .toLowerCase()
       .includes(search.toLowerCase())
   );
-
-  console.log(filteredData.length);
-  console.log(totalPages);
-  console.log(currentPage);
 
   // LOADING
   if (loading) {
@@ -407,9 +398,6 @@ export default function AssessmentsPage() {
           title="Assessments"
           columns={columns}
           data={filteredData}
-          onEdit={(item: Assessment) => {
-            console.log("Edit:", item);
-          }}
         />
 
         {/* PAGINATION */}

@@ -27,11 +27,7 @@ export const authService = {
     return response.data;
   },
   assessment: async () => {
-  console.log("API Calling Started");
-
   const response = await api.get(`${API_BASE_URL}/assessment`);
-
-  console.log("API Response:", response);
 
   return response.data;
 },

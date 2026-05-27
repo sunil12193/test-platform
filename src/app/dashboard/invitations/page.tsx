@@ -53,8 +53,6 @@ export default function InvitationsPage() {
       try {
         setLoading(true);
 
-        console.log("API Calling Started");
-
         const response = await fetch(
           `${API_BASE_URL}/invitation?page=${currentPage}&limit=${pageSize}`
         );
@@ -67,8 +65,6 @@ export default function InvitationsPage() {
 
         const result = await response.json();
 
-        console.log("API DATA:", result);
-
         // SET DATA
         setData(result.data || []);
 
@@ -79,8 +75,6 @@ export default function InvitationsPage() {
           result.totalDocuments || 0
         );
       } catch (err) {
-        console.log("ERROR:", err);
-
         setError(
           err instanceof Error
             ? err.message

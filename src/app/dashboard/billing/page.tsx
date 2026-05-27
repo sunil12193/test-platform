@@ -54,8 +54,6 @@ export default function BillingPlansPage() {
 useEffect(() => {
   const fetchAssessments = async () => {
     try {
-      console.log("API Calling Started");
-
       const response = await fetch(
         "http://localhost:5010/api/billing"
       );
@@ -68,12 +66,8 @@ useEffect(() => {
 
       const result = await response.json();
 
-      console.log("API DATA:", result);
-
       setData(result.data || result);
     } catch (err) {
-      console.log("ERROR:", err);
-
       setError(
         err instanceof Error
           ? err.message
@@ -350,9 +344,6 @@ useEffect(() => {
           title="Billing Plans"
           columns={columns}
           data={filteredData}
-          onEdit={(item: Billing) => {
-            console.log("Edit:", item);
-          }}
         />
 
         <Pagination

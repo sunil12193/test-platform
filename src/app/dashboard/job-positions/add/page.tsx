@@ -55,8 +55,6 @@ export default function AddPositionPage() {
           .map((skill) => skill.trim()),
       };
 
-      console.log("FINAL DATA:", finalData);
-
       const response = await fetch(
         `${API_BASE_URL}/jobPosition/create`,
         {
@@ -71,8 +69,6 @@ export default function AddPositionPage() {
       );
 
       const data = await response.json();
-
-      console.log("API RESPONSE:", data);
 
       if (response.ok) {
         toast.success(data.message || "Position Added Successfully ");
@@ -99,8 +95,6 @@ export default function AddPositionPage() {
         toast.error(data.message || "Failed To Add Position");
       }
     } catch (error) {
-      console.log(error);
-
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

@@ -66,8 +66,6 @@ export default function AddCandidatePage() {
         ranking: Number(formData.ranking),
       };
 
-      console.log("FINAL DATA :", finalData);
-
       const response = await fetch(
         `${API_BASE_URL}/candidate/create`,
         {
@@ -82,8 +80,6 @@ export default function AddCandidatePage() {
       );
 
       const data = await response.json();
-
-      console.log("API RESPONSE :", data);
 
       if (response.ok) {
         toast.success(data.message || "Candidate Added Successfully");
@@ -120,8 +116,6 @@ export default function AddCandidatePage() {
         toast.error(data.message || "Failed to create candidate");
       }
     } catch (error) {
-      console.log("CREATE ERROR :", error);
-
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
