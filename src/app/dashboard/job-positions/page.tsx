@@ -15,7 +15,8 @@ import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
 
 import { JobPosition } from "@/type/jobPosition";
-import { API_BASE_URL } from "@/service/auth.service";
+import { API_BASE_URL } from "@/util/APIGeneric";
+
 
 export default function JobPositionsPage() {
   // SEARCH
@@ -52,7 +53,7 @@ export default function JobPositionsPage() {
         setLoading(true);
 
         const response = await fetch(
-          `${API_BASE_URL}/jobPosition?page=${currentPage}&limit=${pageSize}`
+          `${API_BASE_URL}/jobPosition/get-all?page=${currentPage}&limit=${pageSize}`
         );
 
         if (!response.ok) {

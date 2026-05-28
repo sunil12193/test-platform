@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   FiClock,
@@ -10,97 +10,81 @@ import {
 } from "react-icons/fi";
 
 import ActionButtons from "../../../component/button";
+
 import DataTable from "../../../component/table";
+
 import Pagination from "@/component/pagination";
 
 import { Assessment } from "@/type/assessment";
-import { API_BASE_URL } from "@/service/auth.service";
+
+import { useAssessments } from "@/hooks/useAssessment";
 
 export default function AssessmentsPage() {
-  // DATA
-  const [data, setData] =
-    useState<Assessment[]>([]);
-
-  const [loading, setLoading] =
-    useState<boolean>(true);
-
-  const [error, setError] =
-    useState<string>("");
-
+  // ========================================
   // SEARCH
+  // ========================================
+
   const [search, setSearch] =
     useState<string>("");
 
+  // ========================================
   // PAGINATION
+  // ========================================
+
   const [currentPage, setCurrentPage] =
     useState<number>(1);
 
   const [pageSize, setPageSize] =
     useState<number>(10);
 
-  const [totalPages, setTotalPages] =
-    useState<number>(1);
-
-  const [totalDocuments, setTotalDocuments] =
-    useState<number>(0);
-
+  // ========================================
   // API CALL
-  useEffect(() => {
-    const fetchAssessments = async () => {
-      try {
-        setLoading(true);
+  // ========================================
 
-        const response = await fetch(
-          `${API_BASE_URL}/assessment?page=${currentPage}&limit=${pageSize}`
-        );
+  const {
+    data: response,
+    isLoading,
+    error,
+  } = useAssessments({
+    page: currentPage,
+    limit: pageSize,
+  });
 
-        if (!response.ok) {
-          throw new Error(
-            "Failed to fetch assessments"
-          );
-        }
+  // ========================================
+  // API DATA
+  // ========================================
 
-        const result = await response.json();
+  const assessments: Assessment[] =
+    response?.data || [];
 
-        // SET DATA
-        setData(result.data || []);
+  const totalPages =
+    response?.totalPages || 1;
 
-        // SET PAGINATION
-        setTotalPages(result.totalPages || 1);
+  const totalDocuments =
+    response?.totalDocuments || 0;
 
-        setTotalDocuments(
-          result.totalDocuments || 0
-        );
-      } catch (err) {
-
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Something went wrong"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAssessments();
-  }, [currentPage, pageSize]);
-
+  // ========================================
   // FILTER DATA
-  const filteredData = data.filter((item) =>
-    (
-      (item.title || "") +
-      " " +
-      (item.assessmentId || "") +
-      " " +
-      (item.description || "")
-    )
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  // ========================================
 
+  const filteredData =
+    assessments.filter((item) =>
+      (
+        (item.title || "") +
+        " " +
+        (item.assessmentId || "") +
+        " " +
+        (item.description || "")
+      )
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+
+  // ========================================
   // LOADING
-  if (loading) {
+  // ========================================
+
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
         Loading assessments...
@@ -108,16 +92,22 @@ export default function AssessmentsPage() {
     );
   }
 
+  // ========================================
   // ERROR
+  // ========================================
+
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center text-red-500 text-lg font-semibold">
-        Failed to fetch assessments
+        {(error as Error).message}
       </div>
     );
   }
 
+  // ========================================
   // TABLE COLUMNS
+  // ========================================
+
   const columns = [
     // ASSESSMENT
     {
@@ -126,7 +116,6 @@ export default function AssessmentsPage() {
       render: (item: Assessment) => (
         <div className="min-w-[320px] text-left">
           <div className="flex items-start gap-4">
-            {/* ICON */}
             <div
               className="
                 h-14
@@ -146,7 +135,6 @@ export default function AssessmentsPage() {
               <FiFileText size={22} />
             </div>
 
-            {/* INFO */}
             <div>
               <h2 className="text-[15px] font-semibold text-slate-800">
                 {item.title}

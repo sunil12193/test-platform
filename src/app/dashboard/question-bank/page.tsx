@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { API_BASE_URL } from "@/service/auth.service";
+import { useMemo, useState } from "react";
+
 import {
   FiBookOpen,
   FiCheckCircle,
@@ -15,97 +15,101 @@ import Pagination from "@/component/pagination";
 
 import { QuestionBank } from "@/type/questionBank";
 
+import { useGetAllQuestionBank } from "@/hooks/useQuestionBank";
+
 export default function QuestionBankPage() {
+  // ========================================
   // SEARCH
+  // ========================================
+
   const [search, setSearch] =
     useState<string>("");
 
+  // ========================================
   // PAGINATION
+  // ========================================
+
   const [currentPage, setCurrentPage] =
     useState<number>(1);
 
   const [pageSize, setPageSize] =
     useState<number>(10);
 
-  const [totalPages, setTotalPages] =
-    useState<number>(1);
-
-  const [totalDocuments, setTotalDocuments] =
-    useState<number>(0);
-
-  // DATA
-  const [data, setData] =
-    useState<QuestionBank[]>([]);
-
-  const [loading, setLoading] =
-    useState<boolean>(true);
-
-  const [error, setError] =
-    useState<string>("");
-
+  // ========================================
   // API CALL
-  useEffect(() => {
-    const fetchQuestionBank = async () => {
-      try {
-        setLoading(true);
+  // ========================================
 
-        const response = await fetch(
-          `${API_BASE_URL}/questionBank?page=${currentPage}&limit=${pageSize}`
-        );
+  const {
+    data: response,
+    isLoading,
+    isError,
+    error,
+  } = useGetAllQuestionBank({
+    page: currentPage,
+    limit: pageSize,
+  });
 
-        if (!response.ok) {
-          throw new Error(
-            "Failed to fetch question bank"
-          );
-        }
+  // ========================================
+  // DATA
+  // ========================================
 
-        const result = await response.json();
+  const data: QuestionBank[] =
+    response?.data || [];
 
-        // SET DATA
-        setData(result.data || []);
+  const totalPages =
+    response?.totalPages || 1;
 
-        // SET PAGINATION
-        setTotalPages(result.totalPages || 1);
+  const totalDocuments =
+    response?.totalDocuments || 0;
 
-        setTotalDocuments(
-          result.totalDocuments || 0
-        );
-      } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Something went wrong"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchQuestionBank();
-  }, [currentPage, pageSize]);
-
+  // ========================================
   // FILTER DATA
-  const filteredData = data.filter((item) =>
-    (
-      (item.questionType || "") +
-      " " +
-      (item.questionId || "") +
-      " " +
-      (item.question || "")
-    )
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  // ========================================
 
+  const filteredData = useMemo(() => {
+    return data.filter((item) =>
+      (
+        (item.questionType || "") +
+        " " +
+        (item.questionId || "") +
+        " " +
+        (item.question || "")
+      )
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  }, [data, search]);
+
+  // ========================================
   // LOADING
-  if (loading) {
+  // ========================================
+
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
         Loading question bank...
       </div>
     );
   }
+
+  // ========================================
+  // ERROR
+  // ========================================
+
+  if (isError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500 text-lg font-semibold">
+        {error instanceof Error
+          ? error.message
+          : "Failed to fetch question bank"}
+      </div>
+    );
+  }
+
+  // ========================================
   // TABLE COLUMNS
+  // ========================================
+
   const columns = [
     // QUESTION
     {
@@ -221,7 +225,7 @@ export default function QuestionBankPage() {
 
       render: (item: QuestionBank) => (
         <div className="min-w-60 flex flex-wrap gap-2 justify-center">
-          {item.tags.map(
+          {item.tags?.map(
             (tag, index) => (
               <span
                 key={index}

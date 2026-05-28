@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { API_BASE_URL } from "@/service/auth.service";
+
+import { useState } from "react";
+
 import {
   FiMail,
   FiPhone,
@@ -11,95 +12,81 @@ import {
 } from "react-icons/fi";
 
 import ActionButtons from "../../../component/button";
+
 import DataTable from "../../../component/table";
+
 import Pagination from "@/component/pagination";
 
 import { Candidate } from "@/type/canditate";
 
+import { useCandidates } from "@/hooks/useCandidate";
+
 export default function CandidatesPage() {
+  // ========================================
   // SEARCH
+  // ========================================
+
   const [search, setSearch] =
     useState<string>("");
 
+  // ========================================
   // PAGINATION
+  // ========================================
+
   const [currentPage, setCurrentPage] =
     useState<number>(1);
 
   const [pageSize, setPageSize] =
     useState<number>(10);
 
-  const [totalPages, setTotalPages] =
-    useState<number>(1);
-
-  const [totalDocuments, setTotalDocuments] =
-    useState<number>(0);
-
-  // DATA
-  const [data, setData] =
-    useState<Candidate[]>([]);
-
-  const [loading, setLoading] =
-    useState<boolean>(true);
-
-  const [error, setError] =
-    useState<string>("");
-
+  // ========================================
   // API CALL
-  useEffect(() => {
-    const fetchCandidates = async () => {
-      try {
-        setLoading(true);
+  // ========================================
 
-        const response = await fetch(
-          `${API_BASE_URL}/candidate?page=${currentPage}&limit=${pageSize}`
-        );
+  const {
+    data: response,
+    isLoading,
+    error,
+  } = useCandidates({
+    page: currentPage,
+    limit: pageSize,
+  });
 
-        if (!response.ok) {
-          throw new Error(
-            "Failed to fetch candidates"
-          );
-        }
+  // ========================================
+  // API DATA
+  // ========================================
 
-        const result = await response.json();
+  const candidates: Candidate[] =
+    response?.data || [];
 
-        // SET DATA
-        setData(result.data || []);
+  const totalPages =
+    response?.totalPages || 1;
 
-        // SET PAGINATION
-        setTotalPages(result.totalPages || 1);
+  const totalDocuments =
+    response?.totalDocuments || 0;
 
-        setTotalDocuments(
-          result.totalDocuments || 0
-        );
-      } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Something went wrong"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCandidates();
-  }, [currentPage, pageSize]);
-
+  // ========================================
   // FILTER DATA
-  const filteredData = data.filter((item) =>
-    (
-      (item.firstName || "") +
-      " " +
-      (item.lastName || "") +
-      " " +
-      (item.candidateId || "")
-    )
-      .toLowerCase()
-      .includes(search.toLowerCase())
+  // ========================================
+
+  const filteredData = candidates.filter(
+    (item) =>
+      (
+        (item.firstName || "") +
+        " " +
+        (item.lastName || "") +
+        " " +
+        (item.candidateId || "")
+      )
+        .toLowerCase()
+        .includes(search.toLowerCase())
   );
 
+  // ========================================
   // LOADING
-  if (loading) {
+  // ========================================
+
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
         Loading candidates...
@@ -107,7 +94,22 @@ export default function CandidatesPage() {
     );
   }
 
+  // ========================================
+  // ERROR
+  // ========================================
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500 text-lg font-semibold">
+        {(error as Error).message}
+      </div>
+    );
+  }
+
+  // ========================================
   // TABLE COLUMNS
+  // ========================================
+
   const columns = [
     {
       header: "Candidate",
@@ -161,11 +163,12 @@ export default function CandidatesPage() {
 
       render: (item: Candidate) => (
         <div className="flex flex-wrap gap-2 min-w-62.5 justify-center">
-          {item.skills.map(
+          {item.skills?.map(
             (skill, index) => (
               <span
                 key={index}
-                className=" px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-medium">
+                className="px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-medium"
+              >
                 {skill}
               </span>
             )
@@ -179,7 +182,7 @@ export default function CandidatesPage() {
 
       render: (item: Candidate) => (
         <div className="flex items-center justify-center gap-2 min-w-35">
-          <div className=" h-10 w-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+          <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
             <FiBriefcase />
           </div>
 

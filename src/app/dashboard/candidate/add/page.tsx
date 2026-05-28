@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
 import toast from "react-hot-toast";
-import { API_BASE_URL } from "@/service/auth.service";
+import { API_BASE_URL } from "@/util/APIGeneric";
+
 
 export default function AddCandidatePage() {
   const [formData, setFormData] = useState({
