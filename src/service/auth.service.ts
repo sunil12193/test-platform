@@ -11,7 +11,12 @@ export interface SigninPayload {
   email: string;
   password: string;
 }
- 
+export interface ForgotPasswordPayload {
+  email: string;
+}
+ export interface ResetPasswordPayload {
+  password: string;
+}
 
 export const authService = {
   signup: async (payload: SignupPayload) => {
@@ -25,6 +30,27 @@ export const authService = {
 
     return response.data;
   },
+
+  forgotPassword: async (payload: ForgotPasswordPayload) => {
+  const response = await api.post(
+    `${API_BASE_URL}/auth/forgot-password`,
+    payload,
+  );
+
+  return response.data;
+},
+resetPassword: async (
+  token: string,
+  payload: ResetPasswordPayload,
+) => {
+  const response = await api.post(
+    `${API_BASE_URL}/auth/reset-password/${token}`,
+    payload,
+  );
+
+  return response.data;
+},
+
   assessment: async () => {
   const response = await api.get(`${API_BASE_URL}/assessment`);
 

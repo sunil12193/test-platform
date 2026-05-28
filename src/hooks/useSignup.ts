@@ -15,8 +15,27 @@ export const useSignin = () => {
   });
 };
 
-export const useAssessment = () => {
+export const useForgotPassword = () => {
   return useMutation({
-    mutationFn: authService.assessment,
+    mutationFn: authService.forgotPassword,
   });
 };
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: ({
+      token,
+      payload,
+    }: {
+      token: string;
+      payload: {
+        password: string;
+      };
+    }) => authService.resetPassword(token, payload),
+  });
+};
+
+// export const useAssessment = () => {
+//   return useMutation({
+//     mutationFn: authService.assessment,
+//   });
+// };

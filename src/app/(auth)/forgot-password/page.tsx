@@ -4,52 +4,47 @@ import { useState } from "react";
 
 import Image from "next/image";
 
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-import { FiMail, FiPhone, FiShield, FiArrowRight } from "react-icons/fi";
+import { FiMail, FiShield, FiArrowRight } from "react-icons/fi";
+
+import { useForgotPassword } from "@/hooks/useSignup";
 
 export default function ForgotPasswordPage() {
-  const router = useRouter();
-
-  const [method, setMethod] = useState("email");
-
   const [value, setValue] = useState("");
-
-  const [otp, setOtp] = useState("");
-
-  const [generatedOtp, setGeneratedOtp] = useState("");
-
-  const [otpSent, setOtpSent] = useState(false);
 
   const [error, setError] = useState("");
 
-  // SEND OTP
-  const handleSendOtp = () => {
-    if (!value) {
-      setError("Please enter email or phone number");
+  const forgotPasswordMutation = useForgotPassword();
 
-      return;
-    }
+  // ========================================
+  // HANDLE FORGOT PASSWORD
+  // ========================================
 
-    const randomOtp = Math.floor(100000 + Math.random() * 900000).toString();
+  const handleForgotPassword = async () => {
+    try {
+      if (!value) {
+        setError("Please enter your email");
 
-    setGeneratedOtp(randomOtp);
+        return;
+      }
 
-    setOtpSent(true);
+      setError("");
 
-    setError("");
+      const response = await forgotPasswordMutation.mutateAsync({
+        email: value,
+      });
 
-    // TEST ONLY
-    toast.success(`Your OTP is ${randomOtp}`);
-  };
+      toast.success(
+        response.message || "Password reset link sent successfully",
+      );
 
-  // VERIFY OTP
-  const handleVerifyOtp = () => {
-    if (otp === generatedOtp) {
-      router.push("/reset-password");
-    } else {
-      setError("Invalid OTP");
+      // TEST ONLY
+      console.log(response.link);
+    } catch (error: any) {
+      setError(
+        error?.response?.data?.message || "Something went wrong",
+      );
     }
   };
 
@@ -79,7 +74,9 @@ export default function ForgotPasswordPage() {
             <div>
               <h2 className="text-3xl font-black text-white">Gleefix</h2>
 
-              <p className="text-sm text-blue-100 mt-1">AI Hiring Platform</p>
+              <p className="text-sm text-blue-100 mt-1">
+                AI Hiring Platform
+              </p>
             </div>
           </div>
 
@@ -96,8 +93,8 @@ export default function ForgotPasswordPage() {
             </h1>
 
             <p className="mt-6 text-lg leading-8 text-slate-300">
-              Recover access to your Gleefix account securely using email or
-              phone verification.
+              Recover access to your Gleefix account securely using email
+              verification.
             </p>
 
             {/* INFO CARDS */}
@@ -105,13 +102,17 @@ export default function ForgotPasswordPage() {
               <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-5">
                 <h3 className="text-2xl font-bold text-white">256-bit</h3>
 
-                <p className="text-sm text-blue-100 mt-2">Secure Encryption</p>
+                <p className="text-sm text-blue-100 mt-2">
+                  Secure Encryption
+                </p>
               </div>
 
               <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-5">
-                <h3 className="text-2xl font-bold text-white">Instant</h3>
+                <h3 className="text-2xl font-bold text-white">15 Min</h3>
 
-                <p className="text-sm text-blue-100 mt-2">OTP Verification</p>
+                <p className="text-sm text-blue-100 mt-2">
+                  Secure Reset Link
+                </p>
               </div>
             </div>
           </div>
@@ -137,9 +138,13 @@ export default function ForgotPasswordPage() {
             />
 
             <div>
-              <h2 className="text-2xl font-black text-[#102C4A]">Gleefix</h2>
+              <h2 className="text-2xl font-black text-[#102C4A]">
+                Gleefix
+              </h2>
 
-              <p className="text-xs text-slate-500">AI Hiring Platform</p>
+              <p className="text-xs text-slate-500">
+                AI Hiring Platform
+              </p>
             </div>
           </div>
 
@@ -156,118 +161,43 @@ export default function ForgotPasswordPage() {
               </h2>
 
               <p className="text-slate-500 mt-3">
-                Recover your account securely
+                Enter your email to receive a password reset link
               </p>
-            </div>
-
-            {/* METHOD SWITCH */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <button
-                onClick={() => {
-                  setMethod("email");
-
-                  setValue("");
-
-                  setOtpSent(false);
-
-                  setOtp("");
-
-                  setError("");
-                }}
-                className={`h-14 rounded-2xl border text-sm font-semibold transition-all duration-200 ${
-                  method === "email"
-                    ? "bg-gradient-to-r from-[#0F2B46] to-[#1E4D7B] text-white border-transparent shadow-lg"
-                    : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
-                }`}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <FiMail />
-                  Email
-                </div>
-              </button>
-
-              <button
-                onClick={() => {
-                  setMethod("phone");
-
-                  setValue("");
-
-                  setOtpSent(false);
-
-                  setOtp("");
-
-                  setError("");
-                }}
-                className={`h-14 rounded-2xl border text-sm font-semibold transition-all duration-200 ${
-                  method === "phone"
-                    ? "bg-gradient-to-r from-[#0F2B46] to-[#1E4D7B] text-white border-transparent shadow-lg"
-                    : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
-                }`}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <FiPhone />
-                  Phone
-                </div>
-              </button>
             </div>
 
             {/* FORM */}
             <div className="space-y-5">
               {/* INPUT */}
               <div className="relative">
-                {method === "email" ? (
-                  <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
-                ) : (
-                  <FiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
-                )}
+                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
 
                 <input
-                  type={method === "email" ? "email" : "tel"}
-                  placeholder={
-                    method === "email"
-                      ? "Enter your email"
-                      : "Enter phone number"
-                  }
+                  type="email"
+                  placeholder="Enter your email"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                   className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50/50 pl-12 pr-4 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-blue-100"
                 />
               </div>
 
-              {/* SEND OTP */}
-              {!otpSent && (
-                <button
-                  onClick={handleSendOtp}
-                  className="w-full h-14 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E4D7B] text-white font-semibold flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20"
-                >
-                  Send OTP
-                  <FiArrowRight />
-                </button>
-              )}
+              {/* BUTTON */}
+              <button
+                onClick={handleForgotPassword}
+                disabled={forgotPasswordMutation.isPending}
+                className="w-full h-14 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E4D7B] text-white font-semibold flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20 disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {forgotPasswordMutation.isPending
+                  ? "Sending..."
+                  : "Send Reset Link"}
 
-              {/* OTP SECTION */}
-              {otpSent && (
-                <>
-                  <div className="relative">
-                    <FiShield className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
+                <FiArrowRight />
+              </button>
 
-                    <input
-                      type="text"
-                      placeholder="Enter OTP"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                      className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50/50 pl-12 pr-4 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-blue-100"
-                    />
-                  </div>
-
-                  <button
-                    onClick={handleVerifyOtp}
-                    className="w-full h-14 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E4D7B] text-white font-semibold flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20"
-                  >
-                    Verify OTP
-                    <FiArrowRight />
-                  </button>
-                </>
+              {/* SUCCESS MESSAGE */}
+              {forgotPasswordMutation.isSuccess && (
+                <div className="rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm text-green-600 text-center">
+                  Password reset link has been sent to your email
+                </div>
               )}
 
               {/* ERROR */}

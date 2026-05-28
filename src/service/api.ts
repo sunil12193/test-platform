@@ -1,6 +1,7 @@
-import { API_BASE_URL } from "./auth.service";
+import { API_BASE_URL } from "@/util/APIGeneric";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+
 
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
