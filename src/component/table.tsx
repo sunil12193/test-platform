@@ -12,6 +12,7 @@ type DataTableProps<T> = {
   columns?: Column<T>[];
   data?: T[];
   title?: string;
+  onEdit?: (item: T) => void;
   showEdit?: boolean;
   showDelete?: boolean;
 };
@@ -21,8 +22,9 @@ export default function DataTable<T extends Record<string, any>>({
   data = [],
   title = "Data Table",
 
-  showEdit= true,
-  showDelete= true,
+  onEdit,
+  showEdit = true,
+  showDelete = true,
 }: DataTableProps<T>) {
   const [tableData, setTableData] = useState<T[]>(data);
 
@@ -115,23 +117,25 @@ export default function DataTable<T extends Record<string, any>>({
                 </th>
               ))}
 
-              <th
-                className="
-                  px-6
-                  py-4
-                  text-xs
-                  font-semibold
-                  uppercase
-                  tracking-wider
-                  text-slate-500
-                  text-center
-                  whitespace-nowrap
-                  border-b
-                  border-slate-100
-                "
-              >
-                Actions
-              </th>
+              {(showEdit || showDelete) && (
+                <th
+                  className="
+      px-6
+      py-4
+      text-xs
+      font-semibold
+      uppercase
+      tracking-wider
+      text-slate-500
+      text-center
+      whitespace-nowrap
+      border-b
+      border-slate-100
+    "
+                >
+                  Actions
+                </th>
+              )}
             </tr>
           </thead>
 
@@ -179,59 +183,65 @@ export default function DataTable<T extends Record<string, any>>({
                 ))}
 
                 {/* ACTIONS */}
+                {/* ACTIONS */}
                 <td className="px-6 py-5">
                   <div
                     className="
-                      flex
-                      items-center
-                      justify-center
-                      gap-3
-                    "
+      flex
+      items-center
+      justify-center
+      gap-3
+    "
                   >
                     {/* EDIT */}
-                    <button
-                      className="
-                        h-10
-                        w-10
-                        rounded-xl
-                        bg-blue-50
-                        text-[#1E4D7B]
-                        border
-                        border-blue-100
-                        flex
-                        items-center
-                        justify-center
-                        hover:bg-[#1E4D7B]
-                        hover:text-white
-                        transition-all
-                        duration-200
-                      "
-                    >
-                      <FiEdit2 size={16} />
-                    </button>
+                    {showEdit && (
+                      <button
+                        onClick={() => onEdit?.(item)}
+                        className="
+          h-10
+          w-10
+          rounded-xl
+          bg-blue-50
+          text-[#1E4D7B]
+          border
+          border-blue-100
+          flex
+          items-center
+          justify-center
+          hover:bg-[#1E4D7B]
+          hover:text-white
+          transition-all
+          duration-200
+        "
+                      >
+                        <FiEdit2 size={16} />
+                      </button>
+                    )}
 
                     {/* DELETE */}
-                    <button
-                      onClick={() => handleDelete(rowIndex)}
-                      className="
-                        h-10
-                        w-10
-                        rounded-xl
-                        bg-red-50
-                        text-red-600
-                        border
-                        border-red-100
-                        flex
-                        items-center
-                        justify-center
-                        hover:bg-red-600
-                        hover:text-white
-                        transition-all
-                        duration-200
-                      "
-                    >
-                      <FiTrash2 size={16} />
-                    </button>
+                    {showDelete && (
+                      <button
+                        onClick={() => handleDelete(rowIndex)}
+                        className="
+          h-10
+          w-10
+          rounded-xl
+          bg-red-50
+          text-red-600
+          border
+          border-red-100
+          flex
+          items-center
+          justify-center
+          hover:bg-red-600
+          hover:text-white
+          transition-all
+          duration-200
+        "
+                      >
+                        <FiTrash2 size={16} />
+                      </button>
+                    )}
                   </div>
                 </td>
               </tr>
