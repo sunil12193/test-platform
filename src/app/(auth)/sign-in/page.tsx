@@ -94,21 +94,23 @@ export default function SigninPage() {
         <div className="relative z-10 flex flex-col justify-between h-full w-full p-14">
           {/* LOGO */}
           <div className="flex items-center gap-4">
-            <div className="bg-white p-3 rounded-2xl shadow-xl">
-              <Image
-                src="/logo.svg"
-                alt="Gleefix"
-                width={60}
-                height={60}
-                priority
-              />
-            </div>
+            <Link href="/" className="flex items-center gap-2">
+              <div className="bg-white p-3 rounded-2xl shadow-xl">
+                <Image
+                  src="/logo.svg"
+                  alt="Gleefix"
+                  width={60}
+                  height={60}
+                  priority
+                />
+              </div>
 
-            <div>
-              <h2 className="text-3xl font-black text-white">Gleefix</h2>
+              <div>
+                <h2 className="text-3xl font-black text-white">Gleefix</h2>
 
-              <p className="text-sm text-blue-100 mt-1">AI Hiring Platform</p>
-            </div>
+                <p className="text-sm text-blue-100 mt-1">Where Ambitions Align !</p>
+              </div>
+            </Link>
           </div>
 
           {/* HERO */}
@@ -143,7 +145,7 @@ export default function SigninPage() {
               </div>
 
               <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-5">
-                <h3 className="text-3xl font-bold text-white">350+</h3>
+                <h3 className="text-3xl font-bold text-white">43+</h3>
 
                 <p className="text-sm text-blue-100 mt-2">Companies</p>
               </div>
@@ -166,13 +168,15 @@ export default function SigninPage() {
             <div className="text-center mb-8">
               {/* SINGLE LOGO */}
               <div className="mx-auto w-20 h-20 rounded-3xl bg-white flex items-center justify-center shadow-xl mb-5">
-                <Image
-                  src="/logo.svg"
-                  alt="Gleefix"
-                  width={36}
-                  height={36}
-                  priority
-                />
+                <Link href="/">
+                  <Image
+                    src="/logo.svg"
+                    alt="Gleefix"
+                    width={36}
+                    height={36}
+                    priority
+                  />
+                </Link>
               </div>
 
               <h2 className="text-3xl lg:text-4xl font-black text-slate-900">

@@ -101,7 +101,7 @@ export default function ResetPasswordPage() {
     } catch (error: any) {
       setError(
         error?.response?.data?.message ||
-          "Something went wrong",
+        "Something went wrong",
       );
     }
   };
@@ -119,25 +119,27 @@ export default function ResetPasswordPage() {
         <div className="relative z-10 flex flex-col justify-between h-full w-full p-14">
           {/* LOGO */}
           <div className="flex items-center gap-4">
-            <div className="bg-white p-3 rounded-2xl shadow-xl">
-              <Image
-                src="/logo.svg"
-                alt="Gleefix"
-                width={60}
-                height={60}
-                priority
-              />
-            </div>
+            <Link href="/" className="flex items-center gap-2">
+              <div className="bg-white p-3 rounded-2xl shadow-xl">
+                <Image
+                  src="/logo.svg"
+                  alt="Gleefix"
+                  width={60}
+                  height={60}
+                  priority
+                />
+              </div>
 
-            <div>
-              <h2 className="text-3xl font-black text-white">
-                Gleefix
-              </h2>
+              <div>
+                <h2 className="text-3xl font-black text-white">
+                  Gleefix
+                </h2>
 
-              <p className="text-sm text-blue-100 mt-1">
-                AI Hiring Platform
-              </p>
-            </div>
+                <p className="text-sm text-blue-100 mt-1">
+                  Where Ambitions Align !
+                </p>
+              </div>
+            </Link>
           </div>
 
           {/* HERO */}

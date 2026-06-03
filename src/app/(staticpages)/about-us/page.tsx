@@ -10,7 +10,7 @@ import {
 export default function GleefixAboutPage() {
   const stats = [
     {
-      value: "350+",
+      value: "43+",
       label: "Enterprise Clients",
     },
     {
@@ -53,15 +53,18 @@ export default function GleefixAboutPage() {
   const leadership = [
     {
       name: "Saransh Garg",
-      role: "Director",
+      role: "CTO",
+      image: "/user.jpeg"
     },
     {
-      name: "Aman Verma",
+      name: "Sunil",
       role: "Chief Technology Officer",
+      image: "/user1.jpeg"
     },
     {
       name: "Divyaa Gupta",
       role: "Director ",
+      image: "/use.jpeg"
     },
   ];
 
@@ -77,7 +80,7 @@ export default function GleefixAboutPage() {
         <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 text-center lg:text-left ">
           {/* LEFT */}
           <div className=" lg:text-left">
-            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
               About Gleefix
             </div>
 
@@ -150,17 +153,23 @@ export default function GleefixAboutPage() {
       <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
-          <div className="relative">
+          <div className="relative lg:mt-22">
             <div className="rounded-[40px] bg-white border border-slate-200 shadow-2xl p-8 overflow-hidden">
-              <div className="h-125 rounded-4xl bg-linear-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-2xl font-bold">
-                Company Story Visual
+              <div className="rounded-4xl overflow-hidden border border-slate-200">
+                <Image
+                  src="/story-img.jpeg"
+                  alt="Our Story"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto"
+                />
               </div>
             </div>
           </div>
 
           {/* RIGHT */}
           <div>
-            <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-7">
+            <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-7">
               Our Journey
             </div>
 
@@ -206,7 +215,7 @@ export default function GleefixAboutPage() {
       <section className="bg-white border-y border-slate-200 py-12 lg:py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto mb-16">
-            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-6">
+            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-6">
               Our Core Values
             </div>
 
@@ -254,7 +263,7 @@ export default function GleefixAboutPage() {
       {/* LEADERSHIP */}
       <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
+          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-6">
             Leadership Team
           </div>
 
@@ -274,8 +283,14 @@ export default function GleefixAboutPage() {
               key={index}
               className="rounded-[36px] bg-white border border-slate-200 p-8 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="h-75 rounded-[28px] bg-linear-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-xl font-bold">
-                Leadership Image
+              <div className="h-75 rounded-[28px] overflow-hidden">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  width={300}
+                  height={300}
+                  className="w-full object-cover"
+                />
               </div>
 
               <div className="mt-8 text-center">

@@ -1,262 +1,365 @@
-export default function RTestDashboard() {
-  const stats = [
-    {
-      title: "Total Assessments",
-      value: "248",
-      growth: "+18%",
-      color: "from-blue-500 to-indigo-600",
-    },
-    {
-      title: "Active Candidates",
-      value: "4,892",
-      growth: "+24%",
-      color: "from-emerald-500 to-green-600",
-    },
-    {
-      title: "Completion Rate",
-      value: "86%",
-      growth: "+12%",
-      color: "from-orange-400 to-amber-500",
-    },
-    {
-      title: "Fraud Alerts",
-      value: "14",
-      growth: "-8%",
-      color: "from-rose-500 to-red-600",
-    },
-  ];
+"use client";
 
-  const recentAssessments = [
-    {
-      name: "Frontend Hiring Test",
-      candidates: 320,
-      completion: "84%",
-      status: "Active",
-    },
-    {
-      name: "Backend Node.js Round",
-      candidates: 180,
-      completion: "72%",
-      status: "Live",
-    },
-    {
-      name: "UI/UX Design Assessment",
-      candidates: 90,
-      completion: "96%",
-      status: "Completed",
-    },
-  ];
+import {
+  FiBriefcase,
+  FiClipboard,
+  FiUsers,
+  FiUser,
+} from "react-icons/fi";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 
+const data = [
+  { month: "Jan", candidates: 1200 },
+  { month: "Feb", candidates: 1500 },
+  { month: "Mar", candidates: 1800 },
+  { month: "Apr", candidates: 2200 },
+  { month: "May", candidates: 2600 },
+  { month: "Jun", candidates: 3100 },
+];
+
+const stats = [
+  {
+    title: "Total Candidates",
+    value: "12,543",
+    change: "+18.6%",
+    icon: <FiUsers size={24} />,
+  },
+  {
+    title: "Assessments Completed",
+    value: "8,653",
+    change: "+22.4%",
+    icon: <FiClipboard size={24} />,
+  },
+  {
+    title: "Interviews Conducted",
+    value: "2,350",
+    change: "+15.7%",
+    icon: <FiUsers size={24} />,
+  },
+  {
+    title: "Offers Made",
+    value: "320",
+    change: "+20.0%",
+    icon: <FiBriefcase size={24} />,
+  },
+  {
+    title: "Hires",
+    value: "189",
+    change: "+25.8%",
+    icon: <FiUser size={24} />,
+  },
+];
+
+const assessmentData = [
+  {
+    label: "Excellent (80-100%)",
+    value: 2150,
+    percentage: 24.8,
+  },
+  {
+    label: "Good (60-79%)",
+    value: 3250,
+    percentage: 37.6,
+  },
+  {
+    label: "Average (40-59%)",
+    value: 2100,
+    percentage: 24.3,
+  },
+  {
+    label: "Below Avg (<40%)",
+    value: 1153,
+    percentage: 13.3,
+  },
+];
+
+const funnelData = [
+  {
+    label: "Applications",
+    value: "12,543",
+    width: "100%",
+    color: "from-indigo-500 to-purple-500",
+  },
+  {
+    label: "Assessments",
+    value: "8,653",
+    width: "85%",
+    color: "from-purple-500 to-pink-500",
+  },
+  {
+    label: "Interviews",
+    value: "2,350",
+    width: "70%",
+    color: "from-pink-500 to-rose-500",
+  },
+  {
+    label: "Offers",
+    value: "320",
+    width: "55%",
+    color: "from-orange-500 to-amber-500",
+  },
+  {
+    label: "Hires",
+    value: "189",
+    width: "40%",
+    color: "from-emerald-500 to-green-500",
+  },
+];
+const sourceData = [
+  {
+    label: "LinkedIn",
+    value: 3250,
+    percentage: 37.6,
+  },
+  {
+    label: "Referral",
+    value: 2150,
+    percentage: 24.8,
+  },
+  {
+    label: "Naukri",
+    value: 2100,
+    percentage: 24.3,
+  },
+  {
+    label: "Company Website",
+    value: 1153,
+    percentage: 13.3,
+  },
+];
+
+const sourceColors = [
+  "#3B82F6",
+  "#14B8A6",
+  "#FBBF24",
+  "#F87171",
+];
+
+const colors = [
+  "#3B82F6", // Blue
+  "#14B8A6", // Teal
+  "#FBBF24", // Yellow
+  "#F87171", // Red
+  "#8B5CF6", // Purple
+  "#10B981", // Green
+];
+
+const skills = [
+  { name: "Python", value: 82 },
+  { name: "SQL", value: 74 },
+  { name: "JavaScript", value: 68 },
+  { name: "Problem Solving", value: 64 },
+  { name: "Communication", value: 58 },
+];
+
+export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-[#F5F7FB] p-6">
-      {/* HEADER */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
-            Dashboard
-          </h1>
-
-          <p className="text-slate-500 mt-2 text-sm">
-            Monitor hiring campaigns, assessments, analytics & candidate
-            performance.
+    <div className="flex min-h-screen bg-gray-50">
+      <main className="flex-1 p-6 overflow-auto">
+        {/* PAGE TITLE */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <p className="text-gray-500">
+            Overview of your hiring pipeline and key metrics.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <button className="h-11 px-5 rounded-xl bg-white border border-slate-200 text-slate-700 font-medium hover:shadow-md transition-all duration-200">
-            Export Reports
-          </button>
-
-          <button className="h-11 px-5 rounded-xl bg-[#0F2B46] text-white font-medium shadow-sm hover:bg-[#163a5c] hover:shadow-md transition-all duration-200">
-            Create Assessment
-          </button>
-        </div>
-      </div>
-
-      {/* HERO */}
-      <div
-        className="
-          relative
-          overflow-hidden
-          rounded-3xl
-          bg-linear-to-r
-          from-[#0F2B46]
-          via-[#163A5C]
-          to-[#1E4D7B]
-          p-8
-          text-white
-          shadow-2xl
-          mb-8
-        "
-      >
-        <div className="absolute top-0 right-0 h-72 w-72 bg-blue-400/20 rounded-full blur-3xl" />
-
-        <div className="relative z-10 grid lg:grid-cols-2 gap-8 items-center">
-          <div>
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-sm font-medium mb-5">
-              AI Powered Hiring Intelligence
-            </div>
-
-            <h2 className="text-4xl font-bold leading-tight max-w-xl">
-              Smart Assessment & Recruitment Platform
-            </h2>
-
-            <p className="text-blue-100 mt-5 leading-relaxed max-w-xl">
-              Manage candidates, monitor assessment progress, detect suspicious
-              activities, and generate enterprise-grade hiring analytics.
-            </p>
-
-            <div className="flex flex-wrap gap-4 mt-8">
-              <button className="px-6 py-3 rounded-2xl bg-white text-[#0F2B46] font-semibold hover:scale-[1.02] transition-all duration-200">
-                Start Campaign
-              </button>
-
-              <button className="px-6 py-3 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md text-white font-semibold hover:bg-white/20 transition-all duration-200">
-                View Analytics
-              </button>
-            </div>
-          </div>
-
-          {/* RIGHT PANEL */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-3xl bg-white/10 backdrop-blur-xl border border-white/10 p-5">
-              <p className="text-sm text-blue-100">Assessments Today</p>
-              <h3 className="text-4xl font-bold mt-3">42</h3>
-              <p className="text-emerald-300 text-sm mt-3">+12% Growth</p>
-            </div>
-
-            <div className="rounded-3xl bg-white/10 backdrop-blur-xl border border-white/10 p-5">
-              <p className="text-sm text-blue-100">Candidates Live</p>
-              <h3 className="text-4xl font-bold mt-3">1.8k</h3>
-              <p className="text-emerald-300 text-sm mt-3">
-                Real-time Monitoring
-              </p>
-            </div>
-
-            <div className="rounded-3xl bg-white/10 backdrop-blur-xl border border-white/10 p-5 col-span-2">
-              <div className="flex items-center justify-between">
+        {/* STATS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-2">
+          {stats.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-2xl p-3 border shadow-sm"
+            >
+              <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm text-blue-100">Platform Health</p>
-                  <h3 className="text-3xl font-bold mt-3">99.98%</h3>
+                  <p className="text-[12px] whitespace-nowrap text-gray-500">{item.title}</p>
+                  <h2 className="text-2xl font-bold mt-2">{item.value}</h2>
+                  <p className="text-green-600 text-sm mt-2">
+                    ↑ {item.change}
+                  </p>
                 </div>
 
-                <div className="h-24 w-24 rounded-full border-8 border-emerald-400 flex items-center justify-center text-xl font-bold">
-                  A+
+                <div className="h-14 w-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center">
+                  {item.icon}
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
-      </div>
 
-      {/* STATS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
-        {stats.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm hover:shadow-lg transition-all duration-300"
-          >
-            <div className="flex items-start justify-between">
+        {/* CHARTS */}
+        <div className="grid grid-cols-12 gap-2 mt-6">
+          <div className="col-span-12 xl:col-span-5 bg-white rounded-2xl border p-5">
+            {/* Header */}
+            <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-sm text-slate-500">{item.title}</p>
-
-                <h3 className="text-3xl font-bold text-slate-900 mt-4">
-                  {item.value}
+                <h3 className="font-semibold text-gray-900">
+                  Candidates Over Time
                 </h3>
-              </div>
-
-              <div
-                className={`h-14 w-14 rounded-2xl bg-linear-to-br ${item.color}`}
-              />
-            </div>
-
-            <div className="mt-6 inline-flex px-3 py-1 rounded-full bg-slate-100 text-sm font-medium text-slate-700">
-              {item.growth}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* MAIN GRID */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* LEFT */}
-        <div className="xl:col-span-2 space-y-6">
-          {/* PERFORMANCE */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h3 className="text-xl font-bold text-slate-900">
-                  Assessment Performance
-                </h3>
-
-                <p className="text-sm text-slate-500 mt-1">
-                  Weekly assessment engagement analytics
+                <p className="text-xs text-gray-500 mt-1">
+                  Jan 2024 - Jun 2024
                 </p>
               </div>
 
-              <button className="px-4 py-2 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-all duration-200">
-                This Week
-              </button>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-gray-900">
+                  12,543
+                </p>
+                <p className="text-xs text-green-600 font-medium">
+                  ↑ 18.6% growth
+                </p>
+              </div>
             </div>
 
-            <div className="h-80 rounded-3xl bg-linear-to-br from-slate-50 to-blue-50 border border-slate-100 flex items-center justify-center text-slate-400 text-lg font-medium">
-              Analytics Chart Area
+            {/* Chart */}
+            <div className="h-[260px] focus:outline-none">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={data}>
+                  <defs>
+                    <linearGradient
+                      id="candidateGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop
+                        offset="5%"
+                        stopColor="#8B5CF6"
+                        stopOpacity={0.25}
+                      />
+                      <stop
+                        offset="95%"
+                        stopColor="#8B5CF6"
+                        stopOpacity={0}
+                      />
+                    </linearGradient>
+                  </defs>
+
+                  <CartesianGrid
+                    vertical={false}
+                    stroke="#E5E7EB"
+                    strokeDasharray="3 3"
+                  />
+
+                  <XAxis
+                    dataKey="month"
+                    tick={{ fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <YAxis
+                    tick={{ fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: "12px",
+                      border: "none",
+                      boxShadow:
+                        "0 10px 30px rgba(0,0,0,0.1)",
+                    }}
+                  />
+
+                  <Area
+                    type="natural"
+                    dataKey="candidates"
+                    stroke="#8B5CF6"
+                    strokeWidth={3}
+                    fill="url(#candidateGradient)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             </div>
           </div>
 
-          {/* RECENT ASSESSMENTS */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-xl font-bold text-slate-900">
-                  Recent Assessments
-                </h3>
+          <div className="col-span-12 xl:col-span-5 bg-white rounded-2xl p-5 border">
+            <h3 className="font-semibold mb-2">
+              Assessment Performance
+            </h3>
+            <div className="flex flex-col pt-10 lg:flex-row items-center gap-2">
+              {/* DONUT */}
+              <div className="relative w-42 h-42 flex items-center">
 
-                <p className="text-sm text-slate-500 mt-1">
-                  Ongoing recruitment assessments
-                </p>
+                {/* Inner Circle */}
+                <div className="relative w-36 h-36">
+                  {/* Colored Ring */}
+                  <div
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background:
+                        "conic-gradient(#3B82F6 0% 25%, #14B8A6 25% 62%, #FBBF24 62% 87%, #F87171 87% 100%)",
+                    }}
+                  />
+
+                  {/* White Center */}
+                  <div className="absolute inset-[28px] bg-white rounded-full flex flex-col items-center justify-center">
+                    <h2 className="text-xl font-bold">8,653</h2>
+                    <p className="text-xs text-gray-500">Completed</p>
+                  </div>
+                </div>
               </div>
 
-              <button className="text-sm font-semibold text-[#0F2B46] hover:underline">
-                View All
-              </button>
-            </div>
+              {/* LEGEND */}
+              <div className="flex-col space-y-4">
+                {assessmentData.map((item, index) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between gap-4"
+                  >
+                    <div className="flex items-center gap-2 whitespace-nowrap">
+                      <div
+                        className="w-3 h-3 rounded-full flex-shrink-0"
+                        style={{
+                          backgroundColor: colors[index],
+                        }}
+                      />
 
-            <div className="space-y-4">
-              {recentAssessments.map((item, index) => (
-                <div
-                  key={index}
-                  className="rounded-2xl border border-slate-200 p-5 hover:shadow-md transition-all duration-200"
-                >
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
-                    <div>
-                      <h4 className="font-semibold text-slate-900 text-lg">
-                        {item.name}
-                      </h4>
-
-                      <div className="flex items-center gap-5 mt-3 text-sm text-slate-500">
-                        <span>{item.candidates} Candidates</span>
-                        <span>{item.completion} Completion</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`px-4 py-2 rounded-xl text-xs font-semibold ${
-                          item.status === "Completed"
-                            ? "bg-emerald-50 text-emerald-700"
-                            : item.status === "Live"
-                              ? "bg-orange-50 text-orange-700"
-                              : "bg-blue-50 text-blue-700"
-                        }`}
-                      >
-                        {item.status}
+                      <span className="text-[12px] font-medium whitespace-nowrap">
+                        {item.label}
                       </span>
-
-                      <button className="px-4 py-2 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-all duration-200">
-                        Open
-                      </button>
                     </div>
+
+                    <span className="text-[12px] text-gray-600 whitespace-nowrap">
+                      {item.value.toLocaleString()} ({item.percentage}%)
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="col-span-12 xl:col-span-2 bg-white rounded-2xl p-5 border">
+            <div className="flex justify-between">
+              <h3 className="font-semibold">Top Skills</h3>
+              <button className="text-purple-600 text-sm">View All</button>
+            </div>
+
+            <div className="mt-3 space-y-3">
+              {skills.map((skill) => (
+                <div key={skill.name}>
+                  <div className="flex justify-between mb-2">
+                    <span>{skill.name}</span>
+                    <span>{skill.value}%</span>
+                  </div>
+
+                  <div className="h-2 bg-gray-200 rounded-full">
+                    <div
+                      style={{ width: `${skill.value}%` }}
+                      className="h-2 rounded-full bg-purple-600"
+                    />
                   </div>
                 </div>
               ))}
@@ -264,76 +367,171 @@ export default function RTestDashboard() {
           </div>
         </div>
 
-        {/* RIGHT */}
-        <div className="space-y-6">
-          {/* ACTIVITY */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-6">
-              Live Activity
-            </h3>
+        {/* SECOND ROW */}
+        <div className="grid grid-cols-12 gap-2 mt-6">
+          <div className="col-span-12 xl:col-span-5 bg-white rounded-2xl p-3 border">
+            <h3 className="font-semibold text-start mb-5">Hiring Funnel</h3>
 
-            <div className="space-y-5">
-              {[
-                "12 candidates started assessment",
-                "Frontend Drive completed by 18 users",
-                "2 suspicious activities detected",
-                "New campaign created successfully",
-              ].map((item, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="h-3 w-3 rounded-full bg-[#0F2B46] mt-2" />
-
-                  <div>
-                    <p className="text-sm text-slate-700 leading-relaxed">
-                      {item}
-                    </p>
-
-                    <p className="text-xs text-slate-400 mt-1">2 mins ago</p>
-                  </div>
+            <div className="flex flex-col items-center gap-1">
+              {funnelData.map((item) => (
+                <div
+                  key={item.label}
+                  className={`h-12 rounded-lg bg-gradient-to-r ${item.color}
+                  flex items-center justify-between px-4 text-white font-medium shadow-sm`}
+                  style={{ width: item.width }}
+                >
+                  <span>{item.label}</span>
+                  <span>{item.value}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* QUICK ACTIONS */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-6">
-              Quick Actions
+          <div className="col-span-12 xl:col-span-4 bg-white rounded-2xl p-3 border">
+            <h3 className="font-semibold mb-4">
+              Candidates by Source
             </h3>
 
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                "Create Test",
-                "Invite Users",
-                "Generate Report",
-                "Manage Campaign",
-              ].map((item, index) => (
-                <button
-                  key={index}
-                  className="h-28 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-[#0F2B46] hover:text-white transition-all duration-300 text-sm font-semibold text-slate-700"
-                >
-                  {item}
-                </button>
-              ))}
+            <div className="flex flex-col pt-10 lg:flex-row items-center gap-2">
+              {/* DONUT */}
+              <div className="relative w-42 h-42 flex items-center">
+                <div className="relative w-36 h-36">
+                  {/* Colored Ring */}
+                  <div
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: `conic-gradient(
+              ${sourceColors[0]} 0% 37.6%,
+              ${sourceColors[1]} 37.6% 62.4%,
+              ${sourceColors[2]} 62.4% 86.7%,
+              ${sourceColors[3]} 86.7% 100%
+            )`,
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* LEGEND */}
+              <div className="flex-col space-y-4">
+                {sourceData.map((item, index) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between gap-4"
+                  >
+                    <div className="flex items-center gap-2 whitespace-nowrap">
+                      <div
+                        className="w-3 h-3 rounded-full flex-shrink-0"
+                        style={{
+                          backgroundColor:
+                            sourceColors[index],
+                        }}
+                      />
+                      <span className="text-[10px] font-medium whitespace-nowrap">
+                        {item.label}
+                      </span>
+                    </div>
+
+                    <span className="text-[10px] text-gray-600 whitespace-nowrap">
+                      {item.value.toLocaleString()} (
+                      {item.percentage}%)
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* SECURITY */}
-          <div className="rounded-3xl bg-linear-to-br from-red-500 to-rose-600 p-6 text-white shadow-xl">
-            <p className="text-sm text-red-100">AI Proctoring Enabled</p>
+          <div className="col-span-12 xl:col-span-3 bg-white rounded-2xl p-3 border">
+            <div className="flex justify-between">
+              <h3 className="font-semibold">Proctoring Overview</h3>
+              <button className="text-purple-600 text-sm">
+                View Details
+              </button>
+            </div>
 
-            <h3 className="text-3xl font-bold mt-3">14 Alerts</h3>
+            <div className="grid grid-cols-2 gap-4 mt-5">
+              <Card title="Tests Proctored" value="5,643" />
+              <Card title="Suspicious Activities" value="320" />
+              <Card title="Flagged Sessions" value="145" />
+              <Card title="Integrity Score" value="98.2%" />
+            </div>
+          </div>
+        </div>
 
-            <p className="text-sm text-red-100 mt-4 leading-relaxed">
-              Suspicious activities automatically detected and flagged during
-              assessments.
-            </p>
-
-            <button className="mt-6 w-full h-11 rounded-2xl bg-white text-red-600 font-semibold hover:scale-[1.02] transition-all duration-200">
-              Review Alerts
+        {/* TABLE */}
+        <div className="bg-white rounded-2xl border mt-6 overflow-hidden">
+          <div className="p-5 flex justify-between">
+            <h3 className="font-semibold">Recent Assessments</h3>
+            <button className="text-purple-600 text-sm">
+              View All Assessments
             </button>
           </div>
+
+          <table className="w-full">
+            <thead className="bg-gray-50 border-y">
+              <tr>
+                <th className="text-left p-4">Assessment</th>
+                <th className="text-left p-4">Job Role</th>
+                <th className="text-left p-4">Candidates</th>
+                <th className="text-left p-4">Completed</th>
+                <th className="text-left p-4">Avg Score</th>
+                <th className="text-left p-4">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr className="border-b">
+                <td className="p-4">Full Stack Developer Test</td>
+                <td className="p-4">Full Stack Developer</td>
+                <td className="p-4">1,250</td>
+                <td className="p-4">980 (78%)</td>
+                <td className="p-4">
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                    76.4%
+                  </span>
+                </td>
+                <td className="p-4">
+                  <button className="px-4 py-2 border rounded-lg">
+                    View Report
+                  </button>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="p-4">Data Analyst Assessment</td>
+                <td className="p-4">Data Analyst</td>
+                <td className="p-4">950</td>
+                <td className="p-4">760 (80%)</td>
+                <td className="p-4">
+                  <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
+                    72.1%
+                  </span>
+                </td>
+                <td className="p-4">
+                  <button className="px-4 py-2 border rounded-lg">
+                    View Report
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
+      </main>
+    </div>
+  );
+}
+
+function Card({
+  title,
+  value,
+}: {
+  title: string;
+  value: string;
+}) {
+  return (
+    <div className="border rounded-xl p-4">
+      <p className="text-xs text-gray-500">{title}</p>
+      <h3 className="text-xl font-bold mt-2">{value}</h3>
     </div>
   );
 }

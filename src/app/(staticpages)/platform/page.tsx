@@ -1,32 +1,72 @@
 import Image from "next/image";
+import { FiGrid } from "react-icons/fi";
+import {
+  FiFileText,
+  FiShield,
+  FiUsers,
+  FiBriefcase,
+  FiBarChart2,
+  FiLink,
+} from "react-icons/fi";
+import {
+  FiFilePlus,
+  FiUserPlus,
+  FiMonitor,
+} from "react-icons/fi";
+
+const steps = [
+  {
+    title: "Create Assessment",
+    icon: FiFilePlus,
+  },
+  {
+    title: "Invite Candidates",
+    icon: FiUserPlus,
+  },
+  {
+    title: "Monitor Realtime",
+    icon: FiMonitor,
+  },
+  {
+    title: "Analyze Results",
+    icon: FiBarChart2,
+  },
+];
+
+const modules = [
+  {
+    title: "Assessment Engine",
+    desc: "Build coding, aptitude, psychometric, and technical assessments with realtime evaluation.",
+    icon: FiFileText,
+  },
+  {
+    title: "AI Proctoring",
+    desc: "Monitor candidate behavior using AI-driven fraud prevention and integrity systems.",
+    icon: FiShield,
+  },
+  {
+    title: "Candidate Management",
+    desc: "Track applications, candidate pipelines, and hiring stages from one dashboard.",
+    icon: FiUsers,
+  },
+  {
+    title: "Hiring Campaigns",
+    desc: "Manage enterprise recruitment drives and automate candidate invitations.",
+    icon: FiBriefcase,
+  },
+  {
+    title: "Analytics & Reporting",
+    desc: "Gain actionable hiring insights through realtime dashboards and reports.",
+    icon: FiBarChart2,
+  },
+  {
+    title: "Enterprise Integrations",
+    desc: "Connect ATS, HRMS, Slack, Teams, Zoom, and custom APIs seamlessly.",
+    icon: FiLink,
+  },
+];
 
 export default function GleefixPlatformPage() {
-  const modules = [
-    {
-      title: "Assessment Engine",
-      desc: "Build coding, aptitude, psychometric, and technical assessments with realtime evaluation.",
-    },
-    {
-      title: "AI Proctoring",
-      desc: "Monitor candidate behavior using AI-driven fraud prevention and integrity systems.",
-    },
-    {
-      title: "Candidate Management",
-      desc: "Track applications, candidate pipelines, and hiring stages from one dashboard.",
-    },
-    {
-      title: "Hiring Campaigns",
-      desc: "Manage enterprise recruitment drives and automate candidate invitations.",
-    },
-    {
-      title: "Analytics & Reporting",
-      desc: "Gain actionable hiring insights through realtime dashboards and reports.",
-    },
-    {
-      title: "Enterprise Integrations",
-      desc: "Connect ATS, HRMS, Slack, Teams, Zoom, and custom APIs seamlessly.",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
@@ -40,7 +80,7 @@ export default function GleefixPlatformPage() {
         <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
-            <div className="inline-flex items-center px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+            <div className="inline-flex items-center px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
               Next Generation Recruitment Platform
             </div>
 
@@ -84,12 +124,19 @@ export default function GleefixPlatformPage() {
                   </p>
                 </div>
 
-                <div className="h-16 w-16 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B]" />
+                <div className=" h-16 w-16 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] flex items-center justify-center shadow-lg">
+                  <FiGrid className="text-white text-3xl" />
+                </div>
               </div>
 
               {/* MAIN SCREEN */}
-              <div className="h-72 rounded-[28px] bg-linear-to-br from-blue-50 to-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 font-semibold text-lg">
-                Dashboard Preview
+              <div className=" relative h-64 rounded-3xl bg-linear-to-br from-blue-50 to-slate-100 border border-slate-200 overflow-hidden">
+                <Image
+                  src="/dashboard-img.png"
+                  alt="Dashboard"
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               {/* STATS */}
@@ -104,7 +151,7 @@ export default function GleefixPlatformPage() {
                     label: "Accuracy",
                   },
                   {
-                    value: "350+",
+                    value: "43+",
                     label: "Clients",
                   },
                 ].map((item, index) => (
@@ -123,7 +170,7 @@ export default function GleefixPlatformPage() {
             </div>
 
             {/* FLOATING */}
-            {/* <div className="absolute -bottom-10 -left-10 rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 hidden lg:block">
+            <div className="absolute -bottom-10 -left-10 rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 hidden lg:block">
               <p className="text-sm text-slate-500">Fraud Detection</p>
 
               <h3 className="text-5xl font-black text-red-600 mt-3">AI</h3>
@@ -131,7 +178,7 @@ export default function GleefixPlatformPage() {
               <p className="text-sm text-slate-500 mt-3 max-w-xs leading-relaxed">
                 Advanced realtime cheating prevention system.
               </p>
-            </div> */}
+            </div>
           </div>
         </div>
       </section>
@@ -139,7 +186,7 @@ export default function GleefixPlatformPage() {
       {/* PLATFORM MODULES */}
       <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
+          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-6">
             Platform Modules
           </div>
 
@@ -163,7 +210,9 @@ export default function GleefixPlatformPage() {
               <div className="absolute top-0 right-0 h-52 w-52 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
               <div className="relative z-10">
-                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7 flex items-center justify-center">
+                  <module.icon className="text-white text-4xl" />
+                </div>
 
                 <h3 className="lg:text-3xl text-2xl font-black text-slate-900 leading-tight">
                   {module.title}
@@ -186,7 +235,7 @@ export default function GleefixPlatformPage() {
       <section className="bg-white border-y border-slate-200 py-12 lg:py-24 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto mb-16">
-            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-6">
+            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-6">
               Enterprise Dashboard
             </div>
 
@@ -275,34 +324,34 @@ export default function GleefixPlatformPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
-          {[
-            "Create Assessment",
-            "Invite Candidates",
-            "Monitor Realtime",
-            "Analyze Results",
-          ].map((step, index) => (
-            <div
-              key={index}
-              className="relative rounded-4xl bg-white border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
-            >
-              <div className="absolute top-5 right-5 text-7xl font-black text-slate-100">
-                0{index + 1}
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+
+            return (
+              <div
+                key={index}
+                className="relative rounded-4xl bg-white border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+              >
+                <div className="absolute top-5 right-5 text-7xl font-black text-slate-100">
+                  0{index + 1}
+                </div>
+
+                <div className="relative z-10">
+                  <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] mb-7 flex items-center justify-center">
+                    <Icon className="text-white text-4xl" />
+                  </div>
+
+                  <h3 className="text-2xl font-black text-slate-900 leading-tight">
+                    {step.title}
+                  </h3>
+
+                  <p className="text-slate-600 leading-relaxed mt-5">
+                    Enterprise-grade workflow automation for scalable recruitment operations.
+                  </p>
+                </div>
               </div>
-
-              <div className="relative z-10">
-                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] mb-7" />
-
-                <h3 className="text-2xl font-black text-slate-900 leading-tight">
-                  {step}
-                </h3>
-
-                <p className="text-slate-600 leading-relaxed mt-5">
-                  Enterprise-grade workflow automation for scalable recruitment
-                  operations.
-                </p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

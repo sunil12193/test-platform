@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { FiMail, FiShield, FiArrowRight } from "react-icons/fi";
 
 import { useForgotPassword } from "@/hooks/useSignup";
+import  Link  from "next/link";
 
 export default function ForgotPasswordPage() {
   const [value, setValue] = useState("");
@@ -61,6 +62,7 @@ export default function ForgotPasswordPage() {
         <div className="relative z-10 flex flex-col justify-between h-full w-full p-14">
           {/* LOGO */}
           <div className="flex items-center gap-4">
+            <Link href="/" className="flex items-center gap-2">
             <div className="bg-white p-3 rounded-2xl shadow-xl">
               <Image
                 src="/logo.svg"
@@ -75,9 +77,10 @@ export default function ForgotPasswordPage() {
               <h2 className="text-3xl font-black text-white">Gleefix</h2>
 
               <p className="text-sm text-blue-100 mt-1">
-                AI Hiring Platform
+                Where Ambitions Align !
               </p>
             </div>
+            </Link>
           </div>
 
           {/* HERO */}

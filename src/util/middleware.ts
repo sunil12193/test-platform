@@ -33,6 +33,6 @@ export function middleware(request: NextRequest) {
 }
 
 // APPLY MIDDLEWARE
-export const config = {
-  matcher: ["/dashboard/:path*", "/sign-in", "/sign-up"],
-};
+// export const config = {
+//   matcher: ["/dashboard/:path*", "/sign-in", "/sign-up"],
+// };

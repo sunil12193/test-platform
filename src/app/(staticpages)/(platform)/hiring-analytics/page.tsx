@@ -1,5 +1,34 @@
 import CTASection from "@/component/static-component/CTAsection";
 import Image from "next/image";
+import {
+  FiBarChart2,
+  FiTrendingUp,
+  FiCpu,
+  FiShield,
+} from "react-icons/fi";
+
+const insights = [
+  {
+    title: "Candidate Performance",
+    desc: "Track assessment scores, completion rates, and ranking trends in realtime.",
+    icon: <FiBarChart2 size={30} className="text-white" />,
+  },
+  {
+    title: "Hiring Funnel",
+    desc: "Visualize applicant drop-offs, shortlist conversions, and hiring efficiency.",
+    icon: <FiTrendingUp size={30} className="text-white" />,
+  },
+  {
+    title: "AI Insights",
+    desc: "Identify top talent using AI-generated performance recommendations.",
+    icon: <FiCpu size={30} className="text-white" />,
+  },
+  {
+    title: "Fraud Detection",
+    desc: "Monitor suspicious activities and proctoring anomalies across campaigns.",
+    icon: <FiShield size={30} className="text-white" />,
+  },
+];
 
 export default function HiringAnalyticsPage() {
   const stats = [
@@ -18,25 +47,6 @@ export default function HiringAnalyticsPage() {
     {
       value: "240+",
       label: "Enterprise Clients",
-    },
-  ];
-
-  const insights = [
-    {
-      title: "Candidate Performance",
-      desc: "Track assessment scores, completion rates, and ranking trends in realtime.",
-    },
-    {
-      title: "Hiring Funnel",
-      desc: "Visualize applicant drop-offs, shortlist conversions, and hiring efficiency.",
-    },
-    {
-      title: "AI Insights",
-      desc: "Identify top talent using AI-generated performance recommendations.",
-    },
-    {
-      title: "Fraud Detection",
-      desc: "Monitor suspicious activities and proctoring anomalies across campaigns.",
     },
   ];
 
@@ -82,7 +92,7 @@ export default function HiringAnalyticsPage() {
         <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
-            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
               AI Hiring Analytics
             </div>
 
@@ -148,7 +158,7 @@ export default function HiringAnalyticsPage() {
       {/* INSIGHTS */}
       <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
+          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-6">
             Analytics Insights
           </div>
 
@@ -170,7 +180,9 @@ export default function HiringAnalyticsPage() {
               <div className="absolute top-0 right-0 h-64 w-64 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
               <div className="relative z-10">
-                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] flex items-center justify-center shadow-xl mb-7">
+                  {item.icon}
+                </div>
 
                 <h3 className="text-3xl font-black text-slate-900">
                   {item.title}
@@ -188,9 +200,9 @@ export default function HiringAnalyticsPage() {
       {/* METRICS */}
       <section className="bg-white border-y border-slate-200 py-12 lg:py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-16">
+          <div className=" flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-16">
             <div>
-              <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-6">
+              <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-6">
                 KPI Metrics
               </div>
 
@@ -231,7 +243,7 @@ export default function HiringAnalyticsPage() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
-            <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-7">
+            <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-7">
               Analytics Dashboard
             </div>
 

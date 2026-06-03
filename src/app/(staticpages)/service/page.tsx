@@ -1,12 +1,46 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Bot,
+  FileText,
+  ShieldCheck,
+  BarChart3,
+} from "lucide-react";
+import {
+  FiCpu,
+  FiEye,
+  FiShield,
+  FiSettings,
+} from "react-icons/fi";
+
+const features = [
+  {
+    title: "AI Powered Recruitment Intelligence",
+    icon: FiCpu,
+  },
+  {
+    title: "Realtime Candidate Monitoring",
+    icon: FiEye,
+  },
+  {
+    title: "Enterprise Security & Scalability",
+    icon: FiShield,
+  },
+  {
+    title: "Custom Workflow Automation",
+    icon: FiSettings,
+  },
+];
+
 
 export default function GleefixServicesPage() {
   const services = [
     {
       title: "AI Recruitment Solutions",
       link: "/ai-recruitment",
-      description: "Automate candidate screening, shortlisting, and hiring decisions with AI-powered intelligence.",
+      icon: Bot,
+      description:
+        "Automate candidate screening, shortlisting, and hiring decisions with AI-powered intelligence.",
       features: [
         "AI Resume Screening",
         "Smart Candidate Ranking",
@@ -17,7 +51,9 @@ export default function GleefixServicesPage() {
     {
       title: "Assessment Platform",
       link: "/assessment",
-      description: "Create enterprise-grade coding, aptitude, psychometric, and technical assessments.",
+      icon: FileText,
+      description:
+        "Create enterprise-grade coding, aptitude, psychometric, and technical assessments.",
       features: [
         "Coding Assessments",
         "MCQ & Aptitude Tests",
@@ -28,6 +64,7 @@ export default function GleefixServicesPage() {
     {
       title: "AI Proctoring",
       link: "/ai-proctoring",
+      icon: ShieldCheck,
       description:
         "Prevent cheating and maintain assessment integrity with advanced AI proctoring systems.",
       features: [
@@ -40,7 +77,9 @@ export default function GleefixServicesPage() {
     {
       title: "Hiring Analytics",
       link: "/hiring-analytics",
-      description: "Get deep insights into candidate performance and recruitment effectiveness.",
+      icon: BarChart3,
+      description:
+        "Get deep insights into candidate performance and recruitment effectiveness.",
       features: [
         "Realtime Dashboards",
         "Performance Reports",
@@ -60,7 +99,7 @@ export default function GleefixServicesPage() {
         <div className="absolute bottom-0 right-0 h-96 w-96 bg-orange-200/30 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto text-center">
-          <div className="inline-flex items-center px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-8">
+          <div className="inline-flex items-center px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-8">
             Enterprise Recruitment Infrastructure
           </div>
 
@@ -108,7 +147,13 @@ export default function GleefixServicesPage() {
 
               <div className="relative z-10">
                 {/* ICON */}
-                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7 flex items-center justify-center">
+                  <service.icon
+                    size={36}
+                    className="text-white"
+                    strokeWidth={2.2}
+                  />
+                </div>
 
                 <h2 className="text-3xl font-black text-slate-900 leading-tight">
                   {service.title}
@@ -153,7 +198,7 @@ export default function GleefixServicesPage() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
-            <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
+            <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-6">
               Why Gleefix
             </div>
 
@@ -170,18 +215,25 @@ export default function GleefixServicesPage() {
             </p>
 
             <div className="space-y-5 mt-10">
-              {[
-                "AI Powered Recruitment Intelligence",
-                "Realtime Candidate Monitoring",
-                "Enterprise Security & Scalability",
-                "Custom Workflow Automation",
-              ].map((item, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-2xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B]" />
+              {features.map((item, index) => {
+                const Icon = item.icon;
 
-                  <h3 className="text-lg font-bold text-slate-800">{item}</h3>
-                </div>
-              ))}
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center gap-4"
+                  >
+                    <div
+                      className=" h-12 w-12 rounded-2xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] flex items-center justify-center text-white shadow-lg">
+                      <Icon size={22} />
+                    </div>
+
+                    <h3 className="text-lg font-bold text-slate-800">
+                      {item.title}
+                    </h3>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -199,7 +251,7 @@ export default function GleefixServicesPage() {
                     label: "Reduced Hiring Time",
                   },
                   {
-                    value: "350+",
+                    value: "43+",
                     label: "Enterprise Clients",
                   },
                   {
