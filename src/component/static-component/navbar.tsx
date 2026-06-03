@@ -28,7 +28,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto h-20 px-4 lg:px-0 flex items-center justify-between">
           {/* LEFT */}
           <div className="flex items-center gap-4">
-            <Link href="/">
+            <Link className="flex items-center gap-2" href="/">
               <Image
                 src="/logo.svg"
                 alt="Gleefix"
@@ -36,18 +36,18 @@ export default function Navbar() {
                 height={60}
                 className="object-contain"
               />
+
+              {/* HIDE ON MOBILE */}
+              <div className="hidden md:block">
+                <p className="text-2xl text-[#0F2B46] font-bold">
+                  Gleefix
+                </p>
+
+                <p className="text-sm text-slate-500 mt-0.5 font-bold">
+                  Where Ambitions Align !
+                </p>
+              </div>
             </Link>
-
-            {/* HIDE ON MOBILE */}
-            <div className="hidden md:block">
-              <p className="text-2xl text-[#0F2B46] font-bold">
-                Gleefix
-              </p>
-
-              <p className="text-sm text-slate-500 mt-0.5 font-bold">
-                Where Ambitions Align !
-              </p>
-            </div>
           </div>
 
           {/* DESKTOP NAV */}

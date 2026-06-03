@@ -1,27 +1,37 @@
 import Image from "next/image";
 import WorkflowCard from "@/component/static-component/workflow-cards";
 import CTASection from "@/component/static-component/CTAsection";
+import {
+  FiUser,
+  FiUsers,
+  FiMonitor,
+  FiMic,
+} from "react-icons/fi";
 
+const features = [
+  {
+    title: "Face Detection",
+    desc: "Realtime face tracking and identity verification using AI vision models.",
+    icon: <FiUser size={28} className="text-white" />,
+  },
+  {
+    title: "Multiple Person Detection",
+    desc: "Detect unauthorized participants during assessments instantly.",
+    icon: <FiUsers size={28} className="text-white" />,
+  },
+  {
+    title: "Tab Switching Alerts",
+    desc: "Track suspicious browser activities and focus violations.",
+    icon: <FiMonitor size={28} className="text-white" />,
+  },
+  {
+    title: "Voice & Noise Detection",
+    desc: "Identify background conversations and abnormal audio patterns.",
+    icon: <FiMic size={28} className="text-white" />,
+  },
+];
 
 export default function AIProctoringPage() {
-  const features = [
-    {
-      title: "Face Detection",
-      desc: "Realtime face tracking and identity verification using AI vision models.",
-    },
-    {
-      title: "Multiple Person Detection",
-      desc: "Detect unauthorized participants during assessments instantly.",
-    },
-    {
-      title: "Tab Switching Alerts",
-      desc: "Track suspicious browser activities and focus violations.",
-    },
-    {
-      title: "Voice & Noise Detection",
-      desc: "Identify background conversations and abnormal audio patterns.",
-    },
-  ];
 
   const monitoring = [
     "Live Video Monitoring",
@@ -69,7 +79,7 @@ export default function AIProctoringPage() {
         <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div className="text-center lg:text-start">
-            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
               AI Proctoring Platform
             </div>
 
@@ -153,7 +163,7 @@ export default function AIProctoringPage() {
       {/* FEATURES */}
       <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
+          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-6">
             Proctoring Features
           </div>
 
@@ -176,7 +186,9 @@ export default function AIProctoringPage() {
               <div className="absolute top-0 right-0 h-64 w-64 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
               <div className="relative z-10">
-                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] flex items-center justify-center shadow-xl mb-7">
+                  {item.icon}
+                </div>
 
                 <h3 className="text-2xl lg:text-3xl font-black text-slate-900">
                   {item.title}
@@ -196,7 +208,7 @@ export default function AIProctoringPage() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
-            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
               Monitoring Capabilities
             </div>
 
@@ -237,7 +249,7 @@ export default function AIProctoringPage() {
       {/* WORKFLOW */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
+          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-6">
             AI Workflow
           </div>
 

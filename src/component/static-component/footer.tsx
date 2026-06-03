@@ -48,10 +48,6 @@ const footerSections: FooterSection[] = [
         label: "Platform",
         href: "/platform",
       },
-      {
-        label: "Pricing",
-        href: "/pricing",
-      },
 
     ],
   },
@@ -90,12 +86,6 @@ const footerSections: FooterSection[] = [
         label: "Help Center",
         href: "/help-center",
       },
-
-      {
-        label: "Documentation",
-        href: "/documentation",
-      },
-
       {
         label: "Privacy",
         href: "/privacy-policy",
@@ -189,7 +179,7 @@ export default function Footer() {
           {/* SOCIAL MEDIA */}
           <div className="flex items-center gap-4 mt-6">
             <a
-              href="https://www.linkedin.com/company/gleeffix/posts/"
+              href="https://www.linkedin.com/company/gleeffix/"
               target="_blank"
               rel="noopener noreferrer"
               className="
@@ -470,17 +460,6 @@ export default function Footer() {
             "
           >
             Terms
-          </Link>
-
-          <Link
-            href="/security"
-            className="
-              text-slate-500
-              hover:text-white
-              transition-all
-            "
-          >
-            Security
           </Link>
         </div>
       </div>

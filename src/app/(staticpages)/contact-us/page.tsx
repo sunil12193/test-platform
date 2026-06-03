@@ -1,24 +1,19 @@
 import Image from "next/image";
-
+import {
+  FiMapPin,
+  FiNavigation,
+  FiCompass,
+  FiMap,
+  FiGlobe,
+} from "react-icons/fi";
 export default function GleefixContactPage() {
   const offices = [
     {
-      city: "New Delhi",
-      address: "Cyber Hub, Gurugram, Haryana, India",
-      phone: "+91 98765 43210",
-      email: "india@gleefix.com",
-    },
-    {
-      city: "Singapore",
-      address: "Marina Bay Financial Centre, Singapore",
-      phone: "+65 8123 4567",
-      email: "apac@gleefix.com",
-    },
-    {
-      city: "London",
-      address: "Canary Wharf, London, United Kingdom",
-      phone: "+44 20 1234 5678",
-      email: "uk@gleefix.com",
+      city: "Noida",
+      address: "sector 63, Noida, India",
+      phone: "+91 75034 41724",
+      email: "divya@gleefix.com",
+      icon: FiMapPin,
     },
   ];
 
@@ -31,7 +26,7 @@ export default function GleefixContactPage() {
         <div className="absolute bottom-0 right-0 h-96 w-96 bg-orange-200/30 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto text-center">
-          <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+          <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
             Let’s Connect
           </div>
 
@@ -75,11 +70,11 @@ export default function GleefixContactPage() {
                   {[
                     {
                       title: "Email Support",
-                      value: "support@gleefix.com",
+                      value: "divya@gleefix.com",
                     },
                     {
                       title: "Phone",
-                      value: "+91 98765 43210",
+                      value: "+91 75034 41724",
                     },
                     {
                       title: "Business Hours",
@@ -104,12 +99,8 @@ export default function GleefixContactPage() {
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <h2 className="text-2xl lg:text-3xl font-black text-slate-900">
-                    Global Offices
+                    Office
                   </h2>
-
-                  <p className="text-slate-500 mt-2">
-                    Worldwide enterprise presence
-                  </p>
                 </div>
               </div>
 
@@ -130,7 +121,9 @@ export default function GleefixContactPage() {
                         </p>
                       </div>
 
-                      <div className="h-14 w-14 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B]" />
+                      <div className="h-14 w-14 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] flex items-center justify-center">
+                        <office.icon className="text-white text-xl" />
+                      </div>
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-4 mt-6">
@@ -182,7 +175,7 @@ export default function GleefixContactPage() {
 
                   <input
                     type="text"
-                    placeholder="John"
+                    placeholder="First Name"
                     className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50 px-5 outline-none focus:border-[#0F2B46] focus:bg-white transition-all duration-200"
                   />
                 </div>
@@ -194,7 +187,7 @@ export default function GleefixContactPage() {
 
                   <input
                     type="text"
-                    placeholder="Doe"
+                    placeholder="Last Name"
                     className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50 px-5 outline-none focus:border-[#0F2B46] focus:bg-white transition-all duration-200"
                   />
                 </div>
@@ -207,7 +200,7 @@ export default function GleefixContactPage() {
 
                 <input
                   type="email"
-                  placeholder="john@company.com"
+                  placeholder="Work Email"
                   className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50 px-5 outline-none focus:border-[#0F2B46] focus:bg-white transition-all duration-200"
                 />
               </div>
@@ -280,8 +273,19 @@ export default function GleefixContactPage() {
             </button>
           </div>
 
-          <div className="h-125 bg-linear-to-br from-blue-50 to-slate-100 flex items-center justify-center text-slate-400 text-2xl font-bold">
-            Interactive Map Placeholder
+          <div className="h-125 overflow-hidden border border-slate-200">
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Sector+63+Noida+Uttar+Pradesh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block h-full w-full"
+            >
+              <iframe
+                src="https://maps.google.com/maps?q=Sector%2063%20Noida&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                className="w-full h-full"
+                loading="lazy"
+              />
+            </a>
           </div>
         </div>
       </section>

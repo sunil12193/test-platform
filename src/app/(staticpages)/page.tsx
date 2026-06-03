@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";  
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BarChart3, Bot, FileCheck } from "lucide-react";
@@ -60,16 +60,19 @@ export default function GleefixHomepage() {
       icon: Bot,
       title: "AI Recruitment",
       desc: "Automate hiring workflows with AI-powered candidate screening and assessment intelligence.",
+      link: "/ai-recruitment",
     },
     {
       icon: FileCheck,
       title: "Skill Assessments",
       desc: "Create customizable coding, aptitude, and technical assessments with proctoring.",
+      link: "/assessment",
     },
     {
       icon: BarChart3,
       title: "Hiring Analytics",
       desc: "Track hiring campaigns, completion rates, candidate quality, and recruitment ROI.",
+      link: "/hiring-analytics",
     },
   ];
 
@@ -204,7 +207,8 @@ export default function GleefixHomepage() {
             </p>
 
             <div className="grid grid-cols-2 text-sm lg:text-base gap-4 mt-10">
-              <button
+              <Link
+                href="/sign-up"
                 className="
                   h-14
                   lg:px-8
@@ -218,10 +222,16 @@ export default function GleefixHomepage() {
                   transition-all
                   duration-200
                   cursor-pointer
+                  text-center
+                  flex 
+                  justify-center
+                  items-center
                 "
               >
-                Start Free Trial
-              </button>
+                <button>
+                  Start Free Trial
+                </button>
+              </Link>
 
               <button
                 className="
@@ -303,28 +313,18 @@ export default function GleefixHomepage() {
                     text-lg
                   "
                 >
-                  AI
+                  <Bot size={24} />
                 </div>
               </div>
 
               {/* CHART */}
-              <div
-                className="
-                  h-64
-                  rounded-3xl
-                  bg-linear-to-br
-                  from-blue-50
-                  to-slate-100
-                  border
-                  border-slate-200
-                  flex
-                  items-center
-                  justify-center
-                  text-slate-400
-                  font-semibold
-                "
-              >
-                Analytics Dashboard Preview
+              <div className=" relative h-64 rounded-3xl bg-linear-to-br from-blue-50 to-slate-100 border border-slate-200 overflow-hidden">
+                <Image
+                  src="/dashboard-img.png"
+                  alt="Dashboard"
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               {/* LOWER CARDS */}
@@ -400,7 +400,7 @@ export default function GleefixHomepage() {
               border
               border-orange-100
               text-orange-700
-              text-sm
+              text-xl
               font-semibold
               mb-6
             "
@@ -467,18 +467,12 @@ export default function GleefixHomepage() {
                 {service.desc}
               </p>
 
-              <button
-                className="
-                  mt-8
-                  text-[#0F2B46]
-                  font-semibold
-                  group-hover:translate-x-1
-                  transition-all
-                  duration-200
-                "
+              <Link
+                href={service.link}
+                className="inline-block mt-8 text-[#0F2B46] font-semibold hover:translate-x-1 transition-all duration-200"
               >
                 Learn More →
-              </button>
+              </Link>
             </div>
           ))}
         </div>
@@ -497,7 +491,7 @@ export default function GleefixHomepage() {
               border
               border-blue-100
               text-blue-700
-              text-sm
+              text-xl
               font-semibold
               mb-6
             "
@@ -726,7 +720,7 @@ export default function GleefixHomepage() {
               border
               border-emerald-100
               text-emerald-700
-              text-sm
+              text-xl
               font-semibold
               mb-6
             "
@@ -781,7 +775,7 @@ export default function GleefixHomepage() {
 
       {/* FAQ */}
       <section
-      className="
+        className="
         relative
         overflow-hidden
         bg-gradient-to-b
@@ -791,10 +785,10 @@ export default function GleefixHomepage() {
         lg:py-28
         px-6
       "
-    >
-      {/* BACKGROUND GLOW */}
-      <div
-        className="
+      >
+        {/* BACKGROUND GLOW */}
+        <div
+          className="
           absolute
           top-0
           left-1/2
@@ -806,13 +800,13 @@ export default function GleefixHomepage() {
           rounded-full
           pointer-events-none
         "
-      />
+        />
 
-      <div className="max-w-5xl mx-auto relative z-10">
-        {/* HEADER */}
-        <div className="text-center mb-20">
-          <div
-            className="
+        <div className="max-w-5xl mx-auto relative z-10">
+          {/* HEADER */}
+          <div className="text-center mb-20">
+            <div
+              className="
               inline-flex
               items-center
               gap-2
@@ -823,18 +817,18 @@ export default function GleefixHomepage() {
               border
               border-blue-100
               text-blue-700
-              text-sm
+              text-xl
               font-semibold
               mb-6
             "
-          >
-            <HelpCircle className="w-4 h-4" />
+            >
+              <HelpCircle className="w-4 h-4" />
 
-            Frequently Asked Questions
-          </div>
+              Frequently Asked Questions
+            </div>
 
-          <h2
-            className="
+            <h2
+              className="
               lg:text-4xl 
               text-3xl
               md:text-5xl
@@ -842,15 +836,15 @@ export default function GleefixHomepage() {
               text-slate-900
               leading-tight
             "
-          >
-            Have Questions?
-            <br />
+            >
+              Have Questions?
+              <br />
 
-            We’ve Got Answers.
-          </h2>
+              We’ve Got Answers.
+            </h2>
 
-          <p
-            className="
+            <p
+              className="
               text-slate-500
               text-lg
               mt-6
@@ -858,24 +852,24 @@ export default function GleefixHomepage() {
               mx-auto
               leading-relaxed
             "
-          >
-            Everything you need to know
-            about the Gleefix AI-powered
-            recruitment and assessment
-            platform.
-          </p>
-        </div>
+            >
+              Everything you need to know
+              about the Gleefix AI-powered
+              recruitment and assessment
+              platform.
+            </p>
+          </div>
 
-        {/* FAQ LIST */}
-        <div className="space-y-6">
-          {faqs.map((faq, index) => {
-            const isOpen =
-              openIndex === index;
+          {/* FAQ LIST */}
+          <div className="space-y-6">
+            {faqs.map((faq, index) => {
+              const isOpen =
+                openIndex === index;
 
-            return (
-              <div
-                key={index}
-                className={`
+              return (
+                <div
+                  key={index}
+                  className={`
                   group
                   rounded-[30px]
                   border
@@ -884,19 +878,18 @@ export default function GleefixHomepage() {
                   duration-300
                   cursor-pointer
 
-                  ${
-                    isOpen
+                  ${isOpen
                       ? "bg-[#0F172A] border-[#0F172A] shadow-2xl"
                       : "bg-white border-slate-200 hover:border-blue-200 hover:shadow-xl"
-                  }
+                    }
                 `}
-              >
-                {/* QUESTION */}
-                <button
-                  onClick={() =>
-                    toggleFAQ(index)
-                  }
-                  className="
+                >
+                  {/* QUESTION */}
+                  <button
+                    onClick={() =>
+                      toggleFAQ(index)
+                    }
+                    className="
                     w-full
                     flex
                     items-center
@@ -905,11 +898,11 @@ export default function GleefixHomepage() {
                     p-7
                     text-left
                   "
-                >
-                  <div className="flex items-start gap-5">
-                    {/* NUMBER */}
-                    <div
-                      className={`
+                  >
+                    <div className="flex items-start gap-5">
+                      {/* NUMBER */}
+                      <div
+                        className={`
                         min-w-[48px]
                         h-12
                         rounded-2xl
@@ -920,40 +913,38 @@ export default function GleefixHomepage() {
                         text-sm
                         transition-all
 
-                        ${
-                          isOpen
+                        ${isOpen
                             ? "bg-white/10 text-white"
                             : "bg-slate-100 text-slate-700"
-                        }
+                          }
                       `}
-                    >
-                      0{index + 1}
-                    </div>
+                      >
+                        0{index + 1}
+                      </div>
 
-                    {/* TEXT */}
-                    <div>
-                      <h3
-                        className={`
+                      {/* TEXT */}
+                      <div>
+                        <h3
+                          className={`
                           text-lg
                           md:text-xl
                           font-bold
                           transition-all
 
-                          ${
-                            isOpen
+                          ${isOpen
                               ? "text-white"
                               : "text-slate-900"
-                          }
+                            }
                         `}
-                      >
-                        {faq.question}
-                      </h3>
+                        >
+                          {faq.question}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* ICON */}
-                  <div
-                    className={`
+                    {/* ICON */}
+                    <div
+                      className={`
                       min-w-[50px]
                       h-[50px]
                       rounded-2xl
@@ -962,67 +953,64 @@ export default function GleefixHomepage() {
                       justify-center
                       transition-all
 
-                      ${
-                        isOpen
+                      ${isOpen
                           ? "bg-white text-slate-900 rotate-180"
                           : "bg-slate-100 text-slate-700"
-                      }
+                        }
                     `}
-                  >
-                    {isOpen ? (
-                      <Minus className="w-5 h-5" />
-                    ) : (
-                      <Plus className="w-5 h-5" />
-                    )}
-                  </div>
-                </button>
+                    >
+                      {isOpen ? (
+                        <Minus className="w-5 h-5" />
+                      ) : (
+                        <Plus className="w-5 h-5" />
+                      )}
+                    </div>
+                  </button>
 
-                {/* ANSWER */}
-                <div
-                  className={`
+                  {/* ANSWER */}
+                  <div
+                    className={`
                     grid
                     transition-all
                     duration-500
                     ease-in-out
 
-                    ${
-                      isOpen
+                    ${isOpen
                         ? "grid-rows-[1fr] opacity-100"
                         : "grid-rows-[0fr] opacity-0"
-                    }
+                      }
                   `}
-                >
-                  <div className="overflow-hidden">
-                    <div
-                      className="
+                  >
+                    <div className="overflow-hidden">
+                      <div
+                        className="
                         px-7
                         pb-7
                         pl-[92px]
                       "
-                    >
-                      <p
-                        className={`
+                      >
+                        <p
+                          className={`
                           leading-relaxed
                           text-[15px]
 
-                          ${
-                            isOpen
+                          ${isOpen
                               ? "text-slate-300"
                               : "text-slate-500"
-                          }
+                            }
                         `}
-                      >
-                        {faq.answer}
-                      </p>
+                        >
+                          {faq.answer}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* CTA */}
       <section className="px-6 pb-24 pt-24">

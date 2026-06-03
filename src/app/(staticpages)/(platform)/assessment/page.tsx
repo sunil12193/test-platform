@@ -1,30 +1,42 @@
 import CTASection from "@/component/static-component/CTAsection";
 import Image from "next/image";
 import WorkflowCard from "@/component/static-component/workflow-cards";
+import {
+  FiCode,
+  FiTarget,
+  FiUserCheck,
+  FiShield,
+} from "react-icons/fi";
+
+const assessmentTypes = [
+  {
+    title: "Technical Assessments",
+    desc: "Coding challenges, MCQs, debugging, and live programming evaluations.",
+    stats: "120K+ Attempts",
+    icon: <FiCode size={30} className="text-white" />,
+  },
+  {
+    title: "Aptitude Tests",
+    desc: "Logical reasoning, quantitative aptitude, and analytical ability tests.",
+    stats: "80K+ Candidates",
+    icon: <FiTarget size={30} className="text-white" />,
+  },
+  {
+    title: "Behavioral Assessments",
+    desc: "Personality profiling and soft skill evaluations powered by AI.",
+    stats: "35K+ Evaluations",
+    icon: <FiUserCheck size={30} className="text-white" />,
+  },
+  {
+    title: "AI Proctored Exams",
+    desc: "Advanced AI monitoring with suspicious activity detection.",
+    stats: "99.2% Integrity",
+    icon: <FiShield size={30} className="text-white" />,
+  },
+];
+
 
 export default function AssessmentsPage() {
-  const assessmentTypes = [
-    {
-      title: "Technical Assessments",
-      desc: "Coding challenges, MCQs, debugging, and live programming evaluations.",
-      stats: "120K+ Attempts",
-    },
-    {
-      title: "Aptitude Tests",
-      desc: "Logical reasoning, quantitative aptitude, and analytical ability tests.",
-      stats: "80K+ Candidates",
-    },
-    {
-      title: "Behavioral Assessments",
-      desc: "Personality profiling and soft skill evaluations powered by AI.",
-      stats: "35K+ Evaluations",
-    },
-    {
-      title: "AI Proctored Exams",
-      desc: "Advanced AI monitoring with suspicious activity detection.",
-      stats: "99.2% Integrity",
-    },
-  ];
 
   const features = [
     "AI Based Evaluation",
@@ -72,7 +84,7 @@ export default function AssessmentsPage() {
         <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
-            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
               AI Powered Assessments
             </div>
 
@@ -153,7 +165,7 @@ export default function AssessmentsPage() {
       {/* ASSESSMENT TYPES */}
       <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
+          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-6">
             Assessment Modules
           </div>
 
@@ -175,7 +187,9 @@ export default function AssessmentsPage() {
               <div className="absolute top-0 right-0 h-64 w-64 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
               <div className="relative z-10">
-                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+                <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] flex items-center justify-center shadow-xl mb-7">
+                  {item.icon}
+                </div>
 
                 <h3 className=" text-2xl lg:text-3xl font-black text-slate-900">
                   {item.title}
@@ -199,7 +213,7 @@ export default function AssessmentsPage() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
-            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+            <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
               Enterprise Features
             </div>
 
@@ -240,7 +254,7 @@ export default function AssessmentsPage() {
       {/* WORKFLOW */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-6">
+          <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-xl font-semibold mb-6">
             Assessment Workflow
           </div>
 
