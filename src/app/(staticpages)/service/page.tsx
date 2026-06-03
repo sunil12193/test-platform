@@ -54,7 +54,7 @@ export default function GleefixServicesPage() {
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
 
       {/* HERO */}
-      <section className="relative py-28 px-6 overflow-hidden">
+      <section className="relative py-12 lg:py-28 px-6 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-96 bg-blue-200/30 rounded-full blur-3xl" />
 
         <div className="absolute bottom-0 right-0 h-96 w-96 bg-orange-200/30 rounded-full blur-3xl" />
@@ -64,7 +64,7 @@ export default function GleefixServicesPage() {
             Enterprise Recruitment Infrastructure
           </div>
 
-          <h1 className="text-5xl lg:text-7xl font-black text-slate-900 leading-tight tracking-tight max-w-5xl mx-auto">
+          <h1 className="text-3xl lg:text-7xl font-black text-slate-900 leading-tight tracking-tight max-w-5xl mx-auto">
             Powerful Services Built For Modern Hiring
           </h1>
 
@@ -96,7 +96,7 @@ export default function GleefixServicesPage() {
       </section>
 
       {/* SERVICES GRID */}
-      <section className="max-w-7xl mx-auto px-6 pb-24">
+      <section className="max-w-7xl mx-auto px-6 pb-12 lg:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
           {services.map((service, index) => (
             <div
@@ -149,7 +149,7 @@ export default function GleefixServicesPage() {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="bg-white border-y border-slate-200 py-24 px-6">
+      <section className="bg-white border-y border-slate-200 py-12 lg:py-28 px-6">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT */}
           <div>
@@ -157,7 +157,7 @@ export default function GleefixServicesPage() {
               Why Gleefix
             </div>
 
-            <h2 className="text-5xl font-black text-slate-900 leading-tight">
+            <h2 className="lg:text-5xl text-3xl font-black text-slate-900 leading-tight">
               Enterprise Hiring.
               <br />
               Reimagined With AI.
@@ -211,7 +211,7 @@ export default function GleefixServicesPage() {
                     key={index}
                     className="rounded-3xl bg-white/10 backdrop-blur-md border border-white/10 p-6"
                   >
-                    <h3 className="text-4xl font-black">{item.value}</h3>
+                    <h3 className="lg:text-5xl text-3xl font-black">{item.value}</h3>
 
                     <p className="text-blue-100 mt-3 text-sm leading-relaxed">
                       {item.label}
@@ -225,7 +225,7 @@ export default function GleefixServicesPage() {
             <div className="absolute -bottom-8 -left-8 rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 hidden lg:block">
               <p className="text-sm text-slate-500">Platform Uptime</p>
 
-              <h3 className="text-5xl font-black text-emerald-600 mt-3">
+              <h3 className="lg:text-5xl text-3xl font-black text-emerald-600 mt-3">
                 99.99%
               </h3>
             </div>
@@ -234,12 +234,12 @@ export default function GleefixServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-6 py-24">
+      <section className="px-6 py-12 lg:py-24">
         <div className="max-w-7xl mx-auto rounded-[40px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-24 text-white text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-4xl mx-auto">
-            <h2 className="text-5xl lg:text-6xl font-black leading-tight">
+            <h2 className="lg:text-5xl text-3xl lg:text-6xl font-black leading-tight">
               Let’s Build Your Smart Hiring Ecosystem
             </h2>
 

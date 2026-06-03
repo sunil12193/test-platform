@@ -1,4 +1,7 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_BASE_URL } from "@/util/APIGeneric";
+
+
+
 
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -22,7 +25,7 @@ export async function api<T = any>(
   const { method = "GET", body, headers = {}, token } = options;
 
   try {
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method,
       headers: {
         "Content-Type": "application/json",

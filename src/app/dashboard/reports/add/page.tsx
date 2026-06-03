@@ -1,8 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { API_BASE_URL } from "@/util/APIGeneric";
+
+type InputFieldProps = {
+  label: string;
+  name: string;
+  value: string | number;
+  onChange: (e: any) => void;
+  placeholder?: string;
+  type?: string;
+};
 
 export default function AddReportPage() {
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     reportId: "",
 
@@ -36,12 +49,76 @@ export default function AddReportPage() {
   };
 
   // SUBMIT
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log(formData);
+    setLoading(true);
 
-    alert("Report Added Successfully 🚀");
+    try {
+      const finalData = {
+        ...formData,
+
+        averageScore: Number(formData.averageScore),
+
+        highestScore: Number(formData.highestScore),
+
+        lowestScore: Number(formData.lowestScore),
+
+        completionRate: Number(formData.completionRate),
+
+        suspiciousActivities: Number(formData.suspiciousActivities),
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/report/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Report Added Successfully");
+
+        // RESET FORM
+        setFormData({
+          reportId: "",
+
+          reportType: "Assessment Performance Report",
+
+          generatedBy: "",
+
+          assessmentId: "",
+
+          campaignId: "",
+
+          averageScore: "",
+          highestScore: "",
+          lowestScore: "",
+
+          completionRate: "",
+
+          suspiciousActivities: "",
+
+          exportedFormat: "PDF",
+
+          generatedAt: "",
+        });
+      } else {
+        toast.error(data.message || "Failed To Add Report");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -186,9 +263,25 @@ export default function AddReportPage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              disabled={loading}
+              className="
+                px-8
+                py-4
+                rounded-2xl
+                bg-linear-to-r
+                from-blue-600
+                to-indigo-600
+                text-white
+                font-semibold
+                shadow-lg
+                hover:scale-105
+                transition-all
+                duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+              "
             >
-              Submit Report
+              {loading ? "Submitting..." : "Submit Report"}
             </button>
           </div>
         </form>
@@ -205,10 +298,12 @@ function InputField({
   onChange,
   placeholder,
   type = "text",
-}) {
+}: InputFieldProps) {
   return (
     <div>
-      <label className="text-sm font-semibold text-gray-700">{label}</label>
+      <label className="text-sm font-semibold text-gray-700">
+        {label}
+      </label>
 
       <input
         type={type}
@@ -216,7 +311,18 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full mt-2 px-4 py-3 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+        className="
+          w-full
+          mt-2
+          px-4
+          py-3
+          rounded-2xl
+          border
+          border-gray-300
+          outline-none
+          focus:ring-2
+          focus:ring-blue-500
+        "
       />
     </div>
   );

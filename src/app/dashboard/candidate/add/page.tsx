@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
+import toast from "react-hot-toast";
+import { API_BASE_URL } from "@/util/APIGeneric";
+
 
 export default function AddCandidatePage() {
   const [formData, setFormData] = useState({
@@ -32,8 +35,12 @@ export default function AddCandidatePage() {
     updatedAt: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   // HANDLE CHANGE
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -41,45 +48,108 @@ export default function AddCandidatePage() {
   };
 
   // SUBMIT
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const finalData = {
-      ...formData,
+    try {
+      setLoading(true);
 
-      skills: formData.skills.split(",").map((skill) => skill.trim()),
-    };
+      const finalData = {
+        ...formData,
 
-    console.log(finalData);
+        skills: formData.skills
+          .split(",")
+          .map((skill) => skill.trim())
+          .filter((skill) => skill !== ""),
 
-    alert("Candidate Added Successfully 🚀");
+        totalScore: Number(formData.totalScore),
+
+        ranking: Number(formData.ranking),
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/candidate/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(data.message || "Candidate Added Successfully");
+
+        // RESET FORM
+        setFormData({
+          candidateId: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          profileImage: "",
+
+          resumeUrl: "",
+          linkedinUrl: "",
+          githubUrl: "",
+
+          skills: "",
+          experience: "",
+          education: "",
+
+          currentStatus: "Applied",
+
+          appliedPosition: "",
+          assignedAssessment: "",
+
+          totalScore: "",
+          ranking: "",
+
+          createdAt: "",
+          updatedAt: "",
+        });
+      } else {
+        toast.error(data.message || "Failed to create candidate");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div
         className="
-        max-w-7xl
-        mx-auto
-        bg-white
-        rounded-[30px]
-        shadow-xl
-        overflow-hidden
-        border
-        border-gray-200
-      "
+          max-w-7xl
+          mx-auto
+          bg-white
+          rounded-[30px]
+          shadow-xl
+          overflow-hidden
+          border
+          border-gray-200
+        "
       >
         {/* HEADER */}
         <div
           className="
-          bg-linear-to-r
-          from-blue-600
-          to-indigo-600
-          px-8
-          py-6
-        "
+            bg-linear-to-r
+            from-blue-600
+            to-indigo-600
+            px-8
+            py-6
+          "
         >
-          <h1 className="text-3xl font-bold text-white">Add New Candidate</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Add New Candidate
+          </h1>
 
           <p className="text-blue-100 mt-2">
             Fill all candidate details carefully
@@ -310,6 +380,7 @@ export default function AddCandidatePage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
+              disabled={loading}
               className="
                 px-8
                 py-4
@@ -323,9 +394,11 @@ export default function AddCandidatePage() {
                 hover:scale-105
                 transition-all
                 duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
               "
             >
-              Submit Candidate
+              {loading ? "Submitting..." : "Submit Candidate"}
             </button>
           </div>
         </form>
@@ -333,5 +406,3 @@ export default function AddCandidatePage() {
     </div>
   );
 }
-
-/* INPUT FIELD COMPONENT */

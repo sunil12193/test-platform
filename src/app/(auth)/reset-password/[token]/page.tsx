@@ -3,7 +3,12 @@
 import { useState } from "react";
 
 import Link from "next/link";
+
 import Image from "next/image";
+
+import { useParams, useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
 
 import {
   FiLock,
@@ -13,14 +18,93 @@ import {
   FiArrowRight,
 } from "react-icons/fi";
 
+import { useResetPassword } from "@/hooks/useSignup";
+
 export default function ResetPasswordPage() {
+  const router = useRouter();
+
+  const params = useParams();
+
+  const token = params?.token as string;
+
+  const resetPasswordMutation = useResetPassword();
+
   const [showPassword, setShowPassword] = useState(false);
 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
 
   const [password, setPassword] = useState("");
 
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+  // ========================================
+  // HANDLE RESET PASSWORD
+  // ========================================
+
+  const handleResetPassword = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ) => {
+    e.preventDefault();
+
+    try {
+      setError("");
+
+      // ========================================
+      // VALIDATION
+      // ========================================
+
+      if (!password || !confirmPassword) {
+        setError("All fields are required");
+
+        return;
+      }
+
+      if (password.length < 8) {
+        setError("Password must be at least 8 characters");
+
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setError("Passwords do not match");
+
+        return;
+      }
+
+      // ========================================
+      // API CALL
+      // ========================================
+
+      const response =
+        await resetPasswordMutation.mutateAsync({
+          token,
+
+          payload: {
+            password,
+          },
+        });
+
+      toast.success(
+        response.message || "Password reset successful",
+      );
+
+      // ========================================
+      // REDIRECT LOGIN
+      // ========================================
+
+      setTimeout(() => {
+        router.push("/sign-in");
+      }, 1500);
+    } catch (error: any) {
+      setError(
+        error?.response?.data?.message ||
+          "Something went wrong",
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen overflow-hidden bg-[#F4F7FB] flex">
@@ -46,9 +130,13 @@ export default function ResetPasswordPage() {
             </div>
 
             <div>
-              <h2 className="text-3xl font-black text-white">Gleefix</h2>
+              <h2 className="text-3xl font-black text-white">
+                Gleefix
+              </h2>
 
-              <p className="text-sm text-blue-100 mt-1">AI Hiring Platform</p>
+              <p className="text-sm text-blue-100 mt-1">
+                AI Hiring Platform
+              </p>
             </div>
           </div>
 
@@ -65,8 +153,8 @@ export default function ResetPasswordPage() {
             </h1>
 
             <p className="mt-6 text-lg leading-8 text-slate-300">
-              Your new password should be strong, secure, and easy to remember
-              for safe access to your Gleefix account.
+              Your new password should be strong, secure, and easy
+              to remember for safe access to your Gleefix account.
             </p>
 
             {/* SECURITY POINTS */}
@@ -76,7 +164,9 @@ export default function ResetPasswordPage() {
                   <FiCheckCircle className="text-white" />
                 </div>
 
-                <p className="text-blue-100">Minimum 8 characters required</p>
+                <p className="text-blue-100">
+                  Minimum 8 characters required
+                </p>
               </div>
 
               <div className="flex items-center gap-4 bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl px-5 py-4">
@@ -112,9 +202,13 @@ export default function ResetPasswordPage() {
             />
 
             <div>
-              <h2 className="text-2xl font-black text-[#102C4A]">Gleefix</h2>
+              <h2 className="text-2xl font-black text-[#102C4A]">
+                Gleefix
+              </h2>
 
-              <p className="text-xs text-slate-500">AI Hiring Platform</p>
+              <p className="text-xs text-slate-500">
+                AI Hiring Platform
+              </p>
             </div>
           </div>
 
@@ -136,7 +230,10 @@ export default function ResetPasswordPage() {
             </div>
 
             {/* FORM */}
-            <form className="space-y-5">
+            <form
+              onSubmit={handleResetPassword}
+              className="space-y-5"
+            >
               {/* PASSWORD */}
               <div>
                 <div className="relative">
@@ -146,13 +243,17 @@ export default function ResetPasswordPage() {
                     type={showPassword ? "text" : "password"}
                     placeholder="New Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) =>
+                      setPassword(e.target.value)
+                    }
                     className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50/50 pl-12 pr-14 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-blue-100"
                   />
 
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() =>
+                      setShowPassword(!showPassword)
+                    }
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition"
                   >
                     {showPassword ? (
@@ -170,16 +271,26 @@ export default function ResetPasswordPage() {
                   <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
 
                   <input
-                    type={showConfirmPassword ? "text" : "password"}
+                    type={
+                      showConfirmPassword
+                        ? "text"
+                        : "password"
+                    }
                     placeholder="Confirm Password"
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onChange={(e) =>
+                      setConfirmPassword(e.target.value)
+                    }
                     className="w-full h-14 rounded-2xl border border-slate-200 bg-slate-50/50 pl-12 pr-14 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-blue-100"
                   />
 
                   <button
                     type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    onClick={() =>
+                      setShowConfirmPassword(
+                        !showConfirmPassword,
+                      )
+                    }
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition"
                   >
                     {showConfirmPassword ? (
@@ -215,9 +326,23 @@ export default function ResetPasswordPage() {
                 </div>
               </div>
 
+              {/* ERROR */}
+              {error && (
+                <div className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-600 text-center">
+                  {error}
+                </div>
+              )}
+
               {/* BUTTON */}
-              <button className="w-full h-14 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E4D7B] text-white font-semibold flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20">
-                Reset Password
+              <button
+                type="submit"
+                disabled={resetPasswordMutation.isPending}
+                className="w-full h-14 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E4D7B] text-white font-semibold flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-xl shadow-blue-900/20 disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {resetPasswordMutation.isPending
+                  ? "Resetting..."
+                  : "Reset Password"}
+
                 <FiArrowRight />
               </button>
             </form>

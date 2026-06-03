@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
+import { API_BASE_URL } from "@/util/APIGeneric";
+import toast from "react-hot-toast";
 
 export default function AddQuestionPage() {
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     questionId: "",
 
@@ -37,7 +41,11 @@ export default function AddQuestionPage() {
   });
 
   // HANDLE CHANGE
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -45,20 +53,89 @@ export default function AddQuestionPage() {
   };
 
   // SUBMIT
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const finalData = {
-      ...formData,
+    try {
+      setLoading(true);
 
-      options: formData.options.split(",").map((item: any) => item.trim()),
+      const finalData = {
+        ...formData,
 
-      tags: formData.tags.split(",").map((item: any) => item.trim()),
-    };
+        marks: Number(formData.marks),
 
-    console.log(finalData);
+        totalAttempts: Number(formData.totalAttempts),
 
-    alert("Question Added Successfully 🚀");
+        correctAttempts: Number(formData.correctAttempts),
+
+        options: formData.options
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
+
+        tags: formData.tags
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/questionBank/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(data.message || "Question Added Successfully");
+        // RESET FORM
+        setFormData({
+          questionId: "",
+
+          questionType: "MCQ",
+
+          category: "",
+          subCategory: "",
+
+          difficultyLevel: "Medium",
+
+          question: "",
+
+          options: "",
+
+          correctAnswer: "",
+
+          explanation: "",
+
+          marks: "",
+
+          tags: "",
+
+          totalAttempts: "",
+          correctAttempts: "",
+
+          status: "Published",
+
+          createdBy: "",
+
+          createdAt: "",
+        });
+      } else {
+        toast.error(data.message || "Failed To Add Question");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -284,9 +361,25 @@ export default function AddQuestionPage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
-              className="px-8 py-4 rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+              disabled={loading}
+              className="
+                px-8
+                py-4
+                rounded-2xl
+                bg-linear-to-r
+                from-blue-600
+                to-indigo-600
+                text-white
+                font-semibold
+                shadow-lg
+                hover:scale-105
+                transition-all
+                duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+              "
             >
-              Submit Question
+              {loading ? "Submitting..." : "Submit Question"}
             </button>
           </div>
         </form>

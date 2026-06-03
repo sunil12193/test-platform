@@ -1,5 +1,4 @@
-export const API_BASE_URL =
-  "https://platform-backend-v8zh.onrender.com/api";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 
 // =======================
@@ -36,7 +35,6 @@ export const getRequest = async <T>(
     return response.json();
 
   } catch (error) {
-    console.error("Error fetching data:", error);
     throw error;
   }
 };
@@ -70,7 +68,6 @@ export const postRequest = async <T>(
     return response.json();
 
   } catch (error) {
-    console.error("Error posting data:", error);
     throw error;
   }
 };
@@ -104,7 +101,6 @@ export const putRequest = async <T>(
     return response.json();
 
   } catch (error) {
-    console.error("Error putting data:", error);
     throw error;
   }
 };
@@ -140,7 +136,6 @@ export const deleteRequest = async <T>(
     return response.json();
 
   } catch (error) {
-    console.error("Error deleting data:", error);
     throw error;
   }
 };

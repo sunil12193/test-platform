@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { InputField } from "../../../../component/InputField";
+import { API_BASE_URL } from "@/util/APIGeneric";
+import toast from "react-hot-toast";
+
 
 export default function AddCampaignPage() {
   const [formData, setFormData] = useState({
@@ -32,6 +35,8 @@ export default function AddCampaignPage() {
     createdBy: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   // HANDLE CHANGE
   const handleChange = (e: any) => {
     setFormData({
@@ -40,25 +45,89 @@ export default function AddCampaignPage() {
     });
   };
 
-  // SUBMIT
-  const handleSubmit = (e: any) => {
+  // SUBMIT API
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const finalData = {
-      ...formData,
+    try {
+      setLoading(true);
 
-      assignedAssessments: formData.assignedAssessments
-        .split(",")
-        .map((item: any) => item.trim()),
+      const finalData = {
+        ...formData,
 
-      candidateIds: formData.candidateIds
-        .split(",")
-        .map((item: any) => item.trim()),
-    };
+        totalInvited: Number(formData.totalInvited),
 
-    console.log(finalData);
+        totalCompleted: Number(formData.totalCompleted),
 
-    alert("Campaign Added Successfully 🚀");
+        averageScore: Number(formData.averageScore),
+
+        suspiciousActivities: Number(formData.suspiciousActivities),
+
+        assignedAssessments: formData.assignedAssessments
+          .split(",")
+          .map((item: any) => item.trim())
+          .filter((item: string) => item !== ""),
+
+        candidateIds: formData.candidateIds
+          .split(",")
+          .map((item: any) => item.trim())
+          .filter((item: string) => item !== ""),
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/hiringCampaings/create`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(data.message || "Campaign Added Successfully");
+
+        // RESET FORM
+        setFormData({
+          campaignId: "",
+
+          campaignName: "",
+
+          positionId: "",
+
+          assignedAssessments: "",
+
+          candidateIds: "",
+
+          totalInvited: "",
+
+          totalCompleted: "",
+
+          averageScore: "",
+
+          suspiciousActivities: "",
+
+          startDate: "",
+
+          endDate: "",
+
+          status: "Active",
+
+          createdBy: "",
+        });
+      } else {
+        toast.error(data.message || "Failed To Add Campaign");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -85,7 +154,9 @@ export default function AddCampaignPage() {
             py-6
           "
         >
-          <h1 className="text-3xl font-bold text-white">Add New Campaign</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Add New Campaign
+          </h1>
 
           <p className="text-blue-100 mt-2">
             Fill all campaign details carefully
@@ -280,6 +351,7 @@ export default function AddCampaignPage() {
           <div className="mt-10 flex justify-end">
             <button
               type="submit"
+              disabled={loading}
               className="
                 px-8
                 py-4
@@ -293,9 +365,11 @@ export default function AddCampaignPage() {
                 hover:scale-105
                 transition-all
                 duration-300
+                disabled:opacity-50
+                disabled:cursor-not-allowed
               "
             >
-              Submit Campaign
+              {loading ? "Submitting..." : "Submit Campaign"}
             </button>
           </div>
         </form>

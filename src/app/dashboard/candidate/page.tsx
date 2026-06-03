@@ -1,58 +1,114 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { FiMail, FiPhone, FiBriefcase, FiAward } from "react-icons/fi";
 
-import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
+import { useState } from "react";
+
+import {
+  FiMail,
+  FiPhone,
+  FiBriefcase,
+  FiAward,
+} from "react-icons/fi";
+
 import ActionButtons from "../../../component/button";
+
 import DataTable from "../../../component/table";
-import { Candidate } from "@/type/canditate";
-import { candidateData } from "@/dummyData/candidate";
+
 import Pagination from "@/component/pagination";
 
+import { Candidate } from "@/type/canditate";
+
+import { useCandidates } from "@/hooks/useCandidate";
+
 export default function CandidatesPage() {
-  const [data, setData] = useState<Candidate[]>(candidateData);
-  const [search, setSearch] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  // ========================================
+  // SEARCH
+  // ========================================
 
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [search, setSearch] =
+    useState<string>("");
 
-  const filteredData = data.filter((item) =>
-  (item.firstName + " " + item.lastName + " " + item.candidateId)
-      .toLowerCase()
-      .includes(search.toLowerCase())
+  // ========================================
+  // PAGINATION
+  // ========================================
+
+  const [currentPage, setCurrentPage] =
+    useState<number>(1);
+
+  const [pageSize, setPageSize] =
+    useState<number>(10);
+
+  // ========================================
+  // API CALL
+  // ========================================
+
+  const {
+    data: response,
+    isLoading,
+    error,
+  } = useCandidates({
+    page: currentPage,
+    limit: pageSize,
+  });
+
+  // ========================================
+  // API DATA
+  // ========================================
+
+  const candidates: Candidate[] =
+    response?.data || [];
+
+  const totalPages =
+    response?.totalPages || 1;
+
+  const totalDocuments =
+    response?.totalDocuments || 0;
+
+  // ========================================
+  // FILTER DATA
+  // ========================================
+
+  const filteredData = candidates.filter(
+    (item) =>
+      (
+        (item.firstName || "") +
+        " " +
+        (item.lastName || "") +
+        " " +
+        (item.candidateId || "")
+      )
+        .toLowerCase()
+        .includes(search.toLowerCase())
   );
 
+  // ========================================
+  // LOADING
+  // ========================================
 
-  const startIndex =
-    (currentPage - 1) * pageSize;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+        Loading candidates...
+      </div>
+    );
+  }
 
-  const endIndex =
-    startIndex + pageSize;
+  // ========================================
+  // ERROR
+  // ========================================
 
-  const paginatedData =
-    filteredData.slice(startIndex, endIndex);
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500 text-lg font-semibold">
+        {(error as Error).message}
+      </div>
+    );
+  }
 
-  const totalPages = Math.ceil(
-    filteredData.length / pageSize
-  );
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getRequest(`${API_BASE_URL}/candidate`);
-
-  //       if (response) {
-  //         setData(response);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  // ========================================
+  // TABLE COLUMNS
+  // ========================================
 
   const columns = [
     {
@@ -60,34 +116,15 @@ export default function CandidatesPage() {
 
       render: (item: Candidate) => (
         <div className="flex items-center gap-4 min-w-65">
-          <div className="relative shrink-0">
+          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-slate-200">
             <Image
-              src={item.profileImage}
+              src="/user1.jpeg"
               alt="profile"
-              width={56}
-              height={56}
-              className="
-                rounded-2xl
-                object-cover
-                border
-                border-slate-200
-                shadow-sm
-              "
+              fill
+              className="object-cover"
             />
 
-            <span
-              className="
-                absolute
-                bottom-0
-                right-0
-                h-3.5
-                w-3.5
-                rounded-full
-                border-2
-                border-white
-                bg-emerald-500
-              "
-            />
+            <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-emerald-500" />
           </div>
 
           <div className="text-left">
@@ -95,7 +132,9 @@ export default function CandidatesPage() {
               {item.firstName} {item.lastName}
             </h2>
 
-            <p className="text-xs text-slate-500 mt-1">{item.candidateId}</p>
+            <p className="text-xs text-slate-500 mt-1">
+              {item.candidateId}
+            </p>
           </div>
         </div>
       ),
@@ -124,24 +163,16 @@ export default function CandidatesPage() {
 
       render: (item: Candidate) => (
         <div className="flex flex-wrap gap-2 min-w-62.5 justify-center">
-          {item.skills.map((skill, index) => (
-            <span
-              key={index}
-              className="
-                px-3
-                py-1
-                rounded-full
-                bg-blue-50
-                border
-                border-blue-100
-                text-blue-700
-                text-xs
-                font-medium
-              "
-            >
-              {skill}
-            </span>
-          ))}
+          {item.skills?.map(
+            (skill, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-medium"
+              >
+                {skill}
+              </span>
+            )
+          )}
         </div>
       ),
     },
@@ -151,18 +182,7 @@ export default function CandidatesPage() {
 
       render: (item: Candidate) => (
         <div className="flex items-center justify-center gap-2 min-w-35">
-          <div
-            className="
-              h-10
-              w-10
-              rounded-xl
-              bg-amber-50
-              text-amber-600
-              flex
-              items-center
-              justify-center
-            "
-          >
+          <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
             <FiBriefcase />
           </div>
 
@@ -171,7 +191,9 @@ export default function CandidatesPage() {
               {item.experience}
             </p>
 
-            <p className="text-xs text-slate-500">Experience</p>
+            <p className="text-xs text-slate-500">
+              Experience
+            </p>
           </div>
         </div>
       ),
@@ -214,30 +236,38 @@ export default function CandidatesPage() {
             </h3>
           </div>
 
-          <p className="text-xs text-slate-500 mt-1 ml-6">Applied Role</p>
+          <p className="text-xs text-slate-500 mt-1 ml-6">
+            Applied Role
+          </p>
         </div>
       ),
     },
   ];
 
   return (
-    <div className=" min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-100 p-6">
       <div className="space-y-6">
+        {/* ACTION BUTTONS */}
         <ActionButtons
-          addUrl="dashboard/candidate/add"
-          importUrl="dashboard/candidate/import"
-          exportUrl="dashboard/candidate/export"
-
+          addUrl="/dashboard/candidate/add"
+          importUrl="/dashboard/candidate/import"
+          exportUrl="/dashboard/candidate/export"
           searchValue={search}
           onSearchChange={setSearch}
         />
 
-        <DataTable title="Candidates" columns={columns} data={paginatedData} />
+        {/* TABLE */}
+        <DataTable
+          title="Candidates"
+          columns={columns}
+          data={filteredData}
+        />
 
+        {/* PAGINATION */}
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          totalItems={filteredData.length}
+          totalItems={totalDocuments}
           pageSize={pageSize}
           onPageChange={setCurrentPage}
           onPageSizeChange={setPageSize}
