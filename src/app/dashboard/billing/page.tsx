@@ -4,7 +4,6 @@ import { API_BASE_URL, getRequest } from "../../../util/APIGeneric";
 import ActionButtons from "../../../component/button";
 import DataTable from "../../../component/table";
 import { Billing } from "@/type/billing";
-import { billingPlansData } from "@/dummyData/billing";
 import Pagination from "@/component/pagination";
 
 

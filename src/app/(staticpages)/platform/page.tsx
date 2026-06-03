@@ -209,7 +209,7 @@ export default function GleefixPlatformPage() {
               <div className="lg:col-span-2 rounded-4xl bg-white p-6 border border-white/10">
                 <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-2xl font-black text-slate-900">
+                    <h3 className=" text-xl lg:text-2xl font-black text-slate-900">
                       Recruitment Analytics
                     </h3>
 

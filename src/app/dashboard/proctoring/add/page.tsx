@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { API_BASE_URL } from "@/service/auth.service";
+import { API_BASE_URL } from "@/util/APIGeneric";
 import toast from "react-hot-toast";
 
 export default function AddProctoringPage() {

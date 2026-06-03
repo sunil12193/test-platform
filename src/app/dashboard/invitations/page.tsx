@@ -17,7 +17,7 @@ import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
 
 import { Invitation } from "@/type/invitation";
-import { API_BASE_URL } from "@/service/auth.service";
+import { API_BASE_URL } from "@/util/APIGeneric";
 
 export default function InvitationsPage() {
   // SEARCH

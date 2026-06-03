@@ -12,26 +12,6 @@ export default function Navbar() {
 
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // CLOSE ON OUTSIDE CLICK
-  // useEffect(() => {
-  //   const handleOutsideClick = (event: MouseEvent) => {
-  //     if (
-  //       menuRef.current &&
-  //       !menuRef.current.contains(event.target as Node)
-  //     ) {
-  //       setIsOpen(false);
-  //     }
-  //   };
-
-  //   if (isOpen) {
-  //     document.addEventListener("mousedown", handleOutsideClick);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleOutsideClick);
-  //   };
-  // }, [isOpen]);
-
   return (
     <nav>
       <header
@@ -64,8 +44,8 @@ export default function Navbar() {
                 Gleefix
               </p>
 
-              <p className="text-sm text-slate-500 mt-0.5">
-                Connecting Talent, Building Futures.
+              <p className="text-sm text-slate-500 mt-0.5 font-bold">
+                Where Ambitions Align !
               </p>
             </div>
           </div>

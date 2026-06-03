@@ -83,7 +83,7 @@ export default function GleefixHomepage() {
       label: "Fraud Detection Accuracy",
     },
     {
-      value: "350+",
+      value: "43+",
       label: "Enterprise Clients",
     },
     {
@@ -171,7 +171,7 @@ export default function GleefixHomepage() {
                 mb-6
               "
             >
-              AI Powered Hiring Platform
+              AI Powered Hiring Solutions
             </div>
 
             <h1

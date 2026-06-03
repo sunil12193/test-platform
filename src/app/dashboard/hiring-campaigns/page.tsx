@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BASE_URL } from "@/service/auth.service";
 import {
   FiActivity,
   FiAlertTriangle,
@@ -16,7 +15,7 @@ import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
 
 import { HiringCampaign } from "@/type/hirinigCampiagn";
-import { API_BASE_URL } from "@/service/auth.service";
+import { API_BASE_URL } from "@/util/APIGeneric";
 
 export default function HiringCampaignsPage() {
   // SEARCH

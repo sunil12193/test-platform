@@ -8,6 +8,13 @@ import {
   FiPhone,
 } from "react-icons/fi";
 
+import {
+  FaLinkedinIn,
+  FaFacebookF,
+  FaInstagram,
+  FaXTwitter,
+} from "react-icons/fa6";
+
 interface FooterItem {
   label: string;
   href: string;
@@ -104,14 +111,14 @@ const footerSections: FooterSection[] = [
 
 const companyInfo = {
   companyName:
-    "Gleefix Technologies Pvt. Ltd.",
+    "Gleefix Services Pvt. Ltd.",
 
   address:
-    "Sector 62, Noida, Uttar Pradesh, India",
+    "Sector 63, Noida, Uttar Pradesh, India",
 
-  email: "support@gleefix.com",
+  email: "divya@gleefix.com",
 
-  phone: "+91 9876543210",
+  phone: "+91 75034 41724",
 };
 
 export default function Footer() {
@@ -160,28 +167,111 @@ export default function Footer() {
                 Gleefix
               </h2>
 
-              <p className="text-xs text-slate-400 mt-1">
-                Consulting Talent.
-                Building Futures.
+              <p className="text-xs text-slate-400 mt-1 font-bold">
+                Where Ambitions Align !
               </p>
             </div>
           </Link>
 
           <p
             className="
-              text-slate-400
-              leading-relaxed
-              mt-6
-              max-w-md
-            "
+    text-slate-400
+    leading-relaxed
+    mt-6
+    max-w-md
+  "
           >
-            AI-powered recruitment
-            platform for enterprise
-            hiring, assessments,
-            interview automation,
-            and smart candidate
-            evaluation.
+            AI-powered recruitment platform for enterprise
+            hiring, assessments, interview automation,
+            and smart candidate evaluation.
           </p>
+
+          {/* SOCIAL MEDIA */}
+          <div className="flex items-center gap-4 mt-6">
+            <a
+              href="https://www.linkedin.com/company/gleeffix/posts/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+      h-11
+      w-11
+      rounded-xl
+      bg-white/10
+      hover:bg-blue-600
+      flex
+      items-center
+      justify-center
+      transition-all
+      duration-300
+      hover:scale-110
+    "
+            >
+              <FaLinkedinIn className="text-lg" />
+            </a>
+
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+      h-11
+      w-11
+      rounded-xl
+      bg-white/10
+      hover:bg-blue-500
+      flex
+      items-center
+      justify-center
+      transition-all
+      duration-300
+      hover:scale-110
+    "
+            >
+              <FaFacebookF className="text-lg" />
+            </a>
+
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+      h-11
+      w-11
+      rounded-xl
+      bg-white/10
+      hover:bg-pink-500
+      flex
+      items-center
+      justify-center
+      transition-all
+      duration-300
+      hover:scale-110
+    "
+            >
+              <FaInstagram className="text-lg" />
+            </a>
+
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+      h-11
+      w-11
+      rounded-xl
+      bg-white/10
+      hover:bg-slate-700
+      flex
+      items-center
+      justify-center
+      transition-all
+      duration-300
+      hover:scale-110
+    "
+            >
+              <FaXTwitter className="text-lg" />
+            </a>
+          </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:col-span-4">
 
@@ -323,7 +413,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* BOTTOM */}

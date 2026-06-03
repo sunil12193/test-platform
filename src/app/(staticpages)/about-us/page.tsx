@@ -1,5 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  FiZap,
+  FiShield,
+  FiLayers,
+  FiTrendingUp,
+} from "react-icons/fi";
 
 export default function GleefixAboutPage() {
   const stats = [
@@ -25,33 +31,37 @@ export default function GleefixAboutPage() {
     {
       title: "Innovation",
       desc: "We continuously innovate hiring technologies powered by AI and automation.",
+      icon: FiZap,
     },
     {
       title: "Integrity",
       desc: "Building secure and trustworthy assessment ecosystems for enterprises.",
+      icon: FiShield,
     },
     {
       title: "Scalability",
       desc: "Enterprise-ready infrastructure designed for global hiring operations.",
+      icon: FiLayers,
     },
     {
       title: "Impact",
       desc: "Helping organizations hire smarter and candidates succeed faster.",
+      icon: FiTrendingUp,
     },
   ];
 
   const leadership = [
     {
       name: "Saransh Garg",
-      role: "Founder & CEO",
+      role: "Director",
     },
     {
       name: "Aman Verma",
       role: "Chief Technology Officer",
     },
     {
-      name: "Ritika Sharma",
-      role: "VP Enterprise Growth",
+      name: "Divyaa Gupta",
+      role: "Director ",
     },
   ];
 
@@ -94,7 +104,7 @@ export default function GleefixAboutPage() {
                 </button>
 
               </Link>
-              
+
               <button className="h-14 px-8 rounded-2xl bg-white border border-slate-200 text-slate-700 font-black hover:shadow-lg transition-all duration-200">
                 Our Vision
               </button>
@@ -211,26 +221,32 @@ export default function GleefixAboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7">
-            {values.map((value, index) => (
-              <div
-                key={index}
-                className="group relative overflow-hidden rounded-4xl bg-[#F8FAFC] border border-slate-200 p-8 hover:shadow-2xl transition-all duration-300"
-              >
-                <div className="absolute top-0 right-0 h-48 w-48 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
+            {values.map((value, index) => {
+              const Icon = value.icon;
 
-                <div className="relative z-10">
-                  <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7" />
+              return (
+                <div
+                  key={index}
+                  className="group relative overflow-hidden rounded-4xl bg-[#F8FAFC] border border-slate-200 p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                >
+                  <div className="absolute top-0 right-0 h-48 w-48 bg-blue-100/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
-                  <h3 className="text-3xl font-black text-slate-900">
-                    {value.title}
-                  </h3>
+                  <div className="relative z-10">
+                    <div className="h-18 w-18 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-xl mb-7 flex items-center justify-center">
+                      <Icon className="text-white text-4xl" />
+                    </div>
 
-                  <p className="text-slate-600 leading-relaxed mt-5 text-lg">
-                    {value.desc}
-                  </p>
+                    <h3 className="text-3xl font-black text-slate-900">
+                      {value.title}
+                    </h3>
+
+                    <p className="text-slate-600 leading-relaxed mt-5 text-lg">
+                      {value.desc}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
