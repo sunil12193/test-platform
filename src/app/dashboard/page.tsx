@@ -142,6 +142,36 @@ const skills = [
   { name: "Communication", value: 58 },
 ];
 
+const assessments = [
+  {
+    name: "Full Stack Developer Test",
+    role: "Full Stack Developer",
+    candidates: 1250,
+    completed: 980,
+    completionRate: 78,
+    score: 76.4,
+    status: "Excellent",
+  },
+  {
+    name: "Data Analyst Assessment",
+    role: "Data Analyst",
+    candidates: 950,
+    completed: 760,
+    completionRate: 80,
+    score: 72.1,
+    status: "Good",
+  },
+  {
+    name: "Frontend Developer Assessment",
+    role: "Frontend Developer",
+    candidates: 1450,
+    completed: 1210,
+    completionRate: 83,
+    score: 81.8,
+    status: "Excellent",
+  },
+];
+
 export default function DashboardPage() {
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -482,178 +512,482 @@ export default function DashboardPage() {
         </div>
 
         {/* SECOND ROW */}
-        <div className="grid grid-cols-12 gap-2 mt-6">
-          <div className="col-span-12 xl:col-span-5 bg-white rounded-2xl p-4 border">
-            <h3 className="font-semibold text-start mb-5">Hiring Funnel</h3>
+        <div className="grid grid-cols-12 gap-4 mt-6">
 
-            <div className="flex items-center justify-center gap-8">
-              {/* FUNNEL */}
-              <div className="flex flex-col items-center gap-2">
-                {funnelData.map((item, index) => (
-                  <div
-                    key={item.label}
-                    className={`h-6 rounded-md bg-gradient-to-r ${funnelColors[index % funnelColors.length]
-                      }`}
-                    style={{ width: item.width }}
-                  />
-                ))}
+          {/* HIRING FUNNEL */}
+          <div className="col-span-12 xl:col-span-5 bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">
+                  Hiring Funnel
+                </h3>
+                <p className="text-sm text-slate-500">
+                  Candidate conversion across stages
+                </p>
               </div>
 
-              {/* LEGEND */}
-              <div className="flex flex-col gap-3">
-                {funnelData.map((item, index) => (
-                  <div
-                    key={item.label}
-                    className="flex items-center justify-between gap-6 min-w-[180px]"
-                  >
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={`w-3 h-3 rounded-full bg-gradient-to-r ${funnelColors[index % funnelColors.length]
-                          }`}
-                      />
+              <div className="bg-[#0f2b46]/10 px-3 py-1 rounded-xl">
+                <span className="text-xs font-semibold text-[#0f2b46]">
+                  6.7% Hire Rate
+                </span>
+              </div>
+            </div>
 
-                      <span className="text-sm font-medium">
-                        {item.label}
+            <div className="space-y-4">
+
+              {funnelData.map((item, index) => {
+
+                const percentage = (
+                  (item.value / funnelData[0].value) *
+                  100
+                ).toFixed(0);
+
+                return (
+                  <div key={item.label}>
+
+                    <div className="flex justify-between mb-2">
+
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-slate-700">
+                          {item.label}
+                        </span>
+
+                        <span className="text-xs text-slate-400">
+                          {percentage}%
+                        </span>
+                      </div>
+
+                      <span className="font-bold text-slate-900">
+                        {item.value}
                       </span>
+
                     </div>
 
-                    <span className="text-sm text-gray-600 font-semibold">
-                      {item.value}
-                    </span>
+                    <div className="h-10 bg-slate-100 rounded-2xl overflow-hidden">
+
+                      <div
+                        className="h-full flex items-center px-4 text-white text-sm font-semibold bg-gradient-to-r from-[#0f2b46] to-[#2c5a88]"
+                        style={{
+                          width: `${percentage}%`,
+                        }}
+                      >
+                        {percentage}%
+                      </div>
+
+                    </div>
+
                   </div>
-                ))}
-              </div>
+                );
+              })}
+
             </div>
           </div>
 
-          <div className="col-span-12 xl:col-span-4 bg-white rounded-2xl p-3 border">
-            <h3 className="font-semibold mb-4">
-              Candidates by Source
-            </h3>
+          {/* CANDIDATES SOURCE */}
+          <div className="col-span-12 xl:col-span-4 bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
 
-            <div className="flex flex-col pt-10 lg:flex-row items-center gap-2">
-              {/* DONUT */}
-              <div className="relative w-42 h-42 flex items-center">
-                <div className="relative w-36 h-36">
-                  {/* Colored Ring */}
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background: `conic-gradient(
-              ${sourceColors[0]} 0% 37.6%,
-              ${sourceColors[1]} 37.6% 62.4%,
-              ${sourceColors[2]} 62.4% 86.7%,
-              ${sourceColors[3]} 86.7% 100%
-            )`,
-                    }}
-                  />
-                </div>
+            <div className="flex items-center justify-between mb-5">
+
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">
+                  Candidate Sources
+                </h3>
+
+                <p className="text-sm text-slate-500">
+                  Top acquisition channels
+                </p>
               </div>
 
-              {/* LEGEND */}
-              <div className="flex-col space-y-4">
+              <button className="text-sm font-medium text-[#0f2b46]">
+                View Report
+              </button>
+
+            </div>
+
+            <div className="flex flex-col items-center">
+
+              {/* DONUT */}
+              <div className="relative w-52 h-52">
+
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: `
+              conic-gradient(
+                #0f2b46 0% 37.6%,
+                #1d4f80 37.6% 62.4%,
+                #4a82bc 62.4% 86.7%,
+                #9ec2e8 86.7% 100%
+              )
+            `,
+                  }}
+                />
+
+                <div className="absolute inset-[28px] bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
+
+                  <h2 className="text-3xl font-bold text-slate-900">
+                    8.6K
+                  </h2>
+
+                  <p className="text-sm text-slate-500">
+                    Candidates
+                  </p>
+
+                </div>
+
+              </div>
+
+              {/* SOURCE LIST */}
+              <div className="w-full mt-6 space-y-4">
+
                 {sourceData.map((item, index) => (
+
                   <div
                     key={item.label}
-                    className="flex items-center justify-between gap-4"
+                    className="flex items-center justify-between"
                   >
-                    <div className="flex items-center gap-2 whitespace-nowrap">
+
+                    <div className="flex items-center gap-3">
+
                       <div
-                        className="w-3 h-3 rounded-full flex-shrink-0"
+                        className="w-3 h-3 rounded-full"
                         style={{
                           backgroundColor:
                             sourceColors[index],
                         }}
                       />
-                      <span className="text-[10px] font-medium whitespace-nowrap">
+
+                      <span className="text-sm font-medium text-slate-700">
                         {item.label}
                       </span>
+
                     </div>
 
-                    <span className="text-[10px] text-gray-600 whitespace-nowrap">
-                      {item.value.toLocaleString()} (
-                      {item.percentage}%)
+                    <span className="font-semibold text-slate-900">
+                      {item.percentage}%
                     </span>
+
                   </div>
+
                 ))}
+
               </div>
+
             </div>
           </div>
 
-          <div className="col-span-12 xl:col-span-3 bg-white rounded-2xl p-3 border">
-            <div className="flex justify-between">
-              <h3 className="font-semibold">Proctoring Overview</h3>
-              <button className="text-purple-600 text-sm">
-                View Details
-              </button>
+          {/* PROCTORING OVERVIEW */}
+          <div className="col-span-12 xl:col-span-3 bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+
+            <div className="flex items-center justify-between mb-6">
+
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">
+                  Proctoring
+                </h3>
+
+                <p className="text-sm text-slate-500">
+                  Assessment monitoring
+                </p>
+              </div>
+
+              <div className="w-10 h-10 rounded-xl bg-[#0f2b46]/10 flex items-center justify-center">
+                🛡️
+              </div>
+
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-5">
-              <Card title="Tests Proctored" value="5,643" />
-              <Card title="Suspicious Activities" value="320" />
-              <Card title="Flagged Sessions" value="145" />
-              <Card title="Integrity Score" value="98.2%" />
+            <div className="space-y-4">
+
+              <div className="p-4 rounded-2xl bg-slate-50">
+                <p className="text-xs text-slate-500">
+                  Tests Proctored
+                </p>
+
+                <h4 className="text-2xl font-bold mt-1">
+                  5,643
+                </h4>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+
+                <div className="p-4 rounded-2xl bg-red-50">
+                  <p className="text-xs text-red-500">
+                    Suspicious
+                  </p>
+
+                  <h4 className="text-xl font-bold text-red-700">
+                    320
+                  </h4>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-yellow-50">
+                  <p className="text-xs text-yellow-600">
+                    Flagged
+                  </p>
+
+                  <h4 className="text-xl font-bold text-yellow-700">
+                    145
+                  </h4>
+                </div>
+
+              </div>
+
+              <div className="p-5 rounded-2xl bg-gradient-to-r from-[#0f2b46] to-[#1d4f80] text-white">
+
+                <p className="text-sm opacity-80">
+                  Integrity Score
+                </p>
+
+                <h2 className="text-3xl font-bold mt-2">
+                  98.2%
+                </h2>
+
+                <div className="mt-3 h-2 rounded-full bg-white/20 overflow-hidden">
+
+                  <div
+                    className="h-full rounded-full bg-white"
+                    style={{
+                      width: "98%",
+                    }}
+                  />
+
+                </div>
+
+              </div>
+
             </div>
           </div>
+
         </div>
 
-        {/* TABLE */}
-        <div className="bg-white rounded-2xl border mt-6 overflow-hidden">
-          <div className="p-5 flex justify-between">
-            <h3 className="font-semibold">Recent Assessments</h3>
-            <button className="text-purple-600 text-sm">
-              View All Assessments
-            </button>
+        {/* RECENT ASSESSMENTS */}
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm mt-6 overflow-hidden">
+
+          {/* HEADER */}
+          <div className="p-6 border-b border-slate-100">
+
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+              <div>
+                <h3 className="text-xl font-bold text-slate-900">
+                  Recent Assessments
+                </h3>
+
+                <p className="text-sm text-slate-500 mt-1">
+                  Track assessment performance and completion rates
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+
+                <input
+                  placeholder="Search assessment..."
+                  className="
+            px-4
+            py-2
+            rounded-xl
+            border
+            border-slate-200
+            text-sm
+            outline-none
+            focus:border-[#0f2b46]
+          "
+                />
+
+                <button
+                  className="
+            px-4
+            py-2
+            rounded-xl
+            bg-[#0f2b46]
+            text-white
+            text-sm
+            font-medium
+          "
+                >
+                  View All
+                </button>
+
+              </div>
+
+            </div>
+
           </div>
 
-          <table className="w-full">
-            <thead className="bg-gray-50 border-y">
-              <tr>
-                <th className="text-left p-4">Assessment</th>
-                <th className="text-left p-4">Job Role</th>
-                <th className="text-left p-4">Candidates</th>
-                <th className="text-left p-4">Completed</th>
-                <th className="text-left p-4">Avg Score</th>
-                <th className="text-left p-4">Action</th>
-              </tr>
-            </thead>
+          {/* TABLE */}
+          <div className="overflow-x-auto">
 
-            <tbody>
-              <tr className="border-b">
-                <td className="p-4">Full Stack Developer Test</td>
-                <td className="p-4">Full Stack Developer</td>
-                <td className="p-4">1,250</td>
-                <td className="p-4">980 (78%)</td>
-                <td className="p-4">
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-                    76.4%
-                  </span>
-                </td>
-                <td className="p-4">
-                  <button className="px-4 py-2 border rounded-lg">
-                    View Report
-                  </button>
-                </td>
-              </tr>
+            <table className="w-full">
 
-              <tr>
-                <td className="p-4">Data Analyst Assessment</td>
-                <td className="p-4">Data Analyst</td>
-                <td className="p-4">950</td>
-                <td className="p-4">760 (80%)</td>
-                <td className="p-4">
-                  <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
-                    72.1%
-                  </span>
-                </td>
-                <td className="p-4">
-                  <button className="px-4 py-2 border rounded-lg">
-                    View Report
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              <thead>
+
+                <tr className="bg-slate-50 border-b">
+
+                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
+                    Assessment
+                  </th>
+
+                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
+                    Role
+                  </th>
+
+                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
+                    Candidates
+                  </th>
+
+                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
+                    Completion
+                  </th>
+
+                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
+                    Avg Score
+                  </th>
+
+                  <th className="text-right px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
+                    Action
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                {assessments.map((assessment, index) => (
+
+                  <tr
+                    key={index}
+                    className="
+              border-b
+              hover:bg-slate-50
+              transition-colors
+            "
+                  >
+
+                    {/* Assessment */}
+                    <td className="px-6 py-5">
+
+                      <div className="flex items-center gap-3">
+
+                        <div className="w-10 h-10 rounded-xl bg-[#0f2b46]/10 flex items-center justify-center">
+
+                          <span className="text-[#0f2b46] font-bold">
+                            A
+                          </span>
+
+                        </div>
+
+                        <div>
+
+                          <p className="font-semibold text-slate-900">
+                            {assessment.name}
+                          </p>
+
+                          <p className="text-xs text-slate-500">
+                            Technical Assessment
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                    </td>
+
+                    {/* Role */}
+                    <td className="px-6 py-5 text-slate-700">
+                      {assessment.role}
+                    </td>
+
+                    {/* Candidates */}
+                    <td className="px-6 py-5 font-semibold">
+                      {assessment.candidates.toLocaleString()}
+                    </td>
+
+                    {/* Completion */}
+                    <td className="px-6 py-5">
+
+                      <div className="flex flex-col gap-2">
+
+                        <div className="flex justify-between text-sm">
+
+                          <span>
+                            {assessment.completed}
+                          </span>
+
+                          <span className="font-medium">
+                            {assessment.completionRate}%
+                          </span>
+
+                        </div>
+
+                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+
+                          <div
+                            className="h-full bg-[#0f2b46] rounded-full"
+                            style={{
+                              width: `${assessment.completionRate}%`,
+                            }}
+                          />
+
+                        </div>
+
+                      </div>
+
+                    </td>
+
+                    {/* Score */}
+                    <td className="px-6 py-5">
+
+                      <span
+                        className={`
+                  px-3
+                  py-1
+                  rounded-full
+                  text-xs
+                  font-semibold
+                  ${assessment.score >= 75
+                            ? "bg-green-100 text-green-700"
+                            : "bg-yellow-100 text-yellow-700"
+                          }
+                `}
+                      >
+                        {assessment.score}%
+                      </span>
+
+                    </td>
+
+                    {/* Action */}
+                    <td className="px-6 py-5 text-right">
+
+                      <button
+                        className="
+                  px-4
+                  py-2
+                  rounded-xl
+                  border
+                  border-slate-200
+                  hover:bg-[#0f2b46]
+                  hover:text-white
+                  transition-all
+                "
+                      >
+                        View Report
+                      </button>
+
+                    </td>
+
+                  </tr>
+
+                ))}
+
+              </tbody>
+
+            </table>
+
+          </div>
+
         </div>
       </main>
     </div>
