@@ -3,17 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BarChart3, Bot, FileCheck } from "lucide-react";
-import {
-  FilePlus2,
-  UserPlus,
-  ShieldCheck,
-} from "lucide-react";
-
-import {
-  Plus,
-  Minus,
-  HelpCircle,
-} from "lucide-react";
+import { FilePlus2, UserPlus, ShieldCheck,} from "lucide-react";
+import { Plus, Minus, HelpCircle,} from "lucide-react";
 
 interface FAQItem {
   question: string;

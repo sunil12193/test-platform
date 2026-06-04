@@ -93,18 +93,6 @@ export default function AssessmentsPage() {
   }
 
   // ========================================
-  // ERROR
-  // ========================================
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-red-500 text-lg font-semibold">
-        {(error as Error).message}
-      </div>
-    );
-  }
-
-  // ========================================
   // TABLE COLUMNS
   // ========================================
 

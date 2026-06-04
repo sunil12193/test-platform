@@ -82,36 +82,18 @@ const assessmentData = [
 ];
 
 const funnelData = [
-  {
-    label: "Applications",
-    value: "12,543",
-    width: "100%",
-    color: "from-indigo-500 to-purple-500",
-  },
-  {
-    label: "Assessments",
-    value: "8,653",
-    width: "85%",
-    color: "from-purple-500 to-pink-500",
-  },
-  {
-    label: "Interviews",
-    value: "2,350",
-    width: "70%",
-    color: "from-pink-500 to-rose-500",
-  },
-  {
-    label: "Offers",
-    value: "320",
-    width: "55%",
-    color: "from-orange-500 to-amber-500",
-  },
-  {
-    label: "Hires",
-    value: "189",
-    width: "40%",
-    color: "from-emerald-500 to-green-500",
-  },
+  { label: "Applied", value: 1200, width: "220px" },
+  { label: "Screened", value: 850, width: "180px" },
+  { label: "Interviewed", value: 450, width: "140px" },
+  { label: "Offered", value: 120, width: "100px" },
+  { label: "Hired", value: 80, width: "70px" },
+];
+const funnelColors = [
+  "from-blue-500 to-blue-600",
+  "from-cyan-500 to-cyan-600",
+  "from-green-500 to-green-600",
+  "from-yellow-500 to-yellow-600",
+  "from-red-500 to-red-600",
 ];
 const sourceData = [
   {
@@ -173,22 +155,40 @@ export default function DashboardPage() {
         </div>
 
         {/* STATS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
           {stats.map((item, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-3 border shadow-sm"
-            >
-              <div className="flex justify-between items-center">
+              className=" relative overflow-hidden rounded-3xl bg-white border border-slate-200 p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              {/* Top Accent */}
+              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-[#0f2b46] via-[#1c4d7e] to-[#3d79b8]" />
+
+              {/* Background Glow */}
+              <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-[#0f2b46]/5 blur-2xl" />
+
+              <div className="relative flex items-center justify-between ">
                 <div>
-                  <p className="text-[12px] whitespace-nowrap text-gray-500">{item.title}</p>
-                  <h2 className="text-2xl font-bold mt-2">{item.value}</h2>
-                  <p className="text-green-600 text-sm mt-2">
-                    ↑ {item.change}
+                  <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
+                    {item.title}
                   </p>
+
+                  <h2 className="mt-3 text-3xl font-bold text-slate-900">
+                    {item.value}
+                  </h2>
+
+                  <div className="mt-4 flex items-center gap-2">
+                    <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">
+                      +{item.change}
+                    </span>
+
+                    <span className="text-xs text-slate-400">
+                      vs last month
+                    </span>
+                  </div>
                 </div>
 
-                <div className="h-14 w-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center">
+                <div
+                  className=" flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0f2b46]/10 text-[#0f2b46]">
                   {item.icon}
                 </div>
               </div>
@@ -196,34 +196,73 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {/* CHARTS */}
-        <div className="grid grid-cols-12 gap-2 mt-6">
-          <div className="col-span-12 xl:col-span-5 bg-white rounded-2xl border p-5">
+        {/* CHARTS SECTION */}
+        <div className="grid grid-cols-12 gap-4 mt-6">
+
+          {/* CANDIDATE TREND */}
+          <div className="col-span-12 xl:col-span-6 bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+
             {/* Header */}
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h3 className="font-semibold text-gray-900">
-                  Candidates Over Time
-                </h3>
-                <p className="text-xs text-gray-500 mt-1">
-                  Jan 2024 - Jun 2024
-                </p>
+            <div className="p-6 border-b border-slate-100">
+
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">
+                    Candidate Growth
+                  </h3>
+
+                  <p className="text-sm text-slate-500 mt-1">
+                    Recruitment performance overview
+                  </p>
+                </div>
+
+                <button className="px-3 py-1.5 text-sm rounded-xl bg-[#0f2b46]/10 text-[#0f2b46]">
+                  Last 6 Months
+                </button>
               </div>
 
-              <div className="text-right">
-                <p className="text-2xl font-bold text-gray-900">
-                  12,543
-                </p>
-                <p className="text-xs text-green-600 font-medium">
-                  ↑ 18.6% growth
-                </p>
+              {/* KPI */}
+              <div className="grid grid-cols-3 gap-4 mt-5">
+
+                <div>
+                  <p className="text-xs text-slate-500">
+                    Total Candidates
+                  </p>
+
+                  <h4 className="text-2xl font-bold text-slate-900">
+                    12.5K
+                  </h4>
+                </div>
+
+                <div>
+                  <p className="text-xs text-slate-500">
+                    Growth Rate
+                  </p>
+
+                  <h4 className="text-2xl font-bold text-green-600">
+                    +18.6%
+                  </h4>
+                </div>
+
+                <div>
+                  <p className="text-xs text-slate-500">
+                    Active Jobs
+                  </p>
+
+                  <h4 className="text-2xl font-bold text-slate-900">
+                    64
+                  </h4>
+                </div>
+
               </div>
             </div>
 
             {/* Chart */}
-            <div className="h-[260px] focus:outline-none">
+            <div className="p-4 h-[320px]">
+
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={data}>
+
                   <defs>
                     <linearGradient
                       id="candidateGradient"
@@ -234,12 +273,12 @@ export default function DashboardPage() {
                     >
                       <stop
                         offset="5%"
-                        stopColor="#8B5CF6"
+                        stopColor="#0f2b46"
                         stopOpacity={0.25}
                       />
                       <stop
                         offset="95%"
-                        stopColor="#8B5CF6"
+                        stopColor="#0f2b46"
                         stopOpacity={0}
                       />
                     </linearGradient>
@@ -247,143 +286,243 @@ export default function DashboardPage() {
 
                   <CartesianGrid
                     vertical={false}
-                    stroke="#E5E7EB"
+                    stroke="#E2E8F0"
                     strokeDasharray="3 3"
                   />
 
                   <XAxis
                     dataKey="month"
-                    tick={{ fontSize: 12 }}
                     tickLine={false}
                     axisLine={false}
                   />
 
                   <YAxis
-                    tick={{ fontSize: 12 }}
                     tickLine={false}
                     axisLine={false}
                   />
 
                   <Tooltip
                     contentStyle={{
-                      borderRadius: "12px",
+                      borderRadius: "16px",
                       border: "none",
                       boxShadow:
-                        "0 10px 30px rgba(0,0,0,0.1)",
+                        "0px 15px 40px rgba(0,0,0,0.08)",
                     }}
                   />
 
                   <Area
-                    type="natural"
+                    type="monotone"
                     dataKey="candidates"
-                    stroke="#8B5CF6"
-                    strokeWidth={3}
+                    stroke="#0f2b46"
+                    strokeWidth={4}
                     fill="url(#candidateGradient)"
                   />
                 </AreaChart>
               </ResponsiveContainer>
+
             </div>
           </div>
 
-          <div className="col-span-12 xl:col-span-5 bg-white rounded-2xl p-5 border">
-            <h3 className="font-semibold mb-2">
-              Assessment Performance
-            </h3>
-            <div className="flex flex-col pt-10 lg:flex-row items-center gap-2">
+          {/* ASSESSMENT PERFORMANCE */}
+          <div className="col-span-12 xl:col-span-4 bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+
+            <div className="flex items-center justify-between mb-5">
+
+              <div>
+                <h3 className="font-bold text-slate-900">
+                  Assessment Results
+                </h3>
+
+                <p className="text-sm text-slate-500">
+                  Candidate score distribution
+                </p>
+              </div>
+
+              <div className="bg-[#0f2b46]/10 px-3 py-1 rounded-xl">
+                <span className="text-xs font-semibold text-[#0f2b46]">
+                  8,653 Tests
+                </span>
+              </div>
+
+            </div>
+
+            <div className="flex flex-col items-center">
+
               {/* DONUT */}
-              <div className="relative w-42 h-42 flex items-center">
+              <div className="relative w-48 h-48">
 
-                {/* Inner Circle */}
-                <div className="relative w-36 h-36">
-                  {/* Colored Ring */}
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background:
-                        "conic-gradient(#3B82F6 0% 25%, #14B8A6 25% 62%, #FBBF24 62% 87%, #F87171 87% 100%)",
-                    }}
-                  />
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background:
+                      "conic-gradient(#0f2b46 0% 25%, #1d4f80 25% 62%, #3a77b7 62% 87%, #94b9dd 87% 100%)",
+                  }}
+                />
 
-                  {/* White Center */}
-                  <div className="absolute inset-[28px] bg-white rounded-full flex flex-col items-center justify-center">
-                    <h2 className="text-xl font-bold">8,653</h2>
-                    <p className="text-xs text-gray-500">Completed</p>
-                  </div>
+                <div className="absolute inset-[24px] bg-white rounded-full flex flex-col justify-center items-center shadow-inner">
+
+                  <h2 className="text-3xl font-bold">
+                    8.6K
+                  </h2>
+
+                  <p className="text-sm text-slate-500">
+                    Completed
+                  </p>
+
                 </div>
+
               </div>
 
               {/* LEGEND */}
-              <div className="flex-col space-y-4">
+              <div className="w-full mt-6 space-y-4">
+
                 {assessmentData.map((item, index) => (
+
                   <div
                     key={item.label}
-                    className="flex items-center justify-between gap-4"
+                    className="flex items-center justify-between"
                   >
-                    <div className="flex items-center gap-2 whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+
                       <div
-                        className="w-3 h-3 rounded-full flex-shrink-0"
+                        className="w-3 h-3 rounded-full"
                         style={{
                           backgroundColor: colors[index],
                         }}
                       />
 
-                      <span className="text-[12px] font-medium whitespace-nowrap">
+                      <span className="text-sm text-slate-700">
                         {item.label}
                       </span>
+
                     </div>
 
-                    <span className="text-[12px] text-gray-600 whitespace-nowrap">
-                      {item.value.toLocaleString()} ({item.percentage}%)
+                    <span className="font-semibold text-slate-900">
+                      {item.percentage}%
                     </span>
                   </div>
+
                 ))}
+
               </div>
+
             </div>
+
           </div>
 
-          <div className="col-span-12 xl:col-span-2 bg-white rounded-2xl p-5 border">
-            <div className="flex justify-between">
-              <h3 className="font-semibold">Top Skills</h3>
-              <button className="text-purple-600 text-sm">View All</button>
+          {/* TOP SKILLS */}
+          <div className="col-span-12 xl:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-sm p-5">
+
+            <div className="flex items-center justify-between mb-6">
+
+              <h3 className="font-bold text-slate-900">
+                Top Skills
+              </h3>
+
+              <button className="text-[#0f2b46] text-sm font-medium">
+                View All
+              </button>
+
             </div>
 
-            <div className="mt-3 space-y-3">
+            <div className="space-y-5">
+
               {skills.map((skill) => (
+
                 <div key={skill.name}>
+
                   <div className="flex justify-between mb-2">
-                    <span>{skill.name}</span>
-                    <span>{skill.value}%</span>
+
+                    <span className="text-sm font-medium text-slate-700">
+                      {skill.name}
+                    </span>
+
+                    <span className="text-sm font-semibold text-slate-900">
+                      {skill.value}%
+                    </span>
+
                   </div>
 
-                  <div className="h-2 bg-gray-200 rounded-full">
+                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+
                     <div
-                      style={{ width: `${skill.value}%` }}
-                      className="h-2 rounded-full bg-purple-600"
+                      className="h-full rounded-full bg-gradient-to-r from-[#0f2b46] to-[#2d5d8f]"
+                      style={{
+                        width: `${skill.value}%`,
+                      }}
                     />
+
                   </div>
+
                 </div>
+
               ))}
+
             </div>
+
+            {/* Extra Metric */}
+            <div className="mt-8 p-4 rounded-2xl bg-[#0f2b46] text-white">
+
+              <p className="text-xs opacity-80">
+                Most Demanded
+              </p>
+
+              <h4 className="font-bold mt-1">
+                Python
+              </h4>
+
+              <p className="text-xs opacity-80 mt-1">
+                Appears in 82% of job roles
+              </p>
+
+            </div>
+
           </div>
+
         </div>
 
         {/* SECOND ROW */}
         <div className="grid grid-cols-12 gap-2 mt-6">
-          <div className="col-span-12 xl:col-span-5 bg-white rounded-2xl p-3 border">
+          <div className="col-span-12 xl:col-span-5 bg-white rounded-2xl p-4 border">
             <h3 className="font-semibold text-start mb-5">Hiring Funnel</h3>
 
-            <div className="flex flex-col items-center gap-1">
-              {funnelData.map((item) => (
-                <div
-                  key={item.label}
-                  className={`h-12 rounded-lg bg-gradient-to-r ${item.color}
-                  flex items-center justify-between px-4 text-white font-medium shadow-sm`}
-                  style={{ width: item.width }}
-                >
-                  <span>{item.label}</span>
-                  <span>{item.value}</span>
-                </div>
-              ))}
+            <div className="flex items-center justify-center gap-8">
+              {/* FUNNEL */}
+              <div className="flex flex-col items-center gap-2">
+                {funnelData.map((item, index) => (
+                  <div
+                    key={item.label}
+                    className={`h-6 rounded-md bg-gradient-to-r ${funnelColors[index % funnelColors.length]
+                      }`}
+                    style={{ width: item.width }}
+                  />
+                ))}
+              </div>
+
+              {/* LEGEND */}
+              <div className="flex flex-col gap-3">
+                {funnelData.map((item, index) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between gap-6 min-w-[180px]"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className={`w-3 h-3 rounded-full bg-gradient-to-r ${funnelColors[index % funnelColors.length]
+                          }`}
+                      />
+
+                      <span className="text-sm font-medium">
+                        {item.label}
+                      </span>
+                    </div>
+
+                    <span className="text-sm text-gray-600 font-semibold">
+                      {item.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
