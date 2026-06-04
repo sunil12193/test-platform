@@ -23,34 +23,55 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     question:
-      "How does AI proctoring work?",
+      "Who can use Gleefix?",
 
     answer:
-      "Gleefix uses AI-powered webcam monitoring, screen tracking, tab-switch detection, and suspicious activity analysis to ensure secure online assessments.",
+      "Gleefix is designed for startups, growing businesses, recruitment agencies, and enterprises looking to improve hiring quality and efficiency.",
   },
 
   {
     question:
-      "Can we create custom assessments?",
+      "Can I create custom assessments?",
 
     answer:
-      "Yes. You can create coding tests, MCQs, aptitude assessments, and fully customized enterprise hiring workflows.",
+      "Yes. Gleefix allows organizations to create role-specific assessments tailored to their hiring requirements.",
   },
 
   {
     question:
-      "Does Gleefix support coding interviews?",
+      "Does Gleefix support remote hiring?",
 
     answer:
-      "Absolutely. Gleefix provides live coding environments, multiple programming language support, real-time execution, and evaluation systems.",
+      "Absolutely. Our platform offers online assessments, automated proctoring, and remote candidate evaluation capabilities.",
   },
 
   {
     question:
-      "Can enterprises integrate ATS systems?",
+      "Is automated proctoring available?",
 
     answer:
-      "Yes. Gleefix supports seamless ATS and HRMS integrations for enterprise-grade recruitment automation.",
+      "Yes. Our automated proctoring features help maintain assessment integrity by monitoring candidate activities during online tests.",
+  },
+  {
+    question:
+      "Can we track recruitment performance?",
+
+    answer:
+      "Yes. Gleefix provides real-time dashboards and analytics to monitor hiring progress, assessment performance, and recruiter productivity.",
+  },
+  {
+    question:
+      "Does Gleefix integrate with ATS platforms?",
+
+    answer:
+      "Yes. Integration options are available to help organizations streamline their recruitment workflows.",
+  },
+  {
+    question:
+      "Why choose Gleefix over traditional hiring methods?",
+
+    answer:
+      "Gleefix reduces hiring time, improves candidate quality, minimizes bias, provides actionable insights, and helps organizations make smarter hiring decisions.",
   },
 ];
 
@@ -87,7 +108,7 @@ export default function GleefixHomepage() {
     },
     {
       value: "43+",
-      label: "Enterprise Clients",
+      label: " Clients",
     },
     {
       value: "24/7",
@@ -201,9 +222,7 @@ export default function GleefixHomepage() {
                 max-w-2xl
               "
             >
-              Gleefix helps enterprises streamline recruitment with AI-driven
-              assessments, proctoring, hiring analytics, and intelligent
-              candidate evaluation.
+              Trusted by forward-thinking organizations, Gleefix streamlines end-to-end talent acquisition through AI-powered assessments, automated proctoring, real-time recruitment analytics, and intelligent candidate evaluation. Our platform enables enterprises to make accurate hiring decisions, enhance workforce quality, and scale recruitment efficiently.
             </p>
 
             <div className="grid grid-cols-2 text-sm lg:text-base gap-4 mt-10">
@@ -1036,7 +1055,7 @@ export default function GleefixHomepage() {
 
           <div className="relative z-10 max-w-3xl mx-auto">
             <h2 className="text-2xl lg:text-5xl font-black leading-tight">
-              Ready To Transform Your Hiring Process?
+              Ready to Revolutionize Your Hiring Process?
             </h2>
 
             <p className="text-blue-100 text-lg leading-relaxed mt-7">

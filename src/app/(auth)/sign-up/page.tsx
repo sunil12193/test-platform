@@ -201,7 +201,7 @@ export default function SignupPage() {
               <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-5">
                 <h3 className="text-3xl font-bold text-white">43+</h3>
 
-                <p className="text-sm text-blue-100 mt-2">Enterprise Clients</p>
+                <p className="text-sm text-blue-100 mt-2"> Clients</p>
               </div>
             </div>
           </div>

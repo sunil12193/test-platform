@@ -252,7 +252,7 @@ export default function GleefixServicesPage() {
                   },
                   {
                     value: "43+",
-                    label: "Enterprise Clients",
+                    label: "Clients",
                   },
                   {
                     value: "24/7",

@@ -104,7 +104,7 @@ const companyInfo = {
     "Gleefix Services Pvt. Ltd.",
 
   address:
-    "Sector 63, Noida, Uttar Pradesh, India",
+    "Plot No- 20, Block: H-1/A, Sector 63, Noida, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
 
   email: "divya@gleefix.com",
 
@@ -330,7 +330,7 @@ export default function Footer() {
                   className="
                   text-orange-400
                   mt-1
-                  text-lg
+                  text-2xl
                 "
                 />
 
