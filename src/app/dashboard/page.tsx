@@ -1,21 +1,12 @@
 "use client";
 
-import {
-  FiBriefcase,
-  FiClipboard,
-  FiUsers,
-  FiUser,
-} from "react-icons/fi";
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
-
+import DataTable from "@/component/table";
+import { Assessment } from "@/type/assessment";
+import { FiBriefcase, FiClipboard, FiUsers, FiUser, } from "react-icons/fi";
+import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, } from "recharts";
+import { FiClock, FiFileText, FiHelpCircle, } from "react-icons/fi";
+import { useAssessments } from "@/hooks/useAssessment";
+import { useState } from "react";
 const data = [
   { month: "Jan", candidates: 1200 },
   { month: "Feb", candidates: 1500 },
@@ -173,6 +164,298 @@ const assessments = [
 ];
 
 export default function DashboardPage() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [search, setSearch] = useState<string>("");
+
+  // ========================================
+  // API CALL
+  // ========================================
+
+  const {
+    data: response,
+    isLoading,
+    error,
+  } = useAssessments({
+    page: currentPage,
+    limit: pageSize,
+  });
+
+  // ========================================
+  // API DATA
+  // ========================================
+
+  const assessments: Assessment[] =
+    response?.data || [];
+
+  console.log("Assessments:", assessments);
+
+  const totalPages =
+    response?.totalPages || 1;
+
+  const totalDocuments =
+    response?.totalDocuments || 0;
+
+  const columns = [
+    // ASSESSMENT
+    {
+      header: "Assessment",
+
+      render: (item: Assessment) => (
+        <div className="min-w-[320px] text-left">
+          <div className="flex items-start gap-4">
+            <div
+              className="
+                      h-14
+                      w-14
+                      rounded-2xl
+                      bg-linear-to-br
+                      from-[#0F2B46]
+                      to-[#1E4D7B]
+                      flex
+                      items-center
+                      justify-center
+                      text-white
+                      shadow-sm
+                      shrink-0
+                    "
+            >
+              <FiFileText size={22} />
+            </div>
+
+            <div>
+              <h2 className="text-[15px] font-semibold text-slate-800">
+                {item.title}
+              </h2>
+
+              <p className="text-xs text-slate-500 mt-1">
+                {item.assessmentId}
+              </p>
+
+              <p className="text-sm text-slate-500 mt-3 leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // TYPE
+    {
+      header: "Type",
+
+      render: (item: Assessment) => (
+        <div className="flex justify-center min-w-35">
+          <span
+            className="
+                    px-4
+                    py-2
+                    rounded-xl
+                    bg-blue-50
+                    border
+                    border-blue-100
+                    text-blue-700
+                    text-xs
+                    font-semibold
+                  "
+          >
+            {item.assessmentType}
+          </span>
+        </div>
+      ),
+    },
+
+    // QUESTIONS
+    {
+      header: "Questions",
+
+      render: (item: Assessment) => (
+        <div className="min-w-37.5">
+          <div className="flex items-center justify-center gap-3">
+            <div
+              className="
+                      h-10
+                      w-10
+                      rounded-xl
+                      bg-violet-50
+                      text-violet-600
+                      flex
+                      items-center
+                      justify-center
+                    "
+            >
+              <FiHelpCircle />
+            </div>
+
+            <div className="text-left">
+              <h3 className="text-lg font-bold text-slate-800">
+                {item.totalQuestions}
+              </h3>
+
+              <p className="text-xs text-slate-500">
+                Questions
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // MARKS
+    {
+      header: "Marks",
+
+      render: (item: Assessment) => (
+        <div className="min-w-42.5 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-500">
+              Total
+            </span>
+
+            <span className="font-bold text-slate-800">
+              {item.totalMarks}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-500">
+              Passing
+            </span>
+
+            <span className="font-bold text-emerald-600">
+              {item.passingMarks}
+            </span>
+          </div>
+        </div>
+      ),
+    },
+
+    // DURATION
+    {
+      header: "Duration",
+
+      render: (item: Assessment) => (
+        <div className="min-w-37.5">
+          <div className="flex items-center justify-center gap-3">
+            <div
+              className="
+                      h-10
+                      w-10
+                      rounded-xl
+                      bg-amber-50
+                      text-amber-600
+                      flex
+                      items-center
+                      justify-center
+                    "
+            >
+              <FiClock />
+            </div>
+
+            <div className="text-left">
+              <h3 className="text-lg font-bold text-slate-800">
+                {item.duration}m
+              </h3>
+
+              <p className="text-xs text-slate-500">
+                Duration
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // DIFFICULTY
+    {
+      header: "Difficulty",
+
+      render: (item: Assessment) => (
+        <div className="flex justify-center min-w-35">
+          <span
+            className={`
+                    px-4
+                    py-2
+                    rounded-xl
+                    text-xs
+                    font-semibold
+                    border
+      
+                    ${item.difficultyLevel === "Hard"
+                ? "bg-red-50 border-red-100 text-red-700"
+                : item.difficultyLevel === "Medium"
+                  ? "bg-yellow-50 border-yellow-100 text-yellow-700"
+                  : "bg-emerald-50 border-emerald-100 text-emerald-700"
+              }
+                  `}
+          >
+            {item.difficultyLevel}
+          </span>
+        </div>
+      ),
+    },
+
+    // CANDIDATES
+    {
+      header: "Candidates",
+
+      render: (item: Assessment) => (
+        <div className="min-w-45">
+          <div className="flex items-center gap-3">
+            <div
+              className="
+                      h-10
+                      w-10
+                      rounded-xl
+                      bg-sky-50
+                      text-sky-600
+                      flex
+                      items-center
+                      justify-center
+                    "
+            >
+              <FiUsers />
+            </div>
+
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-slate-500">
+                  Invited:
+                </span>
+
+                <span className="font-semibold text-slate-800">
+                  {item.totalCandidates}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-slate-500">
+                  Completed:
+                </span>
+
+                <span className="font-semibold text-emerald-600">
+                  {item.completedAttempts}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // CREATED
+    {
+      header: "Created",
+
+      render: (item: Assessment) => (
+        <div className="text-sm text-slate-500 font-medium min-w-30">
+          {item.createdAt}
+        </div>
+      ),
+    },
+  ];
   return (
     <div className="flex min-h-screen bg-gray-50">
       <main className="flex-1 p-6 overflow-auto">
@@ -763,232 +1046,16 @@ export default function DashboardPage() {
         </div>
 
         {/* RECENT ASSESSMENTS */}
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm mt-6 overflow-hidden">
-
-          {/* HEADER */}
-          <div className="p-6 border-b border-slate-100">
-
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-
-              <div>
-                <h3 className="text-xl font-bold text-slate-900">
-                  Recent Assessments
-                </h3>
-
-                <p className="text-sm text-slate-500 mt-1">
-                  Track assessment performance and completion rates
-                </p>
-              </div>
-
-              <div className="flex gap-3">
-
-                <input
-                  placeholder="Search assessment..."
-                  className="
-            px-4
-            py-2
-            rounded-xl
-            border
-            border-slate-200
-            text-sm
-            outline-none
-            focus:border-[#0f2b46]
-          "
-                />
-
-                <button
-                  className="
-            px-4
-            py-2
-            rounded-xl
-            bg-[#0f2b46]
-            text-white
-            text-sm
-            font-medium
-          "
-                >
-                  View All
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* TABLE */}
-          <div className="overflow-x-auto">
-
-            <table className="w-full">
-
-              <thead>
-
-                <tr className="bg-slate-50 border-b">
-
-                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
-                    Assessment
-                  </th>
-
-                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
-                    Role
-                  </th>
-
-                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
-                    Candidates
-                  </th>
-
-                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
-                    Completion
-                  </th>
-
-                  <th className="text-left px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
-                    Avg Score
-                  </th>
-
-                  <th className="text-right px-6 py-4 text-xs uppercase tracking-wider text-slate-500">
-                    Action
-                  </th>
-
-                </tr>
-
-              </thead>
-
-              <tbody>
-
-                {assessments.map((assessment, index) => (
-
-                  <tr
-                    key={index}
-                    className="
-              border-b
-              hover:bg-slate-50
-              transition-colors
-            "
-                  >
-
-                    {/* Assessment */}
-                    <td className="px-6 py-5">
-
-                      <div className="flex items-center gap-3">
-
-                        <div className="w-10 h-10 rounded-xl bg-[#0f2b46]/10 flex items-center justify-center">
-
-                          <span className="text-[#0f2b46] font-bold">
-                            A
-                          </span>
-
-                        </div>
-
-                        <div>
-
-                          <p className="font-semibold text-slate-900">
-                            {assessment.name}
-                          </p>
-
-                          <p className="text-xs text-slate-500">
-                            Technical Assessment
-                          </p>
-
-                        </div>
-
-                      </div>
-
-                    </td>
-
-                    {/* Role */}
-                    <td className="px-6 py-5 text-slate-700">
-                      {assessment.role}
-                    </td>
-
-                    {/* Candidates */}
-                    <td className="px-6 py-5 font-semibold">
-                      {assessment.candidates.toLocaleString()}
-                    </td>
-
-                    {/* Completion */}
-                    <td className="px-6 py-5">
-
-                      <div className="flex flex-col gap-2">
-
-                        <div className="flex justify-between text-sm">
-
-                          <span>
-                            {assessment.completed}
-                          </span>
-
-                          <span className="font-medium">
-                            {assessment.completionRate}%
-                          </span>
-
-                        </div>
-
-                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-
-                          <div
-                            className="h-full bg-[#0f2b46] rounded-full"
-                            style={{
-                              width: `${assessment.completionRate}%`,
-                            }}
-                          />
-
-                        </div>
-
-                      </div>
-
-                    </td>
-
-                    {/* Score */}
-                    <td className="px-6 py-5">
-
-                      <span
-                        className={`
-                  px-3
-                  py-1
-                  rounded-full
-                  text-xs
-                  font-semibold
-                  ${assessment.score >= 75
-                            ? "bg-green-100 text-green-700"
-                            : "bg-yellow-100 text-yellow-700"
-                          }
-                `}
-                      >
-                        {assessment.score}%
-                      </span>
-
-                    </td>
-
-                    {/* Action */}
-                    <td className="px-6 py-5 text-right">
-
-                      <button
-                        className="
-                  px-4
-                  py-2
-                  rounded-xl
-                  border
-                  border-slate-200
-                  hover:bg-[#0f2b46]
-                  hover:text-white
-                  transition-all
-                "
-                      >
-                        View Report
-                      </button>
-
-                    </td>
-
-                  </tr>
-
-                ))}
-
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
+        <DataTable
+          title="Recent Assessments"
+          columns={columns}
+          data={assessments.slice(0, 3)}
+          showTotal={false}
+          showViewAll={true}
+          viewAllHref="/dashboard/assessments"
+          showEdit={false}
+          showDelete={false}
+        />
       </main>
     </div>
   );

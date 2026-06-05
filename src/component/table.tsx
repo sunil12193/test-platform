@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import Link from "next/link";
 
 type Column<T> = {
   header: string;
@@ -15,6 +16,10 @@ type DataTableProps<T> = {
   onEdit?: (item: T) => void;
   showEdit?: boolean;
   showDelete?: boolean;
+
+  showTotal?: boolean;
+  showViewAll?: boolean;
+  viewAllHref?: string;
 };
 
 export default function DataTable<T extends Record<string, any>>({
@@ -25,6 +30,10 @@ export default function DataTable<T extends Record<string, any>>({
   onEdit,
   showEdit = true,
   showDelete = true,
+
+  showTotal = true,
+  showViewAll = false,
+  viewAllHref = "#",
 }: DataTableProps<T>) {
   const [tableData, setTableData] = useState<T[]>(data);
 
@@ -48,21 +57,13 @@ export default function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <div
-      className=" overflow-hidden mt-4 rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur-xl shadow-sm">
+    <div className=" overflow-hidden mt-4 rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur-xl shadow-sm">
       {/* HEADER */}
-      <div
-        className=" flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 px-6 py-5 border-b border-slate-100 bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B]">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 px-6 py-5 border-b border-slate-100 bg-gradient-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B]">
+
         {/* LEFT */}
         <div>
-          <h2
-            className="
-              text-2xl
-              font-bold
-              tracking-tight
-              text-white
-            "
-          >
+          <h2 className="text-2xl font-bold tracking-tight text-white">
             {title}
           </h2>
 
@@ -71,23 +72,42 @@ export default function DataTable<T extends Record<string, any>>({
           </p>
         </div>
 
-        {/* TOTAL */}
-        <div
-          className="
-            w-fit
-            px-4
-            py-2
-            rounded-xl
-            bg-white/10
-            border
-            border-white/10
-            backdrop-blur-md
-          "
-        >
-          <p className="text-sm font-medium text-white">
-            Total : {tableData.length}
-          </p>
+        {/* RIGHT */}
+        <div className="flex items-center gap-3">
+
+          {showTotal && (
+            <div className="px-4 py-2 rounded-xl bg-white/10 border border-white/10 backdrop-blur-md">
+              <p className="text-sm font-medium text-white">
+                Total: {tableData.length}
+              </p>
+            </div>
+          )}
+
+          {showViewAll && (
+            <Link
+              href={viewAllHref}
+              className="
+          px-4
+          py-2
+          rounded-xl
+          bg-white/15
+          backdrop-blur-md
+          border
+          border-white/20
+          text-white
+          font-medium
+          text-sm
+          hover:bg-white
+          hover:text-[#0F2B46]
+          transition-all
+          duration-300
+        "
+            >
+              View All
+            </Link>
+          )}
         </div>
+
       </div>
 
       {/* TABLE */}
