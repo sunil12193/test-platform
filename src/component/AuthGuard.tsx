@@ -16,8 +16,8 @@ export default function AuthGuard({
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
-    if (!token) {
-      router.replace("/sign-in");
+    if (token) {
+      router.replace("/dashboard");
     } else {
       setLoading(false);
     }

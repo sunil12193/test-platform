@@ -17,7 +17,6 @@ import DataTable from "../../../component/table";
 import Pagination from "@/component/pagination";
 
 import { ReportsAnalytics } from "@/type/report";
-import { reportsAnalyticsData } from "@/dummyData/report";
 
 export default function ReportsAnalyticsPage() {
   // SEARCH

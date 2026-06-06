@@ -11,7 +11,7 @@ export default function GleefixAboutPage() {
   const stats = [
     {
       value: "43+",
-      label: "Enterprise Clients",
+      label: " Clients",
     },
     {
       value: "1M+",

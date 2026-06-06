@@ -3,17 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BarChart3, Bot, FileCheck } from "lucide-react";
-import {
-  FilePlus2,
-  UserPlus,
-  ShieldCheck,
-} from "lucide-react";
-
-import {
-  Plus,
-  Minus,
-  HelpCircle,
-} from "lucide-react";
+import { FilePlus2, UserPlus, ShieldCheck, } from "lucide-react";
+import { Plus, Minus, HelpCircle, } from "lucide-react";
 
 interface FAQItem {
   question: string;
@@ -23,37 +14,96 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     question:
-      "How does AI proctoring work?",
+      "Who can use Gleefix?",
 
     answer:
-      "Gleefix uses AI-powered webcam monitoring, screen tracking, tab-switch detection, and suspicious activity analysis to ensure secure online assessments.",
+      "Gleefix is designed for startups, growing businesses, recruitment agencies, and enterprises looking to improve hiring quality and efficiency.",
   },
 
   {
     question:
-      "Can we create custom assessments?",
+      "Can I create custom assessments?",
 
     answer:
-      "Yes. You can create coding tests, MCQs, aptitude assessments, and fully customized enterprise hiring workflows.",
+      "Yes. Gleefix allows organizations to create role-specific assessments tailored to their hiring requirements.",
   },
 
   {
     question:
-      "Does Gleefix support coding interviews?",
+      "Does Gleefix support remote hiring?",
 
     answer:
-      "Absolutely. Gleefix provides live coding environments, multiple programming language support, real-time execution, and evaluation systems.",
+      "Absolutely. Our platform offers online assessments, automated proctoring, and remote candidate evaluation capabilities.",
   },
 
   {
     question:
-      "Can enterprises integrate ATS systems?",
+      "Is automated proctoring available?",
 
     answer:
-      "Yes. Gleefix supports seamless ATS and HRMS integrations for enterprise-grade recruitment automation.",
+      "Yes. Our automated proctoring features help maintain assessment integrity by monitoring candidate activities during online tests.",
+  },
+  {
+    question:
+      "Can we track recruitment performance?",
+
+    answer:
+      "Yes. Gleefix provides real-time dashboards and analytics to monitor hiring progress, assessment performance, and recruiter productivity.",
+  },
+  {
+    question:
+      "Does Gleefix integrate with ATS platforms?",
+
+    answer:
+      "Yes. Integration options are available to help organizations streamline their recruitment workflows.",
+  },
+  {
+    question:
+      "Why choose Gleefix over traditional hiring methods?",
+
+    answer:
+      "Gleefix reduces hiring time, improves candidate quality, minimizes bias, provides actionable insights, and helps organizations make smarter hiring decisions.",
   },
 ];
 
+const integrations = [
+  {
+    name: "Slack",
+    icon: "💬",
+    bg: "from-[#4A154B] to-[#7A2E7B]",
+    ring: "ring-purple-200",
+  },
+  {
+    name: "Microsoft Teams",
+    icon: "👥",
+    bg: "from-[#5B5FC7] to-[#7B83EB]",
+    ring: "ring-indigo-200",
+  },
+  {
+    name: "Zoom",
+    icon: "📹",
+    bg: "from-[#2D8CFF] to-[#60A5FA]",
+    ring: "ring-blue-200",
+  },
+  {
+    name: "Google Workspace",
+    icon: "🌐",
+    bg: "from-[#4285F4] via-[#34A853] to-[#FBBC05]",
+    ring: "ring-green-200",
+  },
+  {
+    name: "LinkedIn",
+    icon: "💼",
+    bg: "from-[#0077B5] to-[#0099E5]",
+    ring: "ring-sky-200",
+  },
+  {
+    name: "GitHub",
+    icon: "⚡",
+    bg: "from-[#24292F] to-[#57606A]",
+    ring: "ring-slate-200",
+  },
+];
 export default function GleefixHomepage() {
   const services = [
     {
@@ -87,7 +137,7 @@ export default function GleefixHomepage() {
     },
     {
       value: "43+",
-      label: "Enterprise Clients",
+      label: " Clients",
     },
     {
       value: "24/7",
@@ -201,9 +251,7 @@ export default function GleefixHomepage() {
                 max-w-2xl
               "
             >
-              Gleefix helps enterprises streamline recruitment with AI-driven
-              assessments, proctoring, hiring analytics, and intelligent
-              candidate evaluation.
+              Trusted by forward-thinking organizations, Gleefix streamlines end-to-end talent acquisition through AI-powered assessments, automated proctoring, real-time recruitment analytics, and intelligent candidate evaluation. Our platform enables enterprises to make accurate hiring decisions, enhance workforce quality, and scale recruitment efficiently.
             </p>
 
             <div className="grid grid-cols-2 text-sm lg:text-base gap-4 mt-10">
@@ -708,256 +756,188 @@ export default function GleefixHomepage() {
       </section>
 
       {/* INTEGRATIONS */}
-      <section className="max-w-7xl mx-auto px-6 py-12 lg:py-24">
-        <div className="text-center max-w-3xl mx-auto">
-          <div
-            className="
-              inline-flex
-              px-5
-              py-2
-              rounded-full
-              bg-emerald-50
-              border
-              border-emerald-100
-              text-emerald-700
-              text-xl
-              font-semibold
-              mb-6
-            "
-          >
-            Integrations
+      <section className="relative overflow-hidden py-16 lg:py-28 px-6 bg-gradient-to-b from-slate-50 via-white to-slate-50">
+
+        {/* Background Glow */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#0F2B46]/5 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto">
+
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0F2B46]/5 border border-[#0F2B46]/10 text-[#0F2B46] font-semibold mb-6">
+              🔗 Integrations
+            </div>
+
+            <h2 className="text-4xl lg:text-6xl font-black text-slate-900 leading-tight">
+              Connect With
+              <span className="block text-[#0F2B46]">
+                Your Favorite Tools
+              </span>
+            </h2>
+
+            <p className="text-slate-500 text-lg mt-6 leading-relaxed max-w-2xl mx-auto">
+              Seamlessly integrate with ATS, HRMS, communication,
+              productivity and recruitment platforms.
+            </p>
           </div>
 
-          <h2 className="lg:text-4xl text-3xl font-black text-slate-900">
-            Connect With Your Favorite Tools
-          </h2>
+          {/* Integration Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-20">
 
-          <p className="text-slate-500 text-lg mt-6 leading-relaxed">
-            Integrate seamlessly with HRMS, ATS, communication, and productivity
-            platforms.
-          </p>
-        </div>
+            {integrations.map((tool, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
+              >
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 mt-16">
-          {[
-            "Slack",
-            "Microsoft Teams",
-            "Zoom",
-            "Google Workspace",
-            "LinkedIn",
-            "GitHub",
-          ].map((tool, index) => (
-            <div
-              key={index}
-              className="
-                h-32
-                rounded-3xl
-                bg-white
-                border
-                border-slate-200
-                shadow-sm
-                hover:shadow-xl
-                transition-all
-                duration-300
-                flex
-                items-center
-                justify-center
-                text-center
-                font-bold
-                text-slate-700
-              "
-            >
-              {tool}
+                {/* Glow */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br ${tool.bg} transition-all duration-500`} />
+
+                {/* Top Accent */}
+                <div className={`h-1.5 bg-gradient-to-r ${tool.bg}`} />
+
+                <div className="relative z-10 p-6">
+
+                  {/* Logo */}
+                  <div
+                    className={`h-16 w-16 mx-auto rounded-3xl bg-gradient-to-r ${tool.bg} flex items-center justify-center text-3xl text-white shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}
+                  >
+                    {tool.icon}
+                  </div>
+
+                  {/* Name */}
+                  <h4 className="mt-5 text-center font-bold text-slate-800 text-sm leading-snug">
+                    {tool.name}
+                  </h4>
+
+                  {/* Status */}
+                  <div className="flex justify-center mt-4">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-semibold">
+                      <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                      Available
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+
+          </div>
+
+          {/* Bottom Stats */}
+          <div className="mt-20 grid md:grid-cols-3 gap-6">
+
+            <div className="rounded-3xl bg-white border border-slate-200 p-6 text-center">
+              <h3 className="text-4xl font-black text-[#0F2B46]">50+</h3>
+              <p className="mt-2 text-slate-500">Platform Integrations</p>
             </div>
-          ))}
+
+            <div className="rounded-3xl bg-white border border-slate-200 p-6 text-center">
+              <h3 className="text-4xl font-black text-[#0F2B46]">99.9%</h3>
+              <p className="mt-2 text-slate-500">Integration Uptime</p>
+            </div>
+
+            <div className="rounded-3xl bg-white border border-slate-200 p-6 text-center">
+              <h3 className="text-4xl font-black text-[#0F2B46]">&lt; 5 Min</h3>
+              <p className="mt-2 text-slate-500">Average Setup Time</p>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
       {/* FAQ */}
-      <section
-        className="
-        relative
-        overflow-hidden
-        bg-gradient-to-b
-        from-slate-50
-        to-white
-        py-12
-        lg:py-28
-        px-6
-      "
-      >
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-12 lg:py-28 px-6">
         {/* BACKGROUND GLOW */}
-        <div
-          className="
-          absolute
-          top-0
-          left-1/2
-          -translate-x-1/2
-          w-[600px]
-          h-[600px]
-          bg-blue-100/40
-          blur-3xl
-          rounded-full
-          pointer-events-none
-        "
-        />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-100/40 blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-5xl mx-auto relative z-10">
-          {/* HEADER */}
           <div className="text-center mb-20">
-            <div
-              className="
-              inline-flex
-              items-center
-              gap-2
-              px-5
-              py-2
-              rounded-full
-              bg-blue-50
-              border
-              border-blue-100
-              text-blue-700
-              text-xl
-              font-semibold
-              mb-6
-            "
-            >
-              <HelpCircle className="w-4 h-4" />
 
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0F2B46]/5 border border-[#0F2B46]/10 text-[#0F2B46] font-semibold mb-6">
+              <HelpCircle className="w-4 h-4" />
               Frequently Asked Questions
             </div>
 
-            <h2
-              className="
-              lg:text-4xl 
-              text-3xl
-              md:text-5xl
-              font-black
-              text-slate-900
-              leading-tight
-            "
-            >
-              Have Questions?
+            <h2 className="text-4xl lg:text-6xl font-black leading-tight text-slate-900">
+              Everything You Need
               <br />
-
-              We’ve Got Answers.
+              To Know
             </h2>
 
-            <p
-              className="
-              text-slate-500
-              text-lg
-              mt-6
-              max-w-2xl
-              mx-auto
-              leading-relaxed
-            "
-            >
-              Everything you need to know
-              about the Gleefix AI-powered
-              recruitment and assessment
-              platform.
+            <p className="mt-6 max-w-3xl mx-auto text-lg text-slate-500 leading-relaxed">
+              Learn how Gleefix helps recruiters automate hiring,
+              conduct AI-powered assessments, manage interviews,
+              and hire top talent faster.
             </p>
+
           </div>
 
-          {/* FAQ LIST */}
-          <div className="space-y-6">
+          <div className="space-y-5">
             {faqs.map((faq, index) => {
-              const isOpen =
-                openIndex === index;
+              const isOpen = openIndex === index;
 
               return (
                 <div
                   key={index}
-                  className={`
-                  group
-                  rounded-[30px]
-                  border
-                  overflow-hidden
-                  transition-all
-                  duration-300
-                  cursor-pointer
-
-                  ${isOpen
-                      ? "bg-[#0F172A] border-[#0F172A] shadow-2xl"
-                      : "bg-white border-slate-200 hover:border-blue-200 hover:shadow-xl"
-                    }
-                `}
+                  className={`relative overflow-hidden rounded-[32px] border transition-all duration-500 backdrop-blur-xl ${isOpen
+                      ? "border-[#0F2B46] bg-[#0F2B46] shadow-[0_20px_60px_rgba(15,43,70,0.25)]"
+                      : "border-slate-200 bg-white hover:border-[#0F2B46]/20 hover:shadow-xl"
+                    }`}
                 >
+                  {/* TOP GLOW */}
+                  {isOpen && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] opacity-20" />
+                  )}
+
                   {/* QUESTION */}
                   <button
-                    onClick={() =>
-                      toggleFAQ(index)
-                    }
-                    className="
-                    w-full
-                    flex
-                    items-center
-                    justify-between
-                    gap-5
-                    p-7
-                    text-left
-                  "
+                    onClick={() => toggleFAQ(index)}
+                    className="relative z-10 w-full flex items-center justify-between p-8 text-left"
                   >
                     <div className="flex items-start gap-5">
+
                       {/* NUMBER */}
                       <div
-                        className={`
-                        min-w-[48px]
-                        h-12
-                        rounded-2xl
-                        flex
-                        items-center
-                        justify-center
-                        font-bold
-                        text-sm
-                        transition-all
-
-                        ${isOpen
-                            ? "bg-white/10 text-white"
-                            : "bg-slate-100 text-slate-700"
-                          }
-                      `}
+                        className={`h-14 w-14 rounded-2xl flex items-center justify-center font-black text-lg shrink-0 transition-all ${isOpen
+                            ? "bg-white text-[#0F2B46]"
+                            : "bg-slate-100 text-slate-600"
+                          }`}
                       >
-                        0{index + 1}
+                        {String(index + 1).padStart(2, "0")}
                       </div>
 
-                      {/* TEXT */}
+                      {/* QUESTION TEXT */}
                       <div>
                         <h3
-                          className={`
-                          text-lg
-                          md:text-xl
-                          font-bold
-                          transition-all
-
-                          ${isOpen
+                          className={`text-lg lg:text-xl font-bold transition-colors ${isOpen
                               ? "text-white"
                               : "text-slate-900"
-                            }
-                        `}
+                            }`}
                         >
                           {faq.question}
                         </h3>
+
+                        <p
+                          className={`mt-2 text-sm ${isOpen
+                              ? "text-slate-300"
+                              : "text-slate-500"
+                            }`}
+                        >
+                          Click to learn more
+                        </p>
                       </div>
                     </div>
 
                     {/* ICON */}
                     <div
-                      className={`
-                      min-w-[50px]
-                      h-[50px]
-                      rounded-2xl
-                      flex
-                      items-center
-                      justify-center
-                      transition-all
-
-                      ${isOpen
-                          ? "bg-white text-slate-900 rotate-180"
-                          : "bg-slate-100 text-slate-700"
-                        }
-                    `}
+                      className={`h-14 w-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${isOpen
+                          ? "bg-white text-[#0F2B46] rotate-180"
+                          : "bg-slate-100 text-slate-600"
+                        }`}
                     >
                       {isOpen ? (
                         <Minus className="w-5 h-5" />
@@ -969,40 +949,31 @@ export default function GleefixHomepage() {
 
                   {/* ANSWER */}
                   <div
-                    className={`
-                    grid
-                    transition-all
-                    duration-500
-                    ease-in-out
-
-                    ${isOpen
+                    className={`grid transition-all duration-500 ${isOpen
                         ? "grid-rows-[1fr] opacity-100"
                         : "grid-rows-[0fr] opacity-0"
-                      }
-                  `}
+                      }`}
                   >
                     <div className="overflow-hidden">
-                      <div
-                        className="
-                        px-7
-                        pb-7
-                        pl-[92px]
-                      "
-                      >
-                        <p
-                          className={`
-                          leading-relaxed
-                          text-[15px]
 
-                          ${isOpen
-                              ? "text-slate-300"
-                              : "text-slate-500"
-                            }
-                        `}
+                      <div className="px-8 pb-8 pl-[104px] relative z-10">
+                        <div
+                          className={`rounded-2xl p-5 border ${isOpen
+                              ? "bg-white/5 border-white/10"
+                              : "bg-slate-50 border-slate-100"
+                            }`}
                         >
-                          {faq.answer}
-                        </p>
+                          <p
+                            className={`leading-8 text-[15px] ${isOpen
+                                ? "text-slate-300"
+                                : "text-slate-600"
+                              }`}
+                          >
+                            {faq.answer}
+                          </p>
+                        </div>
                       </div>
+
                     </div>
                   </div>
                 </div>
@@ -1014,29 +985,12 @@ export default function GleefixHomepage() {
 
       {/* CTA */}
       <section className="px-6 pb-24 pt-24">
-        <div
-          className="
-            max-w-7xl
-            mx-auto
-            rounded-[36px]
-            bg-linear-to-r
-            from-[#0F2B46]
-            via-[#163A5C]
-            to-[#1E4D7B]
-            px-10
-            py-12
-            lg:py-20
-            text-center
-            text-white
-            relative
-            overflow-hidden
-          "
-        >
+        <div className="max-w-7xl mx-auto rounded-[36px] bg-linear-to-r from-[#0F2B46] via-[#163A5C] to-[#1E4D7B] px-10 py-12 lg:py-20 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 h-96 w-96 bg-blue-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-3xl mx-auto">
             <h2 className="text-2xl lg:text-5xl font-black leading-tight">
-              Ready To Transform Your Hiring Process?
+              Ready to Revolutionize Your Hiring Process?
             </h2>
 
             <p className="text-blue-100 text-lg leading-relaxed mt-7">
@@ -1045,38 +999,11 @@ export default function GleefixHomepage() {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
-              <button
-                className="
-                  h-14
-                  px-8
-                  rounded-2xl
-                  bg-white
-                  text-[#0F2B46]
-                  font-bold
-                  hover:scale-[1.02]
-                  transition-all
-                  duration-200
-                "
-              >
+              <button className="h-14 px-8 rounded-2xl bg-white text-[#0F2B46] font-bold hover:scale-[1.02] transition-all duration-200">
                 Book Demo
               </button>
 
-              <button
-                className="
-                  h-14
-                  px-8
-                  rounded-2xl
-                  border
-                  border-white/20
-                  bg-white/10
-                  backdrop-blur-md
-                  text-white
-                  font-bold
-                  hover:bg-white/20
-                  transition-all
-                  duration-200
-                "
-              >
+              <button className="h-14 px-8 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md text-white font-bold hover:bg-white/20 transition-all duration-200">
                 Contact Sales
               </button>
             </div>

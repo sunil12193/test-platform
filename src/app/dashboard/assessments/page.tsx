@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 
-import {
-  FiClock,
-  FiFileText,
-  FiHelpCircle,
-  FiUsers,
-} from "react-icons/fi";
+import { FiClock, FiFileText, FiHelpCircle, FiUsers,} from "react-icons/fi";
 
 import ActionButtons from "../../../component/button";
 
@@ -24,8 +19,7 @@ export default function AssessmentsPage() {
   // SEARCH
   // ========================================
 
-  const [search, setSearch] =
-    useState<string>("");
+  const [search, setSearch] =useState<string>("");
 
   // ========================================
   // PAGINATION
@@ -88,18 +82,6 @@ export default function AssessmentsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
         Loading assessments...
-      </div>
-    );
-  }
-
-  // ========================================
-  // ERROR
-  // ========================================
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-red-500 text-lg font-semibold">
-        {(error as Error).message}
       </div>
     );
   }
@@ -385,6 +367,7 @@ export default function AssessmentsPage() {
         <DataTable
           title="Assessments"
           columns={columns}
+          showViewAll={false}
           data={filteredData}
         />
 
