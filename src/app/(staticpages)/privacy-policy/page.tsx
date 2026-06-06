@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ShieldCheck, Lock, Activity, CloudCog, } from "lucide-react";
 
 export default function GleefixPrivacyPolicyPage() {
   const sections = [
@@ -34,6 +35,24 @@ export default function GleefixPrivacyPolicyPage() {
         "Users may request access, correction, deletion, or export of their data in accordance with applicable data protection regulations.",
     },
   ];
+  const securityFeatures = [
+    {
+      title: "Data Encryption",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Access Control",
+      icon: Lock,
+    },
+    {
+      title: "Realtime Monitoring",
+      icon: Activity,
+    },
+    {
+      title: "Secure Cloud Infrastructure",
+      icon: CloudCog,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-[#F7F9FC] overflow-hidden">
@@ -45,7 +64,7 @@ export default function GleefixPrivacyPolicyPage() {
         <div className="absolute bottom-0 right-0 h-96 w-96 bg-orange-200/30 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-5xl mx-auto text-center">
-          <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-7">
+          <div className="inline-flex px-5 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xl font-semibold mb-7">
             Legal & Compliance
           </div>
 
@@ -158,7 +177,7 @@ export default function GleefixPrivacyPolicyPage() {
               <div className="absolute top-0 right-0 h-64 w-64 bg-blue-100/20 rounded-full blur-3xl" />
 
               <div className="relative z-10">
-                <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-sm font-semibold mb-7">
+                <div className="inline-flex px-5 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-700 text-lg font-semibold mb-7">
                   Security Standards
                 </div>
 
@@ -167,23 +186,28 @@ export default function GleefixPrivacyPolicyPage() {
                 </h2>
 
                 <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5 mt-10">
-                  {[
-                    "Data Encryption",
-                    "Access Control",
-                    "Realtime Monitoring",
-                    "Secure Cloud Infrastructure",
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="rounded-3xl bg-[#F8FAFC] border border-slate-200 p-6"
-                    >
-                      <div className="h-16 w-16 rounded-3xl bg-linear-to-br from-[#0F2B46] to-[#1E4D7B] shadow-lg mb-6" />
+                  {securityFeatures.map((item, index) => {
+                    const Icon = item.icon;
 
-                      <h3 className="text-xl font-black text-slate-900 leading-tight">
-                        {item}
-                      </h3>
-                    </div>
-                  ))}
+                    return (
+                      <div
+                        key={index}
+                        className="group rounded-3xl bg-white border border-slate-200 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                      >
+                        <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#0F2B46] to-[#1E4D7B] flex items-center justify-center shadow-lg mb-6 group-hover:scale-110 transition-all duration-300">
+                          <Icon size={30} className="text-white" />
+                        </div>
+
+                        <h3 className="text-xl font-black text-slate-900 leading-tight">
+                          {item.title}
+                        </h3>
+
+                        <p className="mt-3 text-sm text-slate-500 leading-relaxed">
+                          Enterprise-grade security standards to protect candidate and hiring data.
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
